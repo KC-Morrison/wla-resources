@@ -24,7 +24,10 @@ If you find these useful or have questions, feel free to connect on [LinkedIn](h
 
 ## Workshop 1: Leadership and Authenticity
 
-*To be created*
+| File | Type | Description |
+|---|---|---|
+| [Leadership and Authenticity](./Workshop_1_Leadership_and_Authenticity.md) | Notes | Written notes on leadership and authenticity |
+| [Visual Summary](./Workshop_1_Visual_Summary.html) | Interactive | Visual summary tool |
 
 ---
 

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3 Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #f5f0e8; color: #2c2416; padding: 20px; font-size: 12px; line-height: 1.45; }
+
+  @media print {
+    body { background: #fff; color: #1a1a1a; padding: 10px; font-size: 9.5px; }
+    .no-print { display: none; }
+    .page { box-shadow: none; border: 1px solid #d4c9b0; }
+    .col-header, .tag, .connector, .connectors-row, .zone-above, .zone-below { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  .no-print { text-align: center; margin-bottom: 16px; }
+  .print-btn { padding: 9px 22px; background: #1a2744; color: #c9a84c; border: 1.5px solid #c9a84c; border-radius: 20px; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.04em; }
+  .print-btn:hover { background: #2c3e6b; }
+
+  .page { max-width: 1100px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(26,39,68,0.12); border: 1px solid #d4c9b0; padding: 20px 22px; }
+
+  .page-title { text-align: center; margin-bottom: 16px; }
+  .page-title .label { font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase; color: #c9a84c; font-weight: 500; margin-bottom: 4px; }
+  .page-title h1 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: #1a2744; }
+  .page-title p { font-size: 0.68rem; color: #7a6e5e; letter-spacing: 0.04em; margin-top: 2px; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+  .col { background: #fff; border-radius: 10px; border: 1px solid #d4c9b0; overflow: hidden; display: flex; flex-direction: column; }
+  .col-header { padding: 9px 12px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #fff; background: #1a2744; border-bottom: 2px solid #c9a84c; }
+  .col-body { padding: 10px 12px; flex: 1; }
+
+  .sec { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; margin-top: 10px; color: #c9a84c; }
+  .sec:first-child { margin-top: 0; }
+
+  .items { list-style: none; padding: 0; }
+  .items li { display: flex; gap: 6px; margin-bottom: 4px; font-size: 0.72rem; color: #4a3f2f; }
+  .items li::before { content: '›'; color: #c9a84c; font-weight: 700; flex-shrink: 0; }
+
+  .numbered { counter-reset: step; list-style: none; padding: 0; }
+  .numbered li { display: flex; gap: 7px; margin-bottom: 5px; font-size: 0.71rem; color: #4a3f2f; align-items: flex-start; }
+  .numbered li::before { counter-increment: step; content: counter(step); background: #1a2744; color: #c9a84c; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  .tag { display: inline-block; font-size: 0.62rem; font-weight: 700; padding: 2px 7px; border-radius: 8px; margin-right: 3px; margin-bottom: 3px; }
+  .tag-above { background: #dcfce7; color: #166534; }
+  .tag-below { background: #fee2e2; color: #991b1b; }
+  .tag-navy  { background: #1a2744; color: #c9a84c; }
+
+  .kv { display: flex; gap: 0; margin-bottom: 4px; font-size: 0.71rem; }
+  .kv-k { color: #1a2744; min-width: 72px; flex-shrink: 0; font-weight: 700; }
+  .kv-v { color: #5a5040; }
+
+  .div { height: 1px; background: #d4c9b0; margin: 8px 0; }
+
+  /* LINE OF CHOICE */
+  .zone { border-radius: 7px; padding: 7px 9px; margin-bottom: 5px; }
+  .zone-above { background: #dcfce7; border: 1.5px solid #22c55e; }
+  .zone-below { background: #fee2e2; border: 1.5px solid #ef4444; }
+  .zone-title { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; }
+  .zone-above .zone-title { color: #166534; }
+  .zone-below .zone-title { color: #991b1b; }
+  .line-bar { height: 3px; background: linear-gradient(90deg, #22c55e, #c9a84c, #ef4444); border-radius: 2px; margin: 5px 0; position: relative; }
+  .line-bar-label { text-align: center; font-size: 0.6rem; font-weight: 700; color: #7a5c00; letter-spacing: 0.08em; text-transform: uppercase; margin: 2px 0 5px; }
+
+  /* TUCKMAN TABLE */
+  .tbl { width: 100%; border-collapse: collapse; font-size: 0.68rem; }
+  .tbl th { padding: 4px 6px; font-weight: 700; text-align: left; border-bottom: 1px solid #d4c9b0; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.04em; color: #1a2744; background: #f5f0e8; }
+  .tbl td { padding: 3px 6px; color: #4a3f2f; border-bottom: 1px solid #ede8dc; vertical-align: top; }
+  .tbl tr:last-child td { border-bottom: none; }
+  .stage-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+
+  /* LENCIONI PYRAMID */
+  .pyr { display: flex; flex-direction: column; align-items: center; gap: 3px; margin: 6px 0; }
+  .pyr-level { text-align: center; padding: 5px 8px; border-radius: 5px; font-size: 0.63rem; font-weight: 700; color: white; cursor: default; }
+
+  /* TKI GRID */
+  .tki-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin: 6px 0; }
+  .tki-card { border-radius: 7px; padding: 7px 9px; border: 1px solid #d4c9b0; }
+  .tki-name { font-size: 0.7rem; font-weight: 700; color: #1a2744; margin-bottom: 2px; }
+  .tki-outcome { font-size: 0.6rem; font-weight: 600; margin-bottom: 3px; }
+  .tki-detail { font-size: 0.63rem; color: #5a5040; line-height: 1.35; }
+  .tki-span { grid-column: 1 / 3; }
+
+  /* SPECTRUM */
+  .spectrum { display: flex; gap: 3px; margin: 5px 0; }
+  .spec-item { flex: 1; text-align: center; padding: 5px 3px; border-radius: 5px; font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: white; }
+
+  /* FORMULA */
+  .formula { background: #f0e6c8; border: 1.5px solid #c9a84c; border-radius: 7px; padding: 7px 9px; margin: 6px 0; font-size: 0.68rem; color: #5c4400; text-align: center; line-height: 1.5; }
+
+  /* CALLOUT */
+  .callout { background: #f0e6c8; border: 1px solid #c9a84c; border-radius: 6px; padding: 6px 9px; margin: 6px 0; font-size: 0.67rem; color: #5c4400; line-height: 1.4; }
+  .callout strong { color: #7a5c00; }
+
+  /* SCORECARD */
+  .scorecard { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin: 5px 0; }
+  .sc-quad { border-radius: 6px; padding: 6px 8px; }
+  .sc-quad .sc-title { font-size: 0.63rem; font-weight: 700; margin-bottom: 2px; }
+  .sc-quad .sc-q { font-size: 0.6rem; color: #5a5040; font-style: italic; margin-bottom: 2px; }
+  .sc-quad .sc-focus { font-size: 0.6rem; color: #4a3f2f; }
+  .sc-financial { background: #dcfce7; border: 1px solid #86efac; }
+  .sc-customer  { background: #dbeafe; border: 1px solid #93c5fd; }
+  .sc-process   { background: #fef3c7; border: 1px solid #fcd34d; }
+  .sc-growth    { background: #ede9fe; border: 1px solid #c4b5fd; }
+
+  /* CONNECTORS */
+  .connectors-row { grid-column: 1 / -1; background: #1a2744; border-radius: 10px; border: 1px solid #d4c9b0; padding: 10px 14px; display: flex; align-items: center; gap: 0; flex-wrap: nowrap; overflow-x: auto; }
+  .connector { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px 8px; border-radius: 8px; flex: 1; min-width: 80px; text-align: center; background: rgba(255,255,255,0.08); }
+  .cn-title { font-size: 0.63rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; color: #c9a84c; }
+  .cn-desc { font-size: 0.58rem; color: rgba(255,255,255,0.55); line-height: 1.3; }
+  .cn-arrow { font-size: 1rem; color: #c9a84c; padding: 0 4px; flex-shrink: 0; }
+
+  strong { font-weight: 700; }
+
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } .connectors-row { flex-wrap: wrap; } }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  <button class="print-btn" onclick="window.print()">🖨 Print / Save as PDF</button>
+</div>
+
+<div class="page">
+  <div class="page-title">
+    <div class="label">Executive Ready Leadership · Module 3</div>
+    <h1>Building High-Performing Teams</h1>
+    <p>Quick Reference Cheat Sheet</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- COL 1: LINE OF CHOICE -->
+    <div class="col">
+      <div class="col-header">📊 3.2 Line of Choice</div>
+      <div class="col-body">
+        <div class="sec">Culture Equation</div>
+        <div class="callout" style="text-align:center;font-weight:700;font-size:0.72rem;">Culture = Individual Behaviour × Number of People</div>
+
+        <div class="zone zone-above">
+          <div class="zone-title">☀️ Above the Line — Personal Responsibility</div>
+          <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px">
+            <span class="tag tag-above">Ownership</span><span class="tag tag-above">Accountability</span><span class="tag tag-above">Solution-focused</span><span class="tag tag-above">We/Us</span><span class="tag tag-above">Learning</span><span class="tag tag-above">Open</span>
+          </div>
+          <div style="font-size:0.63rem;color:#166534">Ask: "How can I help?" · "What can we do?" · "How did this happen?"</div>
+        </div>
+
+        <div class="line-bar"></div>
+        <div class="line-bar-label">⬆ LINE OF CHOICE ⬇</div>
+
+        <div class="zone zone-below">
+          <div class="zone-title">🌧️ Below the Line — Defensive Behaviours</div>
+          <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px">
+            <span class="tag tag-below">Defend</span><span class="tag tag-below">Deny</span><span class="tag tag-below">Blame</span><span class="tag tag-below">Justify</span><span class="tag tag-below">Quit</span><span class="tag tag-below">Victim</span>
+          </div>
+          <div style="font-size:0.63rem;color:#991b1b">Signals: "Who did this?" · "Why did they...?" · "It's not my fault"</div>
+        </div>
+
+        <div class="callout" style="margin-top:7px">
+          <strong>⚠️ Watch out:</strong> "I know this is below the line, but..." is itself below the line.
+        </div>
+
+        <div class="div"></div>
+        <div class="sec">Tuckman + Line of Choice</div>
+        <table class="tbl">
+          <tr><th>Stage</th><th>Above</th><th>Below</th></tr>
+          <tr><td>Forming</td><td style="color:#166534">Healthy exploration</td><td style="color:#991b1b">Suspicious</td></tr>
+          <tr><td>Storming</td><td style="color:#166534">Productive conflict</td><td style="color:#991b1b">Toxic warfare</td></tr>
+          <tr><td>Norming</td><td style="color:#166534">Good standards</td><td style="color:#991b1b">Normalising bad</td></tr>
+          <tr><td>Performing</td><td style="color:#166534">High achievement</td><td style="color:#991b1b">Never reached</td></tr>
+        </table>
+        <div class="callout" style="margin-top:6px"><strong>🚩 4 Meetings red flag:</strong> Corridor talk before · the meeting · unspoken thoughts · corridor debrief after. Above-the-line teams have ONE meeting.</div>
+      </div>
+    </div>
+
+    <!-- COL 2: TUCKMAN + LENCIONI -->
+    <div class="col">
+      <div class="col-header">🔄 3.3 Tuckman's Stages</div>
+      <div class="col-body">
+        <table class="tbl">
+          <tr><th>Stage</th><th>Key Word</th><th>Leadership Focus</th></tr>
+          <tr><td><span class="stage-dot" style="background:#3498db"></span>Forming</td><td>Polite</td><td>Clarify purpose, bond</td></tr>
+          <tr><td><span class="stage-dot" style="background:#e74c3c"></span>Storming</td><td>Conflict</td><td>Surface issues, ground rules</td></tr>
+          <tr><td><span class="stage-dot" style="background:#f39c12"></span>Norming</td><td>Rules</td><td>Focus on task delivery</td></tr>
+          <tr><td><span class="stage-dot" style="background:#27ae60"></span>Performing</td><td>Effective</td><td>Step back, let team lead</td></tr>
+          <tr><td><span class="stage-dot" style="background:#9b59b6"></span>Adjourning</td><td>Closure</td><td>Recognise, handover</td></tr>
+        </table>
+        <div class="callout" style="margin-top:6px">Teams can <strong>regress</strong> to earlier stages when new members join, leadership changes, or major shifts occur.</div>
+      </div>
+
+      <div class="col-header" style="border-top:1px solid #d4c9b0">🔺 3.4 Lencioni's Five Dysfunctions</div>
+      <div class="col-body">
+        <div class="pyr">
+          <div class="pyr-level" style="width:45%;background:#ef4444">Inattention to Results</div>
+          <div class="pyr-level" style="width:58%;background:#f97316">Avoidance of Accountability</div>
+          <div class="pyr-level" style="width:71%;background:#eab308">Lack of Commitment</div>
+          <div class="pyr-level" style="width:84%;background:#22c55e">Fear of Conflict</div>
+          <div class="pyr-level" style="width:100%;background:#1a2744">Absence of Trust ← Foundation</div>
+        </div>
+        <div class="div"></div>
+        <div class="sec">Cross-Cultural Trust</div>
+        <table class="tbl">
+          <tr><th>Cognitive (Head)</th><th>Affective (Heart)</th></tr>
+          <tr><td>Task-based; built through competence</td><td>Relationship-based; built through connection</td></tr>
+          <tr><td>US, Germany, UK, Australia</td><td>China, Brazil, Saudi Arabia, India</td></tr>
+        </table>
+        <div class="callout" style="margin-top:6px"><strong>Key:</strong> In relationship-based cultures, build personal connection (guanxi) <em>before</em> business.</div>
+      </div>
+    </div>
+
+    <!-- COL 3: TKI -->
+    <div class="col">
+      <div class="col-header">⚔️ 3.5 TKI Conflict Modes</div>
+      <div class="col-body">
+        <div class="sec" style="margin-bottom:6px">Two axes: Assertiveness (your concerns) × Cooperativeness (others' concerns)</div>
+        <div class="tki-grid">
+          <div class="tki-card" style="background:#fee2e2;border-color:#fca5a5">
+            <div class="tki-name">🏆 Competing</div>
+            <div class="tki-outcome" style="color:#991b1b">Win-Lose</div>
+            <div class="tki-detail">Use for: emergencies, unpopular decisions. Risk: creates "yes people"</div>
+          </div>
+          <div class="tki-card" style="background:#dcfce7;border-color:#86efac">
+            <div class="tki-name">🤝 Collaborating</div>
+            <div class="tki-outcome" style="color:#166534">Win-Win</div>
+            <div class="tki-detail">Use for: both parties matter, learning, commitment. Risk: time-consuming</div>
+          </div>
+          <div class="tki-card tki-span" style="background:#fef3c7;border-color:#fcd34d">
+            <div class="tki-name">⚖️ Compromising</div>
+            <div class="tki-outcome" style="color:#92400e">Partial Win</div>
+            <div class="tki-detail">Use for: time pressure, equal power, temporary settlement. Risk: loses sight of bigger issues</div>
+          </div>
+          <div class="tki-card" style="background:#f1f5f9;border-color:#cbd5e1">
+            <div class="tki-name">🚶 Avoiding</div>
+            <div class="tki-outcome" style="color:#475569">Lose-Lose</div>
+            <div class="tki-detail">Use for: trivial issues, cool down. Risk: decisions by default</div>
+          </div>
+          <div class="tki-card" style="background:#dbeafe;border-color:#93c5fd">
+            <div class="tki-name">🎁 Accommodating</div>
+            <div class="tki-outcome" style="color:#1e40af">Lose-Win</div>
+            <div class="tki-detail">Use for: you're wrong, building goodwill. Risk: ideas ignored</div>
+          </div>
+        </div>
+        <div class="callout"><strong>💡 Library book example:</strong> Collaborating finds the win-win — ebook, photocopy, reserve a copy — rather than forcing a choice.</div>
+
+        <div class="div"></div>
+        <div class="col-header" style="border-radius:6px;margin-bottom:6px">🤝 3.6 Tell-Sell-Test-Consult-Joint</div>
+        <div class="sec">Tannenbaum-Schmidt Spectrum</div>
+        <div class="spectrum">
+          <div class="spec-item" style="background:#1a2744">Tell</div>
+          <div class="spec-item" style="background:#2c3e6b">Sell</div>
+          <div class="spec-item" style="background:#3d5088">Test</div>
+          <div class="spec-item" style="background:#4e62a0">Consult</div>
+          <div class="spec-item" style="background:#6074b8">Joint</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.58rem;color:#7a6e5e;margin-bottom:5px"><span>← Leader Authority</span><span>Team Influence →</span></div>
+        <table class="tbl">
+          <tr><th>Style</th><th>When to Use</th></tr>
+          <tr><td><strong>Tell</strong></td><td>Emergencies, non-negotiables</td></tr>
+          <tr><td><strong>Sell</strong></td><td>Buy-in matters, decision made</td></tr>
+          <tr><td><strong>Test</strong></td><td>Have preference, open to change</td></tr>
+          <tr><td><strong>Consult</strong></td><td>Need expertise, build commitment</td></tr>
+          <tr><td><strong>Joint</strong></td><td>High-stakes, need full buy-in</td></tr>
+        </table>
+        <div class="callout" style="margin-top:5px"><strong>⚠️ Dysfunction:</strong> Disguising "Tell" as "Consult" — when the decision is already made — destroys trust.</div>
+      </div>
+    </div>
+
+    <!-- ROW 2 COL 4: COMMITMENT + ACCOUNTABILITY (spans 2) -->
+    <div class="col" style="grid-column: 1 / 3">
+      <div class="col-header">📋 3.7 Commitment & Accountability</div>
+      <div class="col-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div>
+            <div class="sec">The Commitment Request Formula</div>
+            <div class="formula">
+              "In order to [<strong>context</strong>]...<br>
+              I request you [<strong>specific action</strong>]<br>
+              by [<strong>date &amp; time</strong>]...<br>
+              <strong>Do you commit to this?"</strong>
+            </div>
+            <div class="sec">Valid Responses</div>
+            <table class="tbl">
+              <tr><th>Response</th><th>Status</th></tr>
+              <tr><td>"Yes, I commit"</td><td style="color:#166534">✅ Commitment</td></tr>
+              <tr><td>"No, I don't commit"</td><td style="color:#991b1b">❌ Decline</td></tr>
+              <tr><td>"I'll respond by [time]"</td><td style="color:#92400e">⏳ Pending</td></tr>
+              <tr><td>"I'll do my best"</td><td style="color:#991b1b;font-weight:700">❌ This is NO</td></tr>
+              <tr><td>"Maybe"</td><td style="color:#991b1b;font-weight:700">❌ This is NO</td></tr>
+            </table>
+          </div>
+          <div>
+            <div class="sec">The Accountability Conversation (7 Steps)</div>
+            <ol class="numbered">
+              <li><strong>Check your intention</strong> — manage emotions first; clarify what you want to achieve</li>
+              <li><strong>Set the scene</strong></li>
+              <li><strong>Assert prior commitment</strong> — confirm what was agreed</li>
+              <li><strong>Assert the breakdown</strong> — state what didn't happen</li>
+              <li><strong>Inquire their perspective</strong> — listen; distinguish reasonable vs acceptable reasons</li>
+              <li><strong>Issue damage report</strong> — work impact, feelings, relationship impact</li>
+              <li><strong>Make a new request</strong> — another commitment conversation</li>
+            </ol>
+            <div class="callout" style="margin-top:6px">
+              <strong>Acceptable reason:</strong> Genuinely outside their control (system down, family emergency)<br>
+              <strong>Not acceptable:</strong> "Something came up" — they could have renegotiated
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 2 COL 5: BALANCED SCORECARD -->
+    <div class="col">
+      <div class="col-header">🎯 3.8 Balanced Scorecard</div>
+      <div class="col-body">
+        <div class="sec">Kaplan & Norton — Four Perspectives</div>
+        <div style="text-align:center;background:#1a2744;color:#c9a84c;border-radius:6px;padding:5px 8px;font-size:0.68rem;font-weight:700;margin-bottom:6px">🎯 VISION — What are we trying to achieve?</div>
+        <div class="scorecard">
+          <div class="sc-quad sc-financial">
+            <div class="sc-title" style="color:#166534">💰 Financial</div>
+            <div class="sc-q">How should we appear to stakeholders?</div>
+            <div class="sc-focus">Revenue, costs, profitability, ROI</div>
+          </div>
+          <div class="sc-quad sc-customer">
+            <div class="sc-title" style="color:#1e40af">👥 Customer</div>
+            <div class="sc-q">How should we appear to customers?</div>
+            <div class="sc-focus">Satisfaction, retention, market share</div>
+          </div>
+          <div class="sc-quad sc-process">
+            <div class="sc-title" style="color:#92400e">⚙️ Internal Process</div>
+            <div class="sc-q">What processes must we excel at?</div>
+            <div class="sc-focus">Quality, efficiency, innovation</div>
+          </div>
+          <div class="sc-quad sc-growth">
+            <div class="sc-title" style="color:#5b21b6">🌱 Learning & Growth</div>
+            <div class="sc-q">How will we sustain ability to change?</div>
+            <div class="sc-focus">Skills, culture, technology</div>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:6px"><strong>Lead vs Lag:</strong> One perspective is the lead indicator (drives the others). Results must be <strong>visible</strong> — public scoreboards reinforce accountability.</div>
+
+        <div class="div"></div>
+        <div class="sec">Key Theorists</div>
+        <div class="kv"><span class="kv-k">Tuckman (1965)</span><span class="kv-v">Stages of Team Development</span></div>
+        <div class="kv"><span class="kv-k">Lencioni</span><span class="kv-v">Five Dysfunctions of a Team</span></div>
+        <div class="kv"><span class="kv-k">Thomas & Kilmann</span><span class="kv-v">TKI Conflict Mode Instrument</span></div>
+        <div class="kv"><span class="kv-k">Tannenbaum & Schmidt</span><span class="kv-v">Decision-Making Continuum</span></div>
+        <div class="kv"><span class="kv-k">Kofman</span><span class="kv-v">Commitment & Accountability</span></div>
+        <div class="kv"><span class="kv-k">Kaplan & Norton</span><span class="kv-v">Balanced Scorecard</span></div>
+        <div class="kv"><span class="kv-k">Erin Meyer</span><span class="kv-v">The Culture Map</span></div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div class="connectors-row">
+      <div class="connector"><div class="cn-title">Line of Choice</div><div class="cn-desc">Individual behaviour shapes team culture</div></div>
+      <div class="cn-arrow">→</div>
+      <div class="connector"><div class="cn-title">Tuckman</div><div class="cn-desc">Where is your team developmentally?</div></div>
+      <div class="cn-arrow">→</div>
+      <div class="connector"><div class="cn-title">Lencioni</div><div class="cn-desc">Diagnose the dysfunction — start with trust</div></div>
+      <div class="cn-arrow">→</div>
+      <div class="connector"><div class="cn-title">TKI</div><div class="cn-desc">Navigate conflict with the right mode</div></div>
+      <div class="cn-arrow">→</div>
+      <div class="connector"><div class="cn-title">Tell-Sell</div><div class="cn-desc">Make decisions transparently</div></div>
+      <div class="cn-arrow">→</div>
+      <div class="connector"><div class="cn-title">Commitment</div><div class="cn-desc">Clear requests + genuine accountability</div></div>
+      <div class="cn-arrow">→</div>
+      <div class="connector"><div class="cn-title">Scorecard</div><div class="cn-desc">Measure collective results visibly</div></div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

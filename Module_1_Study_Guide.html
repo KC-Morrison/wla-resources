@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: Professional Leadership Project Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ── THEME TOKENS ─────────────────────────────────────── */
+  :root {
+    --navy:       #1a2744;
+    --navy-mid:   #2c3e6b;
+    --gold:       #c9a84c;
+    --gold-light: #f0e6c8;
+    --cream:      #f5f0e8;
+    --cream-dark: #ede8dc;
+    --border:     #d4c9b0;
+    --text:       #2c2416;
+    --text-muted: #5a5040;
+    --text-dim:   #7a6e5e;
+  }
+
+  /* ── RESET ────────────────────────────────────────────── */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+
+  /* ── PAGE HEADER ──────────────────────────────────────── */
+  .page-header { background: var(--navy); border-bottom: 3px solid var(--gold); padding: 24px 28px 0; }
+  .container   { max-width: 960px; margin: 0 auto; }
+  .header-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-weight: 500; text-align: center; }
+  h1 { font-family: 'Playfair Display', serif; color: #fff; text-align: center; margin-bottom: 4px; font-size: 24px; font-weight: 700; }
+  .subtitle { color: rgba(255,255,255,0.65); text-align: center; margin-bottom: 14px; font-size: 13px; }
+
+  /* ── NAV PILLS ────────────────────────────────────────── */
+  .nav-container { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 0 12px; }
+  .nav-item { padding: 7px 13px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); border: 1.5px solid transparent; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .nav-item:hover { color: #fff; background: rgba(255,255,255,0.18); transform: translateY(-1px); }
+  .nav-item.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+  .nav-number { font-size: 11px; opacity: 0.8; }
+  .nav-item.active .nav-number { opacity: 1; }
+
+  /* ── CONTENT AREA & CARD ──────────────────────────────── */
+  .content-area { padding: 24px 28px 40px; }
+  .card { background: #fff; border-radius: 12px; padding: 26px; border: 1px solid var(--border); min-height: 520px; }
+
+  /* ── SECTION HEADER ───────────────────────────────────── */
+  .section-number   { display: inline-block; background: var(--navy); color: var(--gold); padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; margin-right: 10px; vertical-align: middle; }
+  .section-title    { display: inline; font-size: 22px; font-weight: 600; color: var(--navy); vertical-align: middle; }
+  .section-subtitle { display: block; font-size: 13px; color: var(--text-muted); margin-top: 12px; margin-bottom: 20px; line-height: 1.6; border-left: 3px solid var(--gold); padding: 10px 14px; background: var(--cream-dark); border-radius: 0 6px 6px 0; }
+  .subsection { margin: 20px 0; }
+  .subsection-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .subsection-title::before { content: ''; width: 3px; height: 16px; background: var(--gold); border-radius: 2px; flex-shrink: 0; }
+
+  /* ── CLICKABLE GRID ───────────────────────────────────── */
+  .clickable-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 16px 0; }
+  .clickable-item { padding: 16px; border-radius: 10px; cursor: pointer; transition: all 0.25s; text-align: center; border: 2px solid transparent; }
+  .clickable-item:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(26,39,68,0.12); }
+  .clickable-item.active { border-color: var(--gold); box-shadow: 0 6px 18px rgba(201,168,76,0.25); }
+  .clickable-icon { font-size: 30px; margin-bottom: 8px; }
+  .clickable-name { font-weight: 700; font-size: 13px; color: var(--text); }
+  .clickable-desc { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+  .item-blue   { background: #dbeafe; }
+  .item-green  { background: #dcfce7; }
+  .item-yellow { background: #fef3c7; }
+  .item-red    { background: #fee2e2; }
+  .item-purple { background: #ede9fe; }
+  .item-orange { background: #ffedd5; }
+  .item-teal   { background: #ccfbf1; }
+  .item-gray   { background: #f1f5f9; }
+
+  /* ── DETAIL BOX ───────────────────────────────────────── */
+  .detail-box { margin-top: 14px; padding: 18px; background: #fff; border-radius: 8px; border: 1px solid var(--border); border-left: 3px solid var(--gold); }
+  .detail-box h4 { color: var(--navy); margin-bottom: 8px; font-size: 15px; font-weight: 700; }
+  .detail-box p  { color: #4a3f2f; line-height: 1.6; margin-bottom: 8px; font-size: 13.5px; }
+  .detail-box p:last-child { margin-bottom: 0; }
+
+  /* ── INSIGHT / CALLOUT BOX ────────────────────────────── */
+  .insight-box { background: var(--gold-light); border: 1px solid var(--gold); border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .insight-title { font-size: 12px; font-weight: 700; color: #7a5c00; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .insight-box p { color: #5c4400; font-size: 13.5px; line-height: 1.5; }
+
+  /* ── CULTURAL / INFO NOTE BOX ─────────────────────────── */
+  .info-note { background: #e8edf5; border: 1px solid #b5c4d4; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .info-note .note-title { font-weight: 700; color: var(--navy); margin-bottom: 8px; font-size: 13px; }
+  .info-note p { color: #2c3e6b; font-size: 13.5px; line-height: 1.5; }
+
+  /* ── LINE OF CHOICE / ABOVE-BELOW ZONES ──────────────── */
+  .line-zone  { padding: 18px; border-radius: 10px; margin: 10px 0; cursor: pointer; transition: all 0.25s; }
+  .line-zone:hover { transform: scale(1.01); }
+  .zone-above { background: #dcfce7; border: 2px solid #22c55e; }
+  .zone-below { background: #fee2e2; border: 2px solid #ef4444; }
+  .line-divider { height: 4px; background: linear-gradient(90deg, #22c55e, var(--gold), #ef4444); border-radius: 2px; margin: 16px 0; position: relative; }
+  .line-label { position: absolute; left: 50%; transform: translateX(-50%); top: -13px; background: #fff; padding: 3px 12px; font-weight: 700; font-size: 11px; color: var(--navy); border-radius: 10px; border: 1px solid var(--border); white-space: nowrap; }
+  .behavior-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .tag { padding: 4px 10px; border-radius: 14px; font-size: 12px; font-weight: 600; }
+  .tag-green { background: #22c55e; color: white; }
+  .tag-red   { background: #ef4444; color: white; }
+
+  /* ── PYRAMID ──────────────────────────────────────────── */
+  .pyramid { display: flex; flex-direction: column; align-items: center; gap: 5px; margin: 16px 0; }
+  .pyramid-level { padding: 13px 16px; text-align: center; cursor: pointer; transition: all 0.25s; border-radius: 7px; font-weight: 600; color: white; font-size: 13px; }
+  .pyramid-level:hover { transform: scale(1.02); filter: brightness(1.08); }
+  .pyramid-level.active { box-shadow: 0 0 0 3px var(--gold), 0 6px 18px rgba(0,0,0,0.2); }
+  .pyr-5 { width: 40%; background: #ef4444; }
+  .pyr-4 { width: 52%; background: #f97316; }
+  .pyr-3 { width: 64%; background: #eab308; }
+  .pyr-2 { width: 78%; background: #22c55e; }
+  .pyr-1 { width: 100%; background: var(--navy); }
+
+  /* ── SPECTRUM / HORIZONTAL SELECTOR ──────────────────── */
+  .spectrum { display: flex; gap: 6px; margin: 16px 0; }
+  .spectrum-item { flex: 1; padding: 14px 8px; text-align: center; cursor: pointer; transition: all 0.25s; border-radius: 10px; border: 2px solid transparent; color: white; }
+  .spectrum-item:hover { transform: translateY(-3px); }
+  .spectrum-item.active { border-color: var(--gold); box-shadow: 0 6px 18px rgba(0,0,0,0.2); }
+  .spec-1 { background: #1a2744; }
+  .spec-2 { background: #2c3e6b; }
+  .spec-3 { background: #3d5088; }
+  .spec-4 { background: #4e62a0; }
+  .spec-5 { background: #6074b8; }
+  .spectrum-icon   { font-size: 22px; margin-bottom: 4px; }
+  .spectrum-name   { font-weight: 700; font-size: 12px; }
+  .spectrum-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); margin-top: 8px; font-weight: 600; }
+
+  /* ── FORMULA BOX ──────────────────────────────────────── */
+  .formula-box   { background: var(--gold-light); border: 1.5px solid var(--gold); border-radius: 10px; padding: 18px; margin: 16px 0; }
+  .formula-title { font-weight: 700; margin-bottom: 12px; text-align: center; color: #7a5c00; font-size: 14px; }
+  .formula-steps { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+  .formula-step  { background: white; padding: 9px 13px; border-radius: 7px; font-weight: 600; font-size: 13px; border: 1px solid var(--border); color: var(--text); }
+  .formula-arrow { color: var(--gold); font-size: 16px; font-weight: bold; }
+  .formula-note  { text-align: center; margin-top: 12px; font-size: 13px; color: #7a5c00; font-weight: 600; }
+
+  /* ── NUMBERED STEPS LIST ──────────────────────────────── */
+  .steps-list  { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 16px 0; }
+  .step-item   { display: flex; align-items: flex-start; gap: 10px; padding: 12px; background: #fff; border-radius: 8px; border: 1px solid var(--border); border-left: 3px solid var(--navy); }
+  .step-number { background: var(--navy); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .step-text   { font-size: 13px; color: #4a3f2f; }
+
+  /* ── CIRCLE-NUMBER STEP LIST (vertical) ──────────────── */
+  .vsteps { display: flex; flex-direction: column; gap: 16px; margin: 16px 0; }
+  .vstep  { display: flex; gap: 20px; align-items: flex-start; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; transition: box-shadow 0.2s; }
+  .vstep:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .vstep-num  { width: 38px; height: 38px; background: var(--navy); color: white; font-size: 18px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .vstep-body h4 { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .vstep-body p  { font-size: 13.5px; color: #6b6b6b; line-height: 1.6; }
+
+  /* ── EXPANDABLE CARDS ─────────────────────────────────── */
+  .exp-cards { display: grid; gap: 12px; }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .exp-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+  .exp-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--navy); opacity: 0; transition: opacity 0.2s; }
+  .exp-card:hover { border-color: #b8a98a; transform: translateY(-2px); }
+  .exp-card:hover::before, .exp-card.expanded::before { opacity: 1; }
+  .exp-card.expanded { border-color: var(--gold); background: #fdfaf5; }
+  .exp-title   { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .exp-tag     { font-size: 10px; background: var(--gold-light); color: #7a5c00; padding: 2px 7px; border-radius: 10px; font-weight: 600; margin-left: auto; flex-shrink: 0; }
+  .exp-preview { font-size: 12px; color: var(--text-dim); line-height: 1.45; }
+  .exp-detail  { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--cream-dark); }
+  .exp-card.expanded .exp-detail { display: block; }
+  .dp { display: flex; gap: 8px; margin-bottom: 7px; font-size: 12px; color: #4a3f2f; line-height: 1.45; }
+  .dp::before { content: '→'; color: var(--gold); flex-shrink: 0; font-weight: 700; }
+  .expand-hint { font-size: 11px; color: #b8a98a; margin-top: 8px; text-align: right; }
+  .exp-card:hover .expand-hint { color: #7a5c00; }
+
+  /* ── PULL QUOTE ───────────────────────────────────────── */
+  .pullquote { background: var(--navy); color: white; border-radius: 12px; padding: 28px 32px; margin: 24px 0; position: relative; }
+  .pullquote::before { content: '\201C'; font-family: 'Playfair Display', serif; font-size: 100px; color: var(--gold); opacity: 0.3; position: absolute; top: -10px; left: 16px; line-height: 1; }
+  .pullquote p    { font-size: 15px; line-height: 1.65; font-weight: 400; position: relative; z-index: 1; }
+  .pullquote cite { display: block; margin-top: 10px; font-size: 12px; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; font-style: normal; font-weight: 500; position: relative; z-index: 1; }
+
+  /* ── STAT BOXES ───────────────────────────────────────── */
+  .stats    { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin: 20px 0; }
+  .stat-box { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px 20px; text-align: center; }
+  .stat-num   { font-size: 42px; font-weight: 700; color: var(--navy); line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-size: 13px; color: #6b6b6b; line-height: 1.5; }
+
+  /* ── COMPARE COLUMNS ──────────────────────────────────── */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .c-col   { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .c-col h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--cream-dark); }
+  .c-row { display: flex; gap: 8px; margin-bottom: 7px; font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+  /* ── VISION BANNER ────────────────────────────────────── */
+  .vision-banner { text-align: center; padding: 13px; background: var(--navy); color: white; border-radius: 8px; font-weight: 700; font-size: 13px; margin-bottom: 12px; }
+
+  /* ── QUIZ ─────────────────────────────────────────────── */
+  .quiz-progress { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
+  .quiz-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--border); transition: all 0.3s; }
+  .quiz-dot.active    { background: var(--navy); transform: scale(1.3); }
+  .quiz-dot.correct   { background: var(--gold); }
+  .quiz-dot.incorrect { background: #c07060; }
+  .quiz-question { font-size: 17px; font-weight: 700; margin-bottom: 18px; color: var(--navy); line-height: 1.4; }
+  .quiz-options  { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option   { padding: 13px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s; border: 1.5px solid var(--border); background: white; font-size: 13.5px; color: var(--text); }
+  .quiz-option:hover:not(.disabled) { border-color: var(--navy); background: var(--cream); transform: translateX(3px); }
+  .quiz-option.correct  { border-color: var(--gold); background: var(--gold-light); color: #5c4400; }
+  .quiz-option.incorrect { border-color: #c07060; background: #f5e8e5; color: #6b2a1e; }
+  .quiz-option.disabled { cursor: default; }
+  .quiz-feedback { margin-top: 14px; padding: 14px 16px; border-radius: 8px; font-size: 13.5px; line-height: 1.5; }
+  .quiz-feedback.correct   { background: var(--gold-light); color: #5c4400; border: 1px solid var(--gold); }
+  .quiz-feedback.incorrect { background: #f5e8e5; color: #6b2a1e; border: 1px solid #c07060; }
+  .quiz-nav { display: flex; gap: 12px; margin-top: 20px; justify-content: center; }
+  .quiz-btn { padding: 11px 22px; border-radius: 8px; cursor: pointer; font-weight: 700; border: none; transition: all 0.2s; font-size: 13.5px; }
+  .quiz-btn:hover { transform: translateY(-1px); }
+  .quiz-btn-primary   { background: var(--navy); color: var(--gold); }
+  .quiz-btn-secondary { background: var(--cream-dark); color: var(--navy); }
+  .quiz-result  { text-align: center; padding: 30px 20px; }
+  .quiz-score   { font-size: 64px; margin: 16px 0; }
+  .quiz-message { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="container">
+    <div class="header-label">Executive Ready Leadership · Module 1</div>
+    <h1>Professional Leadership Project Support</h1>
+    <p class="subtitle">Understanding the PLP framework, problem framing, and Appreciative Inquiry coaching.</p>
+    <div class="nav-container" id="nav"></div>
+  </div>
+</div>
+
+<div class="content-area">
+  <div class="container">
+    <div class="card" id="content"></div>
+  </div>
+</div>
+
+<script>
+
+const sections = [
+  { id: '1.1',  name: 'PLP Overview',         icon: '🎯' },
+  { id: '1.2',  name: 'Schedule',              icon: '📅' },
+  { id: '1.3',  name: 'Project Examples',      icon: '💡' },
+  { id: '1.4',  name: 'Problem Framing',       icon: '🔍' },
+  { id: '1.5',  name: 'Framing Methods',       icon: '🛠️' },
+  { id: '1.6',  name: 'Appreciative Inquiry',  icon: '✨' },
+  { id: '1.7',  name: 'Coaching Reflection',   icon: '🪞' },
+  { id: 'quiz', name: 'Quiz',                  icon: '🧠' }
+];
+
+const state = {
+  currentSection:       sections[0].id,
+  selectedExample:      0,
+  selectedFramingMethod: 0,
+  selectedAIStep:       0,
+  expandedCards:        {},
+  quiz:                 0,
+  quizAnswers:          [],
+  quizComplete:         false
+};
+
+/* ── QUIZ QUESTIONS ─────────────────────────────────────── */
+const quizQuestions = [
+  {
+    q: 'Which of the following best describes the purpose of the Professional Leadership Project?',
+    opts: [
+      'To complete a major work deliverable within the program timeframe',
+      'To lead positive change within your organisation and support personal leadership growth',
+      'To demonstrate academic knowledge through a written essay',
+      'To replace your existing workload with a brand new project'
+    ],
+    correct: 1,
+    explain: 'The PLP is an outcome-driven activity focused on opportunities to lead positive change within your organisation, as well as personal leadership growth.'
+  },
+  {
+    q: 'How many models or leadership frameworks must you incorporate as a minimum in your PLP?',
+    opts: ['One', 'Two', 'Three', 'Four'],
+    correct: 1,
+    explain: 'The project criteria require you to utilise and apply your learning using a minimum of two models or leadership frameworks from the program or your independent leadership research.'
+  },
+  {
+    q: 'When is Assignment 1 (Framing your Professional Leadership Project) due?',
+    opts: [
+      'One day prior to Webinar 4 (Module 4)',
+      'Four weeks after Webinar 6 (Reconnect)',
+      'Day 3 of the final workshop',
+      'As per the Peer Coaching Schedule'
+    ],
+    correct: 0,
+    explain: 'Assignment 1 is due one day prior to Webinar 4 (Module 4) and has a maximum word count of 1,000 words.'
+  },
+  {
+    q: 'Which of the following is an example of framing a problem at the right level of abstraction?',
+    opts: [
+      '"What car should I buy?"',
+      '"How can I address my transportation need?"',
+      '"Which GPS app should I use?"',
+      '"Should I take the bus or drive?"'
+    ],
+    correct: 1,
+    explain: 'The source material uses this exact example: framing as "How can I address my transportation need?" avoids locking in a solution before properly understanding the problem.'
+  },
+  {
+    q: 'Which of the following is listed as a problem-solving trap in the source material?',
+    opts: [
+      'Active listening',
+      'Seeking diverse perspectives',
+      'Confirmation bias',
+      'Evidence-based decision making'
+    ],
+    correct: 2,
+    explain: 'Confirmation bias is one of the six problem-solving traps listed, alongside overconfidence, ignoring new information, focusing on present needs rather than future ones, self-interest, and mental modes.'
+  },
+  {
+    q: 'Who originally developed the Appreciative Inquiry model?',
+    opts: ['John Dewey', 'David Cooperrider', 'Suzi Finkelstein', 'Jay Melone'],
+    correct: 1,
+    explain: 'Appreciative Inquiry was first developed by David Cooperrider and has been used around the world to create change in organisations, communities, and with individuals.'
+  },
+  {
+    q: 'What is described as the number one skill for a peer coach in the Appreciative Inquiry approach?',
+    opts: [
+      'Problem solving',
+      'Giving advice',
+      'Listening',
+      'Asking closed questions'
+    ],
+    correct: 2,
+    explain: 'The coaching transcript states clearly: the number one skill as a coach is listening — not problem solving — listening with a curious mindset, with the art of questioning as the next key skill.'
+  },
+  {
+    q: 'In the Appreciative Inquiry process, what is the purpose of Step 3?',
+    opts: [
+      'To take the coachee into the future',
+      'To ask the coachee to think of a past achievement',
+      'To elicit the personal qualities that allowed the coachee to be successful',
+      'To connect the coachee back to their PLP'
+    ],
+    correct: 2,
+    explain: 'Step 3 is to elicit the personal qualities that allowed the coachee to succeed — shining a light on their strengths and not allowing modesty to downplay their contributions.'
+  },
+  {
+    q: 'What does the W4 Method in problem framing ask participants to consider?',
+    opts: [
+      'Who, What, When, Where',
+      'Who, What, Why, Where',
+      'What, Why, Workaround, Wins',
+      'Wants, Worries, Wisdom, Wins'
+    ],
+    correct: 1,
+    explain: 'The W4 Method divides a whiteboard into four quadrants: Who, What, Why, and Where. Participants write answers on sticky notes, then affinity diagram and vote on the most important.'
+  },
+  {
+    q: 'Which statement about the PLP topic or focus is correct?',
+    opts: [
+      'You must complete the project within the program timeframe',
+      'The project must have a professional, workplace focus only',
+      'The aim is to substantially add to your existing workload',
+      'The project can have a personal leadership development focus'
+    ],
+    correct: 3,
+    explain: 'The source material is clear that the PLP can have a personal leadership development focus, and that the aim is not to add substantially to your workload but to apply new skills to your leadership practice.'
+  }
+];
+
+/* ── SECTION DATA ───────────────────────────────────────── */
+
+const exampleCategories = [
+  {
+    name: 'Team Development',
+    icon: '👥',
+    color: 'item-blue',
+    desc: 'Building team culture and skills',
+    detail: 'Projects focused on developing your team\'s capability, culture and confidence.',
+    examples: [
+      'Create a team charter',
+      'Create a staff PD to encourage a culture of trust and communication',
+      'Design or facilitate a workshop (or series) to up-skill staff',
+      'Mentor junior staff with a focus on communication and confidence building',
+      'Develop new onboarding and training materials for graduates and juniors'
+    ]
+  },
+  {
+    name: 'Change and Systems',
+    icon: '⚙️',
+    color: 'item-orange',
+    desc: 'Leading implementation and change',
+    detail: 'Projects involving the introduction and implementation of new systems, procedures or initiatives.',
+    examples: [
+      'Introduce a new system and work through implementation with stakeholders',
+      'Develop a new procedure and lead its implementation',
+      'Establish a support base for those struggling to adapt to a new system',
+      'Reformat and update company HR documents to align with new policies',
+      'Create and implement an action plan to align team behaviours to organisational values'
+    ]
+  },
+  {
+    name: 'Communication',
+    icon: '💬',
+    color: 'item-green',
+    desc: 'Improving how people connect',
+    detail: 'Projects centred on improving communication across individuals, teams and the organisation.',
+    examples: [
+      'Create a communication plan to improve communication between areas of the business',
+      'Focus on personal communication, EQ and monitoring interactions',
+      'Spearhead the creation of a new initiative (e.g. a Wellbeing initiative)',
+      'Build leadership capacity in providing feedback and being comfortable with the uncomfortable'
+    ]
+  },
+  {
+    name: 'Network and Relationships',
+    icon: '🌐',
+    color: 'item-purple',
+    desc: 'Expanding your connections',
+    detail: 'Projects focused on building broader professional networks and stronger workplace relationships.',
+    examples: [
+      'Build your personal and professional network',
+      'Develop a more diverse network including people from outside the workplace',
+      'Improve personal relationships in the workplace'
+    ]
+  },
+  {
+    name: 'Personal Leadership',
+    icon: '🌱',
+    color: 'item-yellow',
+    desc: 'Growing as a leader',
+    detail: 'Projects with a personal leadership development focus — growing your own capabilities, habits and self-awareness.',
+    examples: [
+      'Refine leadership purpose and align behaviours to purpose',
+      'Implement new personal resilience strategies to improve mindfulness',
+      'Focus on building time management skills and work/life balance',
+      'Learn to say no',
+      'Build reflective practice through daily journaling and using the Third Space'
+    ]
+  },
+  {
+    name: 'Existing Work',
+    icon: '🚀',
+    color: 'item-teal',
+    desc: 'Apply the program lens to work already underway',
+    detail: 'Your PLP can be a piece of work you are already completing or will start during the program. The program adds a leadership lens — you do not need to create something from scratch.',
+    examples: [
+      'Apply at least two leadership models or frameworks from the program to an existing project',
+      'Keep a leadership diary throughout to track your reflections and evidence',
+      'You do not need to complete the project within the program timeframe',
+      'The aim is to apply new skills to your leadership practice, not substantially add to your workload'
+    ]
+  }
+];
+
+const framingMethods = [
+  {
+    name: 'W4 Method',
+    icon: '🗂️',
+    color: 'item-blue',
+    desc: '30 minutes',
+    detail: 'Divide a whiteboard into four equal quadrants labelled Who, What, Why, and Where. In 5 minutes, each person writes answers on individual sticky notes. Post them up, then do an affinity diagramming exercise and dot vote on the most important items. Each participant constructs a problem statement using the top-voted responses. The discussion that follows is the most important outcome.',
+    bestFor: 'Quick problem framing with a diverse group. Ideal when you need clarity fast and have the right people in the room.'
+  },
+  {
+    name: 'Constraintstorming',
+    icon: '🧩',
+    color: 'item-orange',
+    desc: '60 minutes',
+    detail: 'State the main problems on sticky notes, then identify known constraints for each (time, budget, feasibility, and deeper specifics). Affinity diagram and vote on the most important constraints per problem. Discuss which constraints are flexible vs inflexible. Finally, place each problem on a 2x2 Effort/Impact grid to assess importance. Research shows individuals are better at divergent thinking while groups excel at convergent thinking — this method plays to both.',
+    bestFor: 'Discovering which problems are worth solving at the group level. More effective than traditional brainstorming at uncovering the real issues beneath the surface.'
+  },
+  {
+    name: 'Pain Point Mapping',
+    icon: '🎯',
+    color: 'item-red',
+    desc: '45 minutes',
+    detail: 'On sticky notes, document problems that are expensive, time consuming, or unnecessary/redundant. Affinity diagram by category and type, then dot vote on the most important. Ask key stakeholders to put a price on the highest-voted items — which problem would they fund a solution for? Place those stickies onto a bullseye/shooting target diagram. The sticky closest to the centre is your priority problem.',
+    bestFor: 'Prioritising which problem matters most to stakeholders. Especially useful when you need to justify investment in a solution or compete for resources.'
+  }
+];
+
+const aiSteps = [
+  {
+    num: '1',
+    title: 'Ask about achievements',
+    coach: 'Ask the respondent to think of a time in their life when things went really well. Be a good listener and celebrate their achievements with them.',
+    prompt: '"Think back over your life so far… Think of times when it went really well for you… In a sentence, what were some of those times?"',
+    tip: 'Keep the energy positive and celebratory. This is not a problem-solving conversation — it is a strengths conversation.'
+  },
+  {
+    num: '2',
+    title: 'Choose one and tell it as a story',
+    coach: 'Ask the coachee to choose one of those times and tell it in full. Keep them talking about a time when they felt effective, happy, and in the moment.',
+    prompt: '"Choose one of the times when you felt successful and effective, in control, living in the moment, happy… Tell me about it. What happened? How did it happen?"',
+    tip: 'Resist the urge to move on too quickly. Let the story unfold fully. Pay close attention to the words the coachee uses to describe their experience.'
+  },
+  {
+    num: '3',
+    title: 'Elicit personal qualities',
+    coach: 'Draw out the personal qualities that allowed the coachee to succeed. Do not allow modesty — encourage them to name their own contributions to the success.',
+    prompt: '"What did it feel like? What was it about you and what you did that contributed to this success? What talents, skills and qualities did you show which allowed you to be successful?"',
+    tip: 'Be specific. Shine a light on the capacity they already have. This is the true essence of coaching: facilitating the coachee\'s own awareness of their existing strengths.'
+  },
+  {
+    num: '4',
+    title: 'Take them into the future',
+    coach: 'Ask the coachee what they hope to achieve using those qualities. Encourage an optimistic and ambitious mindset about what is possible.',
+    prompt: '"How could you use those talents, qualities, skills to help you to be what you want to be? …to make future changes in your life and your work?"',
+    tip: 'Help them find a tangible opportunity — it may be a current dilemma, one about to unfold, or the focus they brought to this coaching session.'
+  },
+  {
+    num: '5',
+    title: 'Return to present and the PLP',
+    coach: 'Bring them back to the present and near future. Connect their discovered strengths to their Professional Leadership Project.',
+    prompt: '"What are you going to achieve following this program? How can this align with your Professional Leadership Project? How can you use your talents and skills to achieve your PLP?"',
+    tip: 'Make the connection between their strengths and their PLP concrete and practical. What specific action will they take?'
+  }
+];
+
+/* ── SECTION RENDER FUNCTIONS ───────────────────────────── */
+
+function render11() {
+  return `
+    <div class="section-number">1.1</div>
+    <div class="section-title">PLP Overview</div>
+    <div class="section-subtitle">The Professional Leadership Project (PLP) is the overarching project you complete as part of the Executive Ready Program — an outcome-driven activity focused on leading positive change and personal leadership growth.</div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 Key Insight</div>
+      <p>The aim of the PLP is <strong>not</strong> to add substantially to your workload. It is to apply the new skills and strategies you learn throughout the program directly to your leadership practice — ideally through work you are already doing or about to start.</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Three Project Criteria</div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-text"><strong>Reflect and lead change</strong> — analyse, monitor and lead change using a strong evidence base. Keeping a leadership diary throughout the program is recommended.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-text"><strong>Apply your learning</strong> — use a minimum of <strong>two models or leadership frameworks</strong> from the program or your independent research.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <div class="step-text"><strong>Deliver a tangible outcome</strong> — in an area you have identified that requires leadership development.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Project Scope — Click to Expand</div>
+      <div class="exp-cards cols-2">
+        <div class="exp-card ${state.expandedCards['plp-a'] ? 'expanded' : ''}" onclick="toggleCard('plp-a')">
+          <div class="exp-title">✅ What is allowed <span class="exp-tag">Scope</span></div>
+          <div class="exp-preview">Your project can be personal or professional in focus.</div>
+          <div class="exp-detail">
+            <div class="dp">The focus can be either personal or professional</div>
+            <div class="dp">It can be work you are already completing or will start during the program</div>
+            <div class="dp">You do <strong>not</strong> need to complete the project within the program timeframe</div>
+            <div class="dp">Instead of a work project, your PLP can have a personal leadership development focus</div>
+          </div>
+          <div class="expand-hint">Click to expand ↓</div>
+        </div>
+        <div class="exp-card ${state.expandedCards['plp-b'] ? 'expanded' : ''}" onclick="toggleCard('plp-b')">
+          <div class="exp-title">📋 The Five Key Steps <span class="exp-tag">Process</span></div>
+          <div class="exp-preview">Collaborate → Collect → Plan and lead → Evaluate → Celebrate</div>
+          <div class="exp-detail">
+            <div class="dp">Collaborate with Peer Coaching partner(s) on the project focus and how it aligns with your individual leadership growth</div>
+            <div class="dp">Collect data for the impetus for change and understand how the PLP can enhance your organisation</div>
+            <div class="dp">Plan, monitor and lead change using a strong evidence base</div>
+            <div class="dp">Evaluate your progress</div>
+            <div class="dp">Celebrate success!</div>
+          </div>
+          <div class="expand-hint">Click to expand ↓</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function render12() {
+  return `
+    <div class="section-number">1.2</div>
+    <div class="section-title">Activities and Schedule</div>
+    <div class="section-subtitle">The PLP unfolds across five checkpoints throughout the program. Each builds on the last — from introducing your project idea through to a final reflective report submitted after the Reconnect module.</div>
+
+    <div class="formula-box">
+      <div class="formula-title">🗺️ The PLP Journey</div>
+      <div class="formula-steps">
+        <div class="formula-step">PLP Introduction</div>
+        <span class="formula-arrow">→</span>
+        <div class="formula-step">Peer Coaching 2 &amp; 5</div>
+        <span class="formula-arrow">→</span>
+        <div class="formula-step">Assignment 1</div>
+        <span class="formula-arrow">→</span>
+        <div class="formula-step">Presentation</div>
+        <span class="formula-arrow">→</span>
+        <div class="formula-step">Assignment 2</div>
+      </div>
+      <div class="formula-note">Each checkpoint supports the next — don't leave your PLP thinking until the assignments arrive</div>
+    </div>
+
+    <div class="vsteps">
+      <div class="vstep">
+        <div class="vstep-num">1</div>
+        <div class="vstep-body">
+          <h4>PLP Introduction and Support Session — No due date</h4>
+          <p>This module. Begin identifying your project topic and use the Peer Coaching session to start exploring your ideas through Appreciative Inquiry.</p>
+        </div>
+      </div>
+      <div class="vstep">
+        <div class="vstep-num">2</div>
+        <div class="vstep-body">
+          <h4>Peer Coaching Sessions 2 and 5 — As per Peer Coaching Schedule</h4>
+          <p>Coach your coachee on their project topic, support one another with assignments, and practise articulating project outcomes and reflections in preparation for the final presentation.</p>
+        </div>
+      </div>
+      <div class="vstep">
+        <div class="vstep-num">3</div>
+        <div class="vstep-body">
+          <h4>Assignment 1: Framing your PLP — Due one day prior to Webinar 4 (Module 4) | Max 1,000 words</h4>
+          <p>Describe your project and its intended outcomes. Identify key stakeholders and their potential needs, resistance and objections. Outline potential barriers to implementation and the frameworks from the program you plan to apply.</p>
+        </div>
+      </div>
+      <div class="vstep">
+        <div class="vstep-num">4</div>
+        <div class="vstep-body">
+          <h4>Presentation: PLP — Workshop 3, Day 3 (in workshop) | Max 5 minutes</h4>
+          <p>A casual, supportive presentation to a small group of peers. Cover: Context, Progress, Wins/Challenges, Reflections, Next Steps, and how you implemented your learning. PowerPoint, visual aids and handouts are recommended presentation aids.</p>
+        </div>
+      </div>
+      <div class="vstep">
+        <div class="vstep-num">5</div>
+        <div class="vstep-body">
+          <h4>Assignment 2: PLP Reflective Report — Due four weeks after Webinar 6 (Reconnect) | Max 1,500 words</h4>
+          <p>A full reflective report built against the same six questions as the presentation. Incorporate feedback received during the presentation. Consider the impact of your behaviours on your goals, and ways to address your own areas of resistance.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">⚠️ Assignment 1 — Four Questions to Prepare For</div>
+      <p>1. Briefly describe your project and its intended outcomes and benefits. 2. Who are your key stakeholders — what are their needs, potential resistance and objections, and how could you address these? 3. What are the potential barriers to implementation and how will you overcome them? 4. What learnings, strategies or models from the program will you use?</p>
+    </div>
+  `;
+}
+
+function render13() {
+  const ex = exampleCategories[state.selectedExample];
+  return `
+    <div class="section-number">1.3</div>
+    <div class="section-title">Project Examples</div>
+    <div class="section-subtitle">Previous participants have completed a wide range of PLPs. Click each category below to explore examples — and remember, your project can be professional or personal in focus.</div>
+
+    <div class="clickable-grid">
+      ${exampleCategories.map((cat, i) => `
+        <div class="clickable-item ${cat.color} ${i === state.selectedExample ? 'active' : ''}" onclick="selectExample(${i})">
+          <div class="clickable-icon">${cat.icon}</div>
+          <div class="clickable-name">${cat.name}</div>
+          <div class="clickable-desc">${cat.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${ex.icon} ${ex.name}</h4>
+      <p>${ex.detail}</p>
+      <p><strong>Examples from previous participants:</strong></p>
+      ${ex.examples.map(e => `<p style="margin-left:12px;margin-bottom:4px;font-size:13px;">→ ${e}</p>`).join('')}
+    </div>
+
+    <div class="info-note">
+      <div class="note-title">📝 Not sure which category fits?</div>
+      <p>Many PLPs blend categories — for example, building a communication plan might also involve running a workshop. Choose the angle that most closely aligns with your current leadership development need.</p>
+    </div>
+  `;
+}
+
+function render14() {
+  return `
+    <div class="section-number">1.4</div>
+    <div class="section-title">Problem Framing</div>
+    <div class="section-subtitle">How we define (or frame) a problem influences the way we go about solving it. The goal is to fall in love with your problem, not your solution — deeply understanding the right problem before jumping to answers.</div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 Core Principle</div>
+      <p>Frame your problem at the right level of abstraction. <strong>"What sort of car should I buy?"</strong> locks in a solution. <strong>"How can I address my transportation need?"</strong> opens up possibilities. Always be mindful of your own biases and get others with different perspectives involved.</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Sound Framing vs Problem-Solving Traps</div>
+      <div class="compare">
+        <div class="c-col" style="border-top:3px solid #22c55e;">
+          <h3 style="color:#15803d;">✅ Sound Framing</h3>
+          <div class="c-row">→ Frame at the right level of abstraction</div>
+          <div class="c-row">→ Ask "How might we…?" rather than "Which solution?"</div>
+          <div class="c-row">→ Get others with different perspectives involved</div>
+          <div class="c-row">→ Be mindful of your own biases</div>
+          <div class="c-row">→ Use evidence to understand the problem</div>
+          <div class="c-row">→ Exercise informed judgement in decision making</div>
+        </div>
+        <div class="c-col" style="border-top:3px solid #ef4444;">
+          <h3 style="color:#b91c1c;">❌ Problem-Solving Traps</h3>
+          <div class="c-row">→ Overconfidence — assuming you already know the answer</div>
+          <div class="c-row">→ Confirmation bias — only seeking agreeing information</div>
+          <div class="c-row">→ Ignoring new information as it emerges</div>
+          <div class="c-row">→ Focusing on present needs rather than future ones</div>
+          <div class="c-row">→ Self-interest — letting personal agenda shape framing</div>
+          <div class="c-row">→ Mental modes — trapped by existing ways of thinking</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Decision Making — Above and Below the Line</div>
+    </div>
+    <div class="line-divider"><span class="line-label">The Line</span></div>
+    <div class="line-zone zone-above">
+      <strong style="color:#15803d;font-size:13px;">ABOVE THE LINE — Constructive decision-making behaviours</strong>
+      <div class="behavior-tags">
+        <span class="tag tag-green">Evidence-based decisions</span>
+        <span class="tag tag-green">Exercising good judgement</span>
+        <span class="tag tag-green">Acknowledging uncertainty</span>
+        <span class="tag tag-green">Seeking better information</span>
+        <span class="tag tag-green">Considering future needs</span>
+      </div>
+    </div>
+    <div class="line-zone zone-below">
+      <strong style="color:#b91c1c;font-size:13px;">BELOW THE LINE — Decision quality risks</strong>
+      <div class="behavior-tags">
+        <span class="tag tag-red">Overconfidence</span>
+        <span class="tag tag-red">Confirmation bias</span>
+        <span class="tag tag-red">Ignoring new info</span>
+        <span class="tag tag-red">Self-interest</span>
+        <span class="tag tag-red">Present focus only</span>
+        <span class="tag tag-red">Fixed mental modes</span>
+      </div>
+    </div>
+
+    <div class="info-note">
+      <div class="note-title">📌 Important reminder</div>
+      <p>A good decision does not necessarily lead to a good outcome — unforeseeable events may occur regardless of decision quality. What matters is that you exercise your best judgement using the best available information at the time.</p>
+    </div>
+  `;
+}
+
+function render15() {
+  const method = framingMethods[state.selectedFramingMethod];
+  return `
+    <div class="section-number">1.5</div>
+    <div class="section-title">Framing Methods</div>
+    <div class="section-subtitle">Three practical techniques for framing your problem when time is limited. Click each method to explore how it works and when to use it.</div>
+
+    <div class="clickable-grid">
+      ${framingMethods.map((m, i) => `
+        <div class="clickable-item ${m.color} ${i === state.selectedFramingMethod ? 'active' : ''}" onclick="selectFramingMethod(${i})">
+          <div class="clickable-icon">${m.icon}</div>
+          <div class="clickable-name">${m.name}</div>
+          <div class="clickable-desc">${m.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${method.icon} ${method.name} — ${method.desc}</h4>
+      <p>${method.detail}</p>
+      <p><strong>✅ Best for:</strong> ${method.bestFor}</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Ten Ways to Frame a Problem (Cantero-Gomez, 2019)</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-number">1</div><div class="step-text">The <strong>40-20-10-5 rule</strong></div></div>
+        <div class="step-item"><div class="step-number">2</div><div class="step-text"><strong>Research and collect</strong> information</div></div>
+        <div class="step-item"><div class="step-number">3</div><div class="step-text"><strong>Rephrase and focus</strong> the problem</div></div>
+        <div class="step-item"><div class="step-number">4</div><div class="step-text"><strong>Challenge assumptions</strong></div></div>
+        <div class="step-item"><div class="step-number">5</div><div class="step-text"><strong>Broaden and narrow</strong> the view</div></div>
+        <div class="step-item"><div class="step-number">6</div><div class="step-text"><strong>Change the perspective</strong></div></div>
+        <div class="step-item"><div class="step-number">7</div><div class="step-text"><strong>Frame questions</strong>, not statements</div></div>
+        <div class="step-item"><div class="step-number">8</div><div class="step-text">Use <strong>positive language</strong></div></div>
+        <div class="step-item"><div class="step-number">9</div><div class="step-text"><strong>Become a problem maker</strong></div></div>
+        <div class="step-item"><div class="step-number">10</div><div class="step-text">Use the <strong>SCAMPER rule</strong></div></div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">⚠️ Watch Out</div>
+      <p>Don't confuse a problem statement with problem framing. A problem statement states the issue. Problem framing goes deeper — it provides context, identifies root causes, and ensures you are solving the <em>right</em> problem before developing any solution.</p>
+    </div>
+  `;
+}
+
+function render16() {
+  const step = aiSteps[state.selectedAIStep];
+  return `
+    <div class="section-number">1.6</div>
+    <div class="section-title">Appreciative Inquiry</div>
+    <div class="section-subtitle">A powerful coaching model developed by David Cooperrider. It enables people to self-determine changes in a positive way by surfacing existing strengths and leveraging them for future action. Click each step to explore how to apply it.</div>
+
+    <div class="spectrum">
+      ${aiSteps.map((s, i) => `
+        <div class="spectrum-item spec-${i+1} ${i === state.selectedAIStep ? 'active' : ''}" onclick="selectAIStep(${i})">
+          <div class="spectrum-icon">${['🌟','📖','💪','🔭','🎯'][i]}</div>
+          <div class="spectrum-name">Step ${s.num}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="spectrum-labels">
+      <span>← Reflect on the past</span>
+      <span>Action in the present →</span>
+    </div>
+
+    <div class="detail-box">
+      <h4>Step ${step.num}: ${step.title}</h4>
+      <p><strong>Your role as coach:</strong> ${step.coach}</p>
+      <p><strong>💬 Example prompt:</strong> <em>${step.prompt}</em></p>
+      <p><strong>💡 Coaching tip:</strong> ${step.tip}</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">The Coach's Role</div>
+    </div>
+    <div class="compare">
+      <div class="c-col" style="border-top:3px solid #ef4444;">
+        <h3 style="color:#b91c1c;">❌ Not the coach's role</h3>
+        <div class="c-row">→ Solving the coachee's problems for them</div>
+        <div class="c-row">→ Providing advice and answers</div>
+        <div class="c-row">→ Asking closed, leading questions</div>
+        <div class="c-row">→ Moving quickly past the story</div>
+        <div class="c-row">→ Allowing modesty to go unchallenged</div>
+      </div>
+      <div class="c-col" style="border-top:3px solid #22c55e;">
+        <h3 style="color:#15803d;">✅ The coach's actual role</h3>
+        <div class="c-row">→ Listening with a curious mindset</div>
+        <div class="c-row">→ Asking questions so the story can evolve</div>
+        <div class="c-row">→ Reflecting back what you hear</div>
+        <div class="c-row">→ Shining a light on existing strengths</div>
+        <div class="c-row">→ Facilitating the coachee's own awareness</div>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      <p>Every action starts with a question. Start paying attention to the questions that you ask.</p>
+      <cite>— Suzi Finkelstein, WLA Coaching Transcript</cite>
+    </div>
+  `;
+}
+
+function render17() {
+  return `
+    <div class="section-number">1.7</div>
+    <div class="section-title">Coaching Reflection</div>
+    <div class="section-subtitle">After each Peer Coaching Session, both the coach and the coachee complete a reflective report and upload it to the Learning Portal. Reflection is how the learning becomes lasting.</div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 Why Reflection Matters</div>
+      <p>Providing constructive feedback to your coach is a real gift — and reflecting honestly on your own performance as coach is your growth opportunity. Ask yourself: <strong>What could have been even better if…?</strong></p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Peer Coaching Session 2 — Reflection Template</div>
+    </div>
+    <div class="compare">
+      <div class="c-col" style="border-top:3px solid var(--navy);">
+        <h3 style="color:var(--navy);">🎙️ Coaching Role Reflection</h3>
+        <div class="c-row">→ What worked?</div>
+        <div class="c-row">→ Where did I get stuck?</div>
+        <div class="c-row">→ What did I do in the moment, and what will I do differently in future?</div>
+        <div class="c-row">→ What could have been even better if…?</div>
+        <div class="c-row">→ What do I need to pay attention to next time?</div>
+      </div>
+      <div class="c-col" style="border-top:3px solid var(--gold);">
+        <h3 style="color:#7a5c00;">🪑 Coachee Role Reflection</h3>
+        <div class="c-row">→ What worked in this session?</div>
+        <div class="c-row">→ What impact did the coaching conversation have on me?</div>
+        <div class="c-row">→ What did I leave the session with?</div>
+        <div class="c-row">→ How has the session impacted my thinking or actions?</div>
+        <div class="c-row">→ What constructive feedback can I give my coach?</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">The Reflective Cycle</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-number">1</div><div class="step-text"><strong>Spotlight what worked</strong> — identify the strengths in your coaching approach</div></div>
+        <div class="step-item"><div class="step-number">2</div><div class="step-text"><strong>What could be even better if…?</strong> — your growth opportunity as coach</div></div>
+        <div class="step-item"><div class="step-number">3</div><div class="step-text"><strong>What to pay attention to</strong> — identify your focus area for next time</div></div>
+        <div class="step-item"><div class="step-number">4</div><div class="step-text"><strong>Golden nugget</strong> — as coachee, what insight or visual emerged from the session?</div></div>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      <p>We do not learn from experience… we learn from reflecting on experience.</p>
+      <cite>— John Dewey</cite>
+    </div>
+  `;
+}
+
+/* ── INTERACTION HANDLERS ───────────────────────────────── */
+function selectExample(i)         { state.selectedExample = i;         renderContent(); }
+function selectFramingMethod(i)   { state.selectedFramingMethod = i;   renderContent(); }
+function selectAIStep(i)          { state.selectedAIStep = i;          renderContent(); }
+function toggleCard(id) {
+  state.expandedCards[id] = !state.expandedCards[id];
+  renderContent();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CORE ENGINE — do not edit below this line
+   ═══════════════════════════════════════════════════════════ */
+function render() { renderNav(); renderContent(); }
+
+function renderNav() {
+  document.getElementById('nav').innerHTML = sections.map(s =>
+    `<div class="nav-item ${s.id === state.currentSection ? 'active' : ''}" onclick="goTo('${s.id}')">
+      <span class="nav-number">${s.id}</span> ${s.icon} ${s.name}
+    </div>`
+  ).join('');
+}
+
+function goTo(id) { state.currentSection = id; render(); }
+
+function renderContent() {
+  const c = document.getElementById('content');
+  switch(state.currentSection) {
+    case '1.1':  c.innerHTML = render11();    break;
+    case '1.2':  c.innerHTML = render12();    break;
+    case '1.3':  c.innerHTML = render13();    break;
+    case '1.4':  c.innerHTML = render14();    break;
+    case '1.5':  c.innerHTML = render15();    break;
+    case '1.6':  c.innerHTML = render16();    break;
+    case '1.7':  c.innerHTML = render17();    break;
+    case 'quiz': c.innerHTML = renderQuiz();  break;
+  }
+}
+
+function renderQuiz() {
+  if (state.quizComplete) {
+    const score = state.quizAnswers.filter((a, i) => a === quizQuestions[i].correct).length;
+    const pct   = Math.round((score / quizQuestions.length) * 100);
+    const emoji = pct === 100 ? '🏆' : pct >= 75 ? '⭐' : pct >= 50 ? '👍' : '📚';
+    const msg   = pct === 100 ? 'Perfect! You\'ve mastered this module.' :
+                  pct >= 75  ? 'Great work! You understand the key concepts.' :
+                  pct >= 50  ? 'Good effort — revisit the sections you found tricky.' :
+                               'Keep studying and try again!';
+    return `
+      <div class="quiz-result">
+        <div class="section-number">Quiz</div>
+        <div class="section-title" style="display:block;margin-bottom:16px;">Results</div>
+        <div class="quiz-score">${emoji}</div>
+        <p style="font-size:22px;font-weight:700;color:var(--navy);margin-bottom:8px;">${score} / ${quizQuestions.length} (${pct}%)</p>
+        <p class="quiz-message">${msg}</p>
+        <button class="quiz-btn quiz-btn-primary" onclick="resetQuiz()">Try Again</button>
+      </div>`;
+  }
+  const q        = quizQuestions[state.quiz];
+  const answered = state.quizAnswers[state.quiz] !== undefined;
+  const isCorrect = answered && state.quizAnswers[state.quiz] === q.correct;
+  return `
+    <div class="section-number">Quiz</div>
+    <div class="section-title" style="display:block;margin-bottom:16px;">Test Your Knowledge</div>
+    <div class="quiz-progress">
+      ${quizQuestions.map((_, i) => {
+        let cls = i === state.quiz ? 'active' : '';
+        if (state.quizAnswers[i] !== undefined)
+          cls = state.quizAnswers[i] === quizQuestions[i].correct ? 'correct' : 'incorrect';
+        return `<div class="quiz-dot ${cls}"></div>`;
+      }).join('')}
+    </div>
+    <div class="quiz-question">Q${state.quiz + 1}. ${q.q}</div>
+    <div class="quiz-options">
+      ${q.opts.map((opt, i) => {
+        let cls = answered ? 'disabled ' : '';
+        if (answered && i === q.correct) cls += 'correct';
+        else if (answered && state.quizAnswers[state.quiz] === i) cls += 'incorrect';
+        return `<div class="quiz-option ${cls}" onclick="${answered ? '' : `answerQuiz(${i})`}">${opt}</div>`;
+      }).join('')}
+    </div>
+    ${answered ? `<div class="quiz-feedback ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✅ Correct!' : '❌ Not quite.'} ${q.explain}</div>` : ''}
+    <div class="quiz-nav">
+      ${state.quiz > 0 ? '<button class="quiz-btn quiz-btn-secondary" onclick="prevQuiz()">← Previous</button>' : ''}
+      ${answered ? (state.quiz < quizQuestions.length - 1
+        ? '<button class="quiz-btn quiz-btn-primary" onclick="nextQuiz()">Next →</button>'
+        : '<button class="quiz-btn quiz-btn-primary" onclick="finishQuiz()">See Results</button>') : ''}
+    </div>`;
+}
+
+function answerQuiz(i) { state.quizAnswers[state.quiz] = i; renderContent(); }
+function prevQuiz()    { state.quiz--; renderContent(); }
+function nextQuiz()    { state.quiz++; renderContent(); }
+function finishQuiz()  { state.quizComplete = true; renderContent(); }
+function resetQuiz()   { state.quiz = 0; state.quizAnswers = []; state.quizComplete = false; renderContent(); }
+
+render();
+</script>
+</body>
+</html>

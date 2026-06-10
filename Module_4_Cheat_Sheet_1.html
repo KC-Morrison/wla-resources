@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4 Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f0e8;
+    color: #2c2416;
+    padding: 20px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  @media print {
+    body { background: #fff; color: #1a1a1a; padding: 10px; font-size: 9.5px; }
+    .no-print { display: none; }
+    .page { box-shadow: none; border: 1px solid #d4c9b0; }
+    .col-header, .tag, .connector, .connectors-row { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  .no-print { text-align: center; margin-bottom: 16px; }
+  .print-btn { padding: 9px 22px; background: #1a2744; color: #c9a84c; border: 1.5px solid #c9a84c; border-radius: 20px; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.04em; }
+  .print-btn:hover { background: #2c3e6b; }
+
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(26,39,68,0.12);
+    border: 1px solid #d4c9b0;
+    padding: 20px 22px;
+  }
+
+  .page-title { text-align: center; margin-bottom: 16px; }
+  .page-title .label { font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase; color: #c9a84c; font-weight: 500; margin-bottom: 4px; }
+  .page-title h1 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: #1a2744; }
+  .page-title p { font-size: 0.68rem; color: #7a6e5e; letter-spacing: 0.04em; margin-top: 2px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 10px;
+  }
+
+  .col {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #d4c9b0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .col-header {
+    padding: 9px 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #fff;
+    background: #1a2744;
+    border-bottom: 2px solid #c9a84c;
+  }
+
+  .col-body { padding: 10px 12px; flex: 1; }
+
+  .sec { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; margin-top: 10px; color: #c9a84c; }
+  .sec:first-child { margin-top: 0; }
+
+  .items { list-style: none; padding: 0; }
+  .items li { display: flex; gap: 6px; margin-bottom: 4px; font-size: 0.72rem; color: #4a3f2f; }
+  .items li::before { content: '›'; color: #c9a84c; font-weight: 700; flex-shrink: 0; }
+
+  .numbered { counter-reset: step; list-style: none; padding: 0; }
+  .numbered li { display: flex; gap: 7px; margin-bottom: 5px; font-size: 0.71rem; color: #4a3f2f; align-items: flex-start; }
+  .numbered li::before { counter-increment: step; content: counter(step); background: #1a2744; color: #c9a84c; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  .tag { display: inline-block; font-size: 0.62rem; font-weight: 700; padding: 2px 7px; border-radius: 8px; margin-right: 4px; margin-bottom: 3px; }
+
+  .kv { display: flex; gap: 0; margin-bottom: 4px; font-size: 0.71rem; }
+  .kv-k { color: #1a2744; min-width: 80px; flex-shrink: 0; font-weight: 700; }
+  .kv-v { color: #5a5040; }
+
+  .div { height: 1px; background: #d4c9b0; margin: 8px 0; }
+
+  /* ICEBERG */
+  .ice-visual { margin: 4px 0 8px; }
+  .ice-row { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 6px; margin-bottom: 3px; cursor: default; }
+  .ice-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .ice-name { font-size: 0.7rem; font-weight: 700; flex: 1; }
+  .ice-q { font-size: 0.63rem; color: #7a6e5e; }
+  .ice-badge { font-size: 0.58rem; font-weight: 700; padding: 2px 6px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0; }
+  .wl { text-align: center; font-size: 0.6rem; letter-spacing: 0.1em; color: #8a6e00; padding: 3px 0; border-top: 1px dashed #c9a84c; border-bottom: 1px dashed #c9a84c; margin: 3px 0; text-transform: uppercase; font-weight: 700; }
+
+  /* DESIGN THINKING STAGES */
+  .dt-stages { display: flex; gap: 4px; margin: 4px 0 8px; }
+  .dt-s { flex: 1; text-align: center; padding: 6px 4px; border-radius: 6px; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1.3; }
+  .arrow-row { display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: #7a6e5e; margin-bottom: 6px; letter-spacing: 0.05em; }
+
+  /* COMPARE TABLE */
+  .cmp { width: 100%; border-collapse: collapse; font-size: 0.68rem; }
+  .cmp th { padding: 4px 6px; font-weight: 700; text-align: left; border-bottom: 1px solid #d4c9b0; font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.05em; color: #1a2744; }
+  .cmp td { padding: 3px 6px; color: #5a5040; border-bottom: 1px solid #ede8dc; vertical-align: top; }
+  .cmp tr:last-child td { border-bottom: none; }
+
+  /* CONNECTORS ROW */
+  .connectors-row {
+    grid-column: 1 / -1;
+    background: #1a2744;
+    border-radius: 10px;
+    border: 1px solid #d4c9b0;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .connector { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px 10px; border-radius: 8px; flex: 1; min-width: 90px; text-align: center; }
+  .cn-title { font-size: 0.66rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+  .cn-desc { font-size: 0.62rem; color: rgba(255,255,255,0.55); line-height: 1.3; }
+  .cn-arrow { font-size: 1rem; color: #c9a84c; padding: 0 4px; flex-shrink: 0; }
+
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+    .connectors-row { flex-wrap: wrap; }
+  }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  <button class="print-btn" onclick="window.print()">🖨 Print / Save as PDF</button>
+</div>
+
+<div class="page">
+
+  <div class="page-title">
+    <div class="label">Executive Ready Leadership · Module 4</div>
+    <h1>Problem Solving & Decision Making</h1>
+    <p>Quick Reference Cheat Sheet</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- COL 1: PROBLEM FRAMING + STRATEGIC THINKING -->
+    <div class="col">
+      <div class="col-header">🖼️ 4.1 Problem Framing</div>
+      <div class="col-body">
+        <div class="sec">Core Principle</div>
+        <ul class="items">
+          <li>How we <strong>frame a problem</strong> shapes how we solve it</li>
+          <li>Frame at the right level of abstraction — not as a solution</li>
+          <li>❌ "I need to buy a car" → ✅ "I need transport options"</li>
+          <li>Involve others with <strong>different perspectives</strong></li>
+        </ul>
+        <div class="div"></div>
+        <div class="sec">6 Problem Solving Traps</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px">
+          <span class="tag" style="background:#f0e6c8;color:#7a5c00">Overconfidence</span>
+          <span class="tag" style="background:#f0e6c8;color:#7a5c00">Confirmation bias</span>
+          <span class="tag" style="background:#f0e6c8;color:#7a5c00">Ignoring new info</span>
+          <span class="tag" style="background:#f0e6c8;color:#7a5c00">Short-term focus</span>
+          <span class="tag" style="background:#f0e6c8;color:#7a5c00">Self-interest</span>
+          <span class="tag" style="background:#f0e6c8;color:#7a5c00">Mental models</span>
+        </div>
+        <div class="div"></div>
+        <div class="col-header">🔭 4.2 Strategic Thinking Skills</div>
+        <div class="sec">Hughes & Colarelli Beatty — 5 Skills</div>
+        <ul class="items">
+          <li><strong>Scanning</strong> — analyse the environment, look outward</li>
+          <li><strong>Visioning</strong> — communicate a compelling future</li>
+          <li><strong>Reframing</strong> — challenge assumptions, see opportunities</li>
+          <li><strong>Making meaning</strong> — translate vision into daily decisions</li>
+          <li><strong>Thinking systemically</strong> — find high-leverage interventions</li>
+        </ul>
+        <div class="div"></div>
+        <div class="sec">Scanning Tools</div>
+        <ul class="items">
+          <li><strong>SWOT:</strong> Strengths · Weaknesses · Opportunities · Threats</li>
+          <li><strong>STEEPLED:</strong> Social · Tech · Economic · Environmental · Political · Legal · Ethical · Demographic</li>
+          <li>Narrows to <strong>3–5 key strategic drivers</strong> that shape everything</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- COL 2: ICEBERG -->
+    <div class="col">
+      <div class="col-header">🧊 4.3 Systems Thinking Iceberg</div>
+      <div class="col-body">
+        <div class="sec">The Four Levels</div>
+        <div class="ice-visual">
+          <div class="ice-row" style="background:#fdf0f0">
+            <div class="ice-dot" style="background:#e74c3c"></div>
+            <div>
+              <div class="ice-name" style="color:#8a2020">▲ EVENTS</div>
+              <div class="ice-q">What just happened?</div>
+            </div>
+            <div class="ice-badge" style="background:#f5d5d0;color:#8a2020">React</div>
+          </div>
+          <div class="wl">· · · waterline · · ·</div>
+          <div class="ice-row" style="background:#fef8ee">
+            <div class="ice-dot" style="background:#f39c12"></div>
+            <div>
+              <div class="ice-name" style="color:#7a5c00">PATTERNS</div>
+              <div class="ice-q">What has been happening?</div>
+            </div>
+            <div class="ice-badge" style="background:#f0e6c8;color:#6a4800">Anticipate</div>
+          </div>
+          <div class="ice-row" style="background:#edf4fb">
+            <div class="ice-dot" style="background:#3498db"></div>
+            <div>
+              <div class="ice-name" style="color:#1a5276">STRUCTURE</div>
+              <div class="ice-q">Why is this happening?</div>
+            </div>
+            <div class="ice-badge" style="background:#d4e8f5;color:#1a4060">Change</div>
+          </div>
+          <div class="ice-row" style="background:#edfaf6">
+            <div class="ice-dot" style="background:#1abc9c"></div>
+            <div>
+              <div class="ice-name" style="color:#0e6655">▼ MENTAL MODELS</div>
+              <div class="ice-q">How does our thinking shape this?</div>
+            </div>
+            <div class="ice-badge" style="background:#d0f5ec;color:#0a4a3a">Transform</div>
+          </div>
+        </div>
+        <div class="div"></div>
+        <div class="sec">Structure Includes</div>
+        <ul class="items">
+          <li>Hierarchy, sign-off processes, physical design</li>
+          <li>Policies, procedures, reward mechanisms</li>
+          <li>Decision-making criteria, information access</li>
+          <li>What leadership pays attention to</li>
+        </ul>
+        <div class="div"></div>
+        <div style="background:#f0e6c8;border:1.5px solid #c9a84c;border-radius:7px;padding:7px 9px;font-size:0.69rem;color:#5c4400;line-height:1.45">
+          <strong style="color:#7a5c00">Key message:</strong> Structure drives behaviour. Mental models drive structures. Transform mental models → transform the system.
+        </div>
+        <div class="div"></div>
+        <div class="sec">Peter Senge on Mental Models</div>
+        <div style="font-size:0.67rem;color:#5a5040;font-style:italic;line-height:1.45;border-left:2px solid #c9a84c;padding-left:8px">"Deeply held internal images of how the world works... Very often, we are not consciously aware of our mental models or the effects they have on our behavior."</div>
+      </div>
+    </div>
+
+    <!-- COL 3: DECISION MAKING -->
+    <div class="col">
+      <div class="col-header">⚖️ 4.4 Rational Decision Making</div>
+      <div class="col-body">
+        <div class="sec">6-Step Model (Bazerman & Moore)</div>
+        <ol class="numbered">
+          <li>Define the problem</li>
+          <li>Identify the criteria</li>
+          <li>Assess the criteria</li>
+          <li>Generate alternatives</li>
+          <li>Rate each alternative on each criterion</li>
+          <li>Compute the optimal decision</li>
+        </ol>
+        <div class="div"></div>
+        <div class="sec">3 Pre-Decision Steps (Confer)</div>
+        <ul class="items">
+          <li><strong>Challenge constraints</strong> — question what's actually fixed (Stanford $5 example)</li>
+          <li><strong>Premortem</strong> — how could this fail? (Cobra Effect)</li>
+          <li><strong>Check the basics</strong> — details matter ($125M NASA Orbiter)</li>
+        </ul>
+        <div class="div"></div>
+        <div class="sec">Cultural Decision Making Styles (Meyer)</div>
+        <table class="cmp">
+          <tr>
+            <th style="color:#1a2744">Unilateral</th>
+            <th style="color:#1a2744">Consensual</th>
+          </tr>
+          <tr><td>Fast, one person</td><td>Slow, everyone consulted</td></tr>
+          <tr><td>Flexible, revisable</td><td>Fixed once made</td></tr>
+          <tr><td>Slower to implement</td><td>Rapid implementation</td></tr>
+          <tr><td>lowercase <em>d</em></td><td>capital <em>D</em></td></tr>
+          <tr><td>e.g. American</td><td>e.g. Swedish, Japanese</td></tr>
+        </table>
+        <div class="div"></div>
+        <div style="background:#f0e6c8;border:1.5px solid #c9a84c;border-radius:7px;padding:7px 9px;font-size:0.68rem;color:#5c4400;line-height:1.45">
+          <strong style="color:#7a5c00">Tip:</strong> With multicultural teams — agree on decision-making style upfront. Japanese <em>ringi</em> + <em>nemawashi</em> = consensual consensus-building.
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 4: DESIGN THINKING (spans 2 cols) -->
+    <div class="col" style="grid-column: 1 / 3">
+      <div class="col-header">✏️ 4.5 Design Thinking (d.school, Stanford)</div>
+      <div class="col-body">
+        <div class="sec" style="margin-bottom:6px">A human-centred, non-linear, iterative process — a journey of divergence and convergence</div>
+        <div class="dt-stages">
+          <div class="dt-s" style="background:#d4e8f5;color:#1a4060">👁️<br>Empathise<br><span style="font-size:0.58rem;font-weight:400;color:#1a5276">Understand the user</span></div>
+          <div class="dt-s" style="background:#dcfce7;color:#1a5e30">📌<br>Define<br><span style="font-size:0.58rem;font-weight:400;color:#1a5e30">Frame the problem</span></div>
+          <div class="dt-s" style="background:#fef3c7;color:#7a5c00">💡<br>Ideate<br><span style="font-size:0.58rem;font-weight:400;color:#7a5c00">Generate ideas</span></div>
+          <div class="dt-s" style="background:#ffedd5;color:#7a3800">🔧<br>Prototype<br><span style="font-size:0.58rem;font-weight:400;color:#7a3800">Build to learn</span></div>
+          <div class="dt-s" style="background:#fee2e2;color:#8a2020">🧪<br>Test<br><span style="font-size:0.58rem;font-weight:400;color:#8a2020">Iterate</span></div>
+        </div>
+        <div class="arrow-row">↩ ITERATE — stages are not sequential; loop back as needed ↩</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div>
+            <div class="sec">Stage Key Points</div>
+            <ul class="items">
+              <li><strong>Empathise:</strong> observe, engage, watch, listen — set aside assumptions</li>
+              <li><strong>Define:</strong> frame from the <em>user's</em> perspective, not the org's</li>
+              <li><strong>Ideate:</strong> defer judgement — diverge first, converge later</li>
+              <li><strong>Prototype:</strong> build cheaply, don't get attached, know your question</li>
+              <li><strong>Test:</strong> show don't tell, ask users to compare, loop back</li>
+            </ul>
+          </div>
+          <div>
+            <div class="sec">9 Mindsets</div>
+            <div style="display:flex;flex-wrap:wrap;gap:3px">
+              <span class="tag" style="background:#1a2744;color:#c9a84c">Empathetic</span>
+              <span class="tag" style="background:#1a2744;color:#c9a84c">Collaborative</span>
+              <span class="tag" style="background:#1a2744;color:#c9a84c">Optimistic</span>
+              <span class="tag" style="background:#1a2744;color:#c9a84c">Embrace Ambiguity</span>
+              <span class="tag" style="background:#1a2744;color:#c9a84c">Curious</span>
+              <span class="tag" style="background:#1a2744;color:#c9a84c">Reframe</span>
+              <span class="tag" style="background:#1a2744;color:#c9a84c">Embrace Diversity</span>
+              <span class="tag" style="background:#1a2744;color:#c9a84c">Make Tangible</span>
+              <span class="tag" style="background:#1a2744;color:#c9a84c">Take Action</span>
+            </div>
+            <div class="div"></div>
+            <div class="sec">Define Stage — Problem Statement</div>
+            <ul class="items">
+              <li>❌ "Increase market share by 5%"</li>
+              <li>✅ "Users need X in order to thrive"</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 5: RESEARCH -->
+    <div class="col">
+      <div class="col-header">📄 Research — Jang (2017)</div>
+      <div class="col-body">
+        <div class="sec">Cultural Brokerage in Multicultural Teams</div>
+        <div class="kv"><span class="kv-k">Brokerage:</span><span class="kv-v">Facilitating interactions across cultural boundaries</span></div>
+        <div class="kv"><span class="kv-k">Insider:</span><span class="kv-v">Multicultural with <em>overlapping</em> cultures</span></div>
+        <div class="kv"><span class="kv-k">Outsider:</span><span class="kv-v">Multicultural with <em>no overlapping</em> cultures</span></div>
+        <div class="div"></div>
+        <div class="sec">Two Types of Brokerage</div>
+        <ul class="items">
+          <li><strong>Integrating</strong> (insiders) — synthesise knowledge across cultures</li>
+          <li><strong>Eliciting</strong> (outsiders) — draw out cultural knowledge from others</li>
+          <li>Both significantly enhanced team creative performance</li>
+        </ul>
+        <div class="div"></div>
+        <div class="sec">Key Findings</div>
+        <ul class="items">
+          <li>Multiculturals (both types) boost creativity in diverse teams</li>
+          <li>Together, integrating + eliciting explained <strong>28% of variance</strong> in creative performance</li>
+          <li>Monoculturals who attempt to elicit <strong>decrease</strong> team performance</li>
+          <li>Cultural outsiders are as valuable as insiders — don't overlook them</li>
+        </ul>
+        <div class="div"></div>
+        <div style="background:#f0e6c8;border:1.5px solid #c9a84c;border-radius:7px;padding:7px 9px;font-size:0.67rem;color:#5c4400;line-height:1.4">
+          <strong style="color:#7a5c00">Leader tip:</strong> Identify your cultural brokers. Create conditions for insiders AND outsiders to play that role. Appoint formally if needed.
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW: HOW IT ALL CONNECTS -->
+    <div class="connectors-row">
+      <div class="connector" style="background:rgba(255,255,255,0.08)">
+        <div class="cn-title" style="color:#c9a84c">Problem Framing</div>
+        <div class="cn-desc">Define the right problem at the right level before you solve anything</div>
+      </div>
+      <div class="cn-arrow">→</div>
+      <div class="connector" style="background:rgba(255,255,255,0.08)">
+        <div class="cn-title" style="color:#c9a84c">Strategic Thinking</div>
+        <div class="cn-desc">Scan the environment (SWOT, STEEPLED) to identify your 3–5 strategic drivers</div>
+      </div>
+      <div class="cn-arrow">→</div>
+      <div class="connector" style="background:rgba(255,255,255,0.08)">
+        <div class="cn-title" style="color:#c9a84c">Systems Thinking</div>
+        <div class="cn-desc">Work below the waterline — change structures, transform mental models</div>
+      </div>
+      <div class="cn-arrow">→</div>
+      <div class="connector" style="background:rgba(255,255,255,0.08)">
+        <div class="cn-title" style="color:#c9a84c">Decision Making</div>
+        <div class="cn-desc">Apply the 6-step model, premortem, and culturally-aware decision styles</div>
+      </div>
+      <div class="cn-arrow">→</div>
+      <div class="connector" style="background:rgba(255,255,255,0.08)">
+        <div class="cn-title" style="color:#c9a84c">Design Thinking</div>
+        <div class="cn-desc">Human-centred, iterative — empathise, define, ideate, prototype, test</div>
+      </div>
+      <div class="cn-arrow">→</div>
+      <div class="connector" style="background:rgba(255,255,255,0.08)">
+        <div class="cn-title" style="color:#c9a84c">Cultural Brokerage</div>
+        <div class="cn-desc">Leverage multicultural brokers (insiders + outsiders) for creative outcomes</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

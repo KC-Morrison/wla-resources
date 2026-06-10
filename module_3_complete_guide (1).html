@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 3: Building High-Performing Teams - Complete Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f5f0e8; min-height: 100vh; }
+    .page-header { background: #1a2744; border-bottom: 3px solid #c9a84c; padding: 24px 28px 0; }
+    .container { max-width: 960px; margin: 0 auto; }
+    .header-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #c9a84c; margin-bottom: 6px; font-weight: 500; text-align: center; }
+    h1 { font-family: 'Playfair Display', serif; color: #fff; text-align: center; margin-bottom: 4px; font-size: 24px; font-weight: 700; }
+    .subtitle { color: rgba(255,255,255,0.65); text-align: center; margin-bottom: 14px; font-size: 13px; }
+    .nav-container { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 0 12px; }
+    .nav-item { padding: 7px 13px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); border: 1.5px solid transparent; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .nav-item:hover { color: #fff; background: rgba(255,255,255,0.18); transform: translateY(-1px); }
+    .nav-item.active { background: #c9a84c; color: #1a2744; border-color: #c9a84c; }
+    .nav-number { font-size: 11px; opacity: 0.8; }
+    .nav-item.active .nav-number { opacity: 1; }
+    .content-area { padding: 24px 28px 40px; }
+    .card { background: #fff; border-radius: 12px; padding: 26px; border: 1px solid #d4c9b0; min-height: 520px; }
+    .section-number { display: inline-block; background: #1a2744; color: #c9a84c; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; margin-right: 10px; vertical-align: middle; }
+    .section-title { display: inline; font-size: 22px; font-weight: 600; color: #1a2744; vertical-align: middle; }
+    .section-subtitle { display: block; font-size: 13px; color: #5a5040; margin-top: 12px; margin-bottom: 20px; line-height: 1.6; border-left: 3px solid #c9a84c; padding: 10px 14px; background: #ede8dc; border-radius: 0 6px 6px 0; }
+    .subsection { margin: 20px 0; }
+    .subsection-title { font-size: 14px; font-weight: 700; color: #1a2744; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .subsection-title::before { content: ''; width: 3px; height: 16px; background: #c9a84c; border-radius: 2px; flex-shrink: 0; }
+    .clickable-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 16px 0; }
+    .clickable-item { padding: 16px; border-radius: 10px; cursor: pointer; transition: all 0.25s; text-align: center; border: 2px solid transparent; }
+    .clickable-item:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(26,39,68,0.12); }
+    .clickable-item.active { border-color: #c9a84c; box-shadow: 0 6px 18px rgba(201,168,76,0.25); }
+    .clickable-icon { font-size: 30px; margin-bottom: 8px; }
+    .clickable-name { font-weight: 700; font-size: 13px; color: #2c2416; }
+    .clickable-desc { font-size: 11px; color: #7a6e5e; margin-top: 4px; }
+    .item-blue { background: #dbeafe; }
+    .item-green { background: #dcfce7; }
+    .item-yellow { background: #fef3c7; }
+    .item-red { background: #fee2e2; }
+    .item-purple { background: #ede9fe; }
+    .item-orange { background: #ffedd5; }
+    .item-teal { background: #ccfbf1; }
+    .item-gray { background: #f1f5f9; }
+    .detail-box { margin-top: 14px; padding: 18px; background: #fff; border-radius: 8px; border: 1px solid #d4c9b0; border-left: 3px solid #c9a84c; }
+    .detail-box h4 { color: #1a2744; margin-bottom: 8px; font-size: 15px; font-weight: 700; }
+    .detail-box p { color: #4a3f2f; line-height: 1.6; margin-bottom: 8px; font-size: 13.5px; }
+    .detail-box p:last-child { margin-bottom: 0; }
+    .line-zone { padding: 18px; border-radius: 10px; margin: 10px 0; cursor: pointer; transition: all 0.25s; }
+    .line-zone:hover { transform: scale(1.01); }
+    .zone-above { background: #dcfce7; border: 2px solid #22c55e; }
+    .zone-below { background: #fee2e2; border: 2px solid #ef4444; }
+    .line-divider { height: 4px; background: linear-gradient(90deg, #22c55e, #c9a84c, #ef4444); border-radius: 2px; margin: 16px 0; position: relative; }
+    .line-label { position: absolute; left: 50%; transform: translateX(-50%); top: -13px; background: #fff; padding: 3px 12px; font-weight: 700; font-size: 11px; color: #1a2744; border-radius: 10px; border: 1px solid #d4c9b0; white-space: nowrap; }
+    .behavior-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .tag { padding: 4px 10px; border-radius: 14px; font-size: 12px; font-weight: 600; }
+    .tag-green { background: #22c55e; color: white; }
+    .tag-red { background: #ef4444; color: white; }
+    .pyramid { display: flex; flex-direction: column; align-items: center; gap: 5px; margin: 16px 0; }
+    .pyramid-level { padding: 13px 16px; text-align: center; cursor: pointer; transition: all 0.25s; border-radius: 7px; font-weight: 600; color: white; font-size: 13px; }
+    .pyramid-level:hover { transform: scale(1.02); filter: brightness(1.08); }
+    .pyramid-level.active { box-shadow: 0 0 0 3px #c9a84c, 0 6px 18px rgba(0,0,0,0.2); }
+    .pyr-5 { width: 40%; background: #ef4444; }
+    .pyr-4 { width: 52%; background: #f97316; }
+    .pyr-3 { width: 64%; background: #eab308; }
+    .pyr-2 { width: 78%; background: #22c55e; }
+    .pyr-1 { width: 100%; background: #1a2744; }
+    .spectrum { display: flex; gap: 6px; margin: 16px 0; }
+    .spectrum-item { flex: 1; padding: 14px 8px; text-align: center; cursor: pointer; transition: all 0.25s; border-radius: 10px; border: 2px solid transparent; color: white; }
+    .spectrum-item:hover { transform: translateY(-3px); }
+    .spectrum-item.active { border-color: #c9a84c; box-shadow: 0 6px 18px rgba(0,0,0,0.2); }
+    .spec-1 { background: #1a2744; }
+    .spec-2 { background: #2c3e6b; }
+    .spec-3 { background: #3d5088; }
+    .spec-4 { background: #4e62a0; }
+    .spec-5 { background: #6074b8; }
+    .spectrum-icon { font-size: 22px; margin-bottom: 4px; }
+    .spectrum-name { font-weight: 700; font-size: 12px; }
+    .spectrum-labels { display: flex; justify-content: space-between; font-size: 11px; color: #7a6e5e; margin-top: 8px; font-weight: 600; }
+    .formula-box { background: #f0e6c8; border: 1.5px solid #c9a84c; border-radius: 10px; padding: 18px; margin: 16px 0; }
+    .formula-title { font-weight: 700; margin-bottom: 12px; text-align: center; color: #7a5c00; font-size: 14px; }
+    .formula-steps { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+    .formula-step { background: white; padding: 9px 13px; border-radius: 7px; font-weight: 600; font-size: 13px; border: 1px solid #d4c9b0; color: #2c2416; }
+    .formula-arrow { color: #c9a84c; font-size: 16px; font-weight: bold; }
+    .formula-note { text-align: center; margin-top: 12px; font-size: 13px; color: #7a5c00; font-weight: 600; }
+    .steps-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 16px 0; }
+    .step-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px; background: #fff; border-radius: 8px; border: 1px solid #d4c9b0; border-left: 3px solid #1a2744; }
+    .step-number { background: #1a2744; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .step-text { font-size: 13px; color: #4a3f2f; }
+    .scorecard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+    .scorecard-item { padding: 20px; border-radius: 10px; cursor: pointer; transition: all 0.25s; text-align: center; border: 2px solid transparent; }
+    .scorecard-item:hover { transform: scale(1.02); }
+    .scorecard-item.active { border-color: #c9a84c; box-shadow: 0 6px 18px rgba(201,168,76,0.25); }
+    .scorecard-icon { font-size: 30px; margin-bottom: 8px; }
+    .scorecard-name { font-weight: 700; font-size: 14px; color: #2c2416; }
+    .vision-banner { text-align: center; padding: 13px; background: #1a2744; color: white; border-radius: 8px; font-weight: 700; font-size: 13px; margin-bottom: 12px; }
+    .insight-box { background: #f0e6c8; border: 1px solid #c9a84c; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+    .insight-box .insight-title { font-weight: 700; color: #7a5c00; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; font-size: 13px; }
+    .insight-box p { color: #5c4400; font-size: 13.5px; line-height: 1.5; }
+    .cultural-note { background: #e8edf5; border: 1px solid #b5c4d4; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+    .cultural-note .note-title { font-weight: 700; color: #1a2744; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; font-size: 13px; }
+    .cultural-note p { color: #2c3e6b; font-size: 13.5px; line-height: 1.5; }
+    .quiz-progress { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
+    .quiz-dot { width: 12px; height: 12px; border-radius: 50%; background: #d4c9b0; transition: all 0.3s; }
+    .quiz-dot.active { background: #1a2744; transform: scale(1.3); }
+    .quiz-dot.correct { background: #c9a84c; }
+    .quiz-dot.incorrect { background: #c07060; }
+    .quiz-question { font-size: 17px; font-weight: 700; margin-bottom: 18px; color: #1a2744; line-height: 1.4; }
+    .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+    .quiz-option { padding: 13px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s; border: 1.5px solid #d4c9b0; background: white; font-size: 13.5px; color: #2c2416; }
+    .quiz-option:hover:not(.disabled) { border-color: #1a2744; background: #f5f0e8; transform: translateX(3px); }
+    .quiz-option.correct { border-color: #c9a84c; background: #f0e6c8; color: #5c4400; }
+    .quiz-option.incorrect { border-color: #c07060; background: #f5e8e5; color: #6b2a1e; }
+    .quiz-option.disabled { cursor: default; }
+    .quiz-feedback { margin-top: 14px; padding: 14px 16px; border-radius: 8px; font-size: 13.5px; line-height: 1.5; }
+    .quiz-feedback.correct { background: #f0e6c8; color: #5c4400; border: 1px solid #c9a84c; }
+    .quiz-feedback.incorrect { background: #f5e8e5; color: #6b2a1e; border: 1px solid #c07060; }
+    .quiz-nav { display: flex; gap: 12px; margin-top: 20px; justify-content: center; }
+    .quiz-btn { padding: 11px 22px; border-radius: 8px; cursor: pointer; font-weight: 700; border: none; transition: all 0.2s; font-size: 13.5px; }
+    .quiz-btn:hover { transform: translateY(-1px); }
+    .quiz-btn-primary { background: #1a2744; color: #c9a84c; }
+    .quiz-btn-secondary { background: #ede8dc; color: #1a2744; }
+    .quiz-result { text-align: center; padding: 30px 20px; }
+    .quiz-score { font-size: 64px; margin: 16px 0; }
+    .quiz-message { font-size: 15px; color: #5a5040; margin-bottom: 24px; }
+  </style>
+</head>
+<body>
+  <div class="page-header">
+    <div class="container">
+      <div class="header-label">Executive Ready Leadership · Module 3</div>
+      <h1>Building High-Performing Teams</h1>
+      <p class="subtitle">Complete Interactive Study Guide</p>
+      <div class="nav-container" id="nav"></div>
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="container">
+      <div class="card" id="content"></div>
+    </div>
+  </div>
+
+<script>
+const sections = [
+  { id: '3.1', name: 'Power of Teams', icon: '🚀' },
+  { id: '3.2', name: 'Line of Choice', icon: '📊' },
+  { id: '3.3', name: 'Tuckman', icon: '🔄' },
+  { id: '3.4', name: 'Trust', icon: '🤝' },
+  { id: '3.5', name: 'Conflict', icon: '⚔️' },
+  { id: '3.6', name: 'Commitment', icon: '✅' },
+  { id: '3.7', name: 'Accountability', icon: '📋' },
+  { id: '3.8', name: 'Results', icon: '🎯' },
+  { id: 'quiz', name: 'Quiz', icon: '🧠' }
+];
+
+const state = {
+  currentSection: '3.1',
+  tuckman: 0,
+  lencioni: 4,
+  tki: 1,
+  commitment: 2,
+  scorecard: 0,
+  trustType: null,
+  cultureScale: null,
+  quiz: 0,
+  quizAnswers: [],
+  quizComplete: false
+};
+
+// Data
+const tuckmanStages = [
+  { name: 'Forming', icon: '👋', color: 'item-blue', desc: 'Getting to know each other', details: 'The team is new. Members are polite, cautious, and figuring out roles. Trust hasn\'t formed yet. High learning, low productivity.', leadership: 'Help members get to know each other. Clarify purpose and expectations. Give time to bond but keep things moving.' },
+  { name: 'Storming', icon: '⚡', color: 'item-red', desc: 'Conflict & power struggles', details: 'Politeness wears off. Disagreements surface about mission, process, and power. True personalities emerge. Hardest but necessary stage.', leadership: 'Don\'t ignore conflict — acknowledge it as natural. Surface issues. Review ground rules. Revisit purpose.' },
+  { name: 'Norming', icon: '📋', color: 'item-yellow', desc: 'Establishing ground rules', details: 'The team develops "rules of engagement." Roles become clear. Members appreciate each other\'s skills. Focus shifts to process and task.', leadership: 'Process is working well. Now focus on task delivery. Be diligent about the roadmap.' },
+  { name: 'Performing', icon: '🚀', color: 'item-green', desc: 'High productivity', details: 'Highly effective, autonomous, loyal. Healthy debate. "We" over "I". Problems solved quickly. Anticipate issues before they arise.', leadership: 'Step back — the team is self-regulating. They handle decisions and processes independently.' },
+  { name: 'Adjourning', icon: '🎯', color: 'item-purple', desc: 'Wrapping up', details: 'Project ends. Activities wrap up, outcomes reported, successes celebrated. Members may feel loss or relief.', leadership: 'Ensure proper handover. Meet deadlines. Recognise achievements. Provide closure.' }
+];
+
+const lencioniLevels = [
+  { level: 5, name: 'Inattention to Results', color: 'pyr-5', desc: 'Team members put individual needs ahead of collective goals.', fix: 'Make results public. Use scoreboards. Reward team achievements, not just individual performance.' },
+  { level: 4, name: 'Avoidance of Accountability', color: 'pyr-4', desc: 'Team members don\'t hold each other accountable.', fix: 'Publicise goals and standards. Regular progress reviews. Peer accountability. Commitment conversations.' },
+  { level: 3, name: 'Lack of Commitment', color: 'pyr-3', desc: 'Without real debate, people don\'t truly buy in.', fix: 'Use Tell-Sell-Test-Consult-Joint. Clarify decisions. Set deadlines. Review commitments.' },
+  { level: 2, name: 'Fear of Conflict', color: 'pyr-2', desc: 'Without trust, people avoid honest debate.', fix: 'Understand conflict styles (TKI). Mine for different opinions. Healthy conflict is productive.' },
+  { level: 1, name: 'Absence of Trust', color: 'pyr-1', desc: 'The foundation. Without trust, nothing else works.', fix: 'Be vulnerable first. Share failures. Walk-talks. 360 feedback. Build relationships.' }
+];
+
+const tkiModes = [
+  { name: 'Competing', icon: '🏆', color: 'item-red', outcome: 'Win-Lose', desc: 'High assertiveness, low cooperativeness. Pursue your concerns at others\' expense.', when: 'Emergencies, unpopular but necessary decisions, protecting yourself.', risk: 'Creates "yes people", stifles learning.' },
+  { name: 'Collaborating', icon: '🤝', color: 'item-green', outcome: 'Win-Win', desc: 'High assertiveness, high cooperativeness. Find solutions that satisfy both parties.', when: 'Important issues for both sides, learning, gaining commitment.', risk: 'Time-consuming; not every issue warrants it.' },
+  { name: 'Compromising', icon: '⚖️', color: 'item-yellow', outcome: 'Partial Win', desc: 'Moderate on both axes. Find expedient middle ground.', when: 'Time pressure, equal power, temporary settlement needed.', risk: 'May lose sight of bigger issues; can create gamesmanship.' },
+  { name: 'Avoiding', icon: '🚶', color: 'item-gray', outcome: 'Lose-Lose', desc: 'Low assertiveness, low cooperativeness. Sidestep or postpone.', when: 'Trivial issues, emotions need to cool, others can resolve better.', risk: 'Decisions by default; walking on eggshells.' },
+  { name: 'Accommodating', icon: '🎁', color: 'item-blue', outcome: 'Lose-Win', desc: 'Low assertiveness, high cooperativeness. Satisfy others at your expense.', when: 'You\'re wrong, issue matters more to them, building goodwill.', risk: 'Your ideas get ignored; discipline becomes lax.' }
+];
+
+const commitmentStyles = [
+  { name: 'Tell', icon: '📢', desc: 'Leader announces the decision.', when: 'Emergencies, non-negotiables, clear expertise.' },
+  { name: 'Sell', icon: '💬', desc: 'Leader announces and explains rationale.', when: 'Buy-in matters but decision is made.' },
+  { name: 'Test', icon: '🔍', desc: 'Leader proposes tentatively, seeks input.', when: 'Leader has preference but open to change.' },
+  { name: 'Consult', icon: '🗣️', desc: 'Leader gathers input, then decides.', when: 'Team expertise needed, building commitment.' },
+  { name: 'Joint', icon: '🤝', desc: 'Leader and team decide by consensus.', when: 'High-stakes, need full buy-in.' }
+];
+
+const scorecardQuadrants = [
+  { name: 'Financial', icon: '💰', color: 'item-green', question: 'How should we appear to stakeholders?', focus: 'Revenue, costs, profitability, ROI, budget adherence.' },
+  { name: 'Customer', icon: '👥', color: 'item-blue', question: 'How should we appear to customers?', focus: 'Satisfaction, retention, market share, value proposition.' },
+  { name: 'Internal Process', icon: '⚙️', color: 'item-yellow', question: 'What processes must we excel at?', focus: 'Quality, efficiency, innovation, operational excellence.' },
+  { name: 'Learning & Growth', icon: '🌱', color: 'item-purple', question: 'How will we sustain our ability to change?', focus: 'Skills, culture, technology, leadership development.' }
+];
+
+const quizQuestions = [
+  { q: 'A team member says "Marketing didn\'t send the data on time — it\'s not my fault." This is:', opts: ['Above the line', 'Below the line', 'Healthy conflict', 'Collaboration'], correct: 1, explain: 'Blaming others is classic below-the-line behaviour. Above the line: "How can I get the data I need next time?"' },
+  { q: 'In Tuckman\'s model, which stage features power struggles and conflict?', opts: ['Forming', 'Storming', 'Norming', 'Performing'], correct: 1, explain: 'Storming is when politeness wears off and conflicts surface about mission, process, and power.' },
+  { q: 'What is at the BASE of Lencioni\'s pyramid?', opts: ['Results', 'Accountability', 'Trust', 'Commitment'], correct: 2, explain: 'Trust is the foundation. Without it, teams fear conflict, lack commitment, avoid accountability, and ignore results.' },
+  { q: 'Task-based cultures (US, Germany) build trust primarily through:', opts: ['Long dinners together', 'Demonstrating competence', 'Sharing personal stories', 'Gift giving'], correct: 1, explain: 'Task-based cultures build cognitive trust through proving reliability and competence. Relationship-based cultures prioritise personal connection first.' },
+  { q: 'Which TKI conflict style seeks a win-win outcome?', opts: ['Competing', 'Compromising', 'Collaborating', 'Accommodating'], correct: 2, explain: 'Collaborating is high on both assertiveness and cooperativeness — working together to fully satisfy both parties.' },
+  { q: 'A manager gathers input from the team, then makes the final decision herself. This is:', opts: ['Tell', 'Sell', 'Consult', 'Joint'], correct: 2, explain: 'Consult means seeking input to inform the decision, while retaining final decision-making authority.' },
+  { q: 'According to commitment conversations, "I\'ll do my best" counts as:', opts: ['Yes', 'No', 'Maybe', 'Conditional yes'], correct: 1, explain: '"I\'ll do my best" is No — there\'s no clear commitment. You can\'t hold someone accountable for "doing their best."' },
+  { q: 'The Balanced Scorecard measures results across how many perspectives?', opts: ['2', '3', '4', '5'], correct: 2, explain: 'Four perspectives: Financial, Customer, Internal Process, and Learning & Growth — all connected to shared vision.' }
+];
+
+function render() {
+  renderNav();
+  renderContent();
+}
+
+function renderNav() {
+  document.getElementById('nav').innerHTML = sections.map(s => 
+    `<div class="nav-item ${s.id === state.currentSection ? 'active' : ''}" onclick="goTo('${s.id}')">
+      <span class="nav-number">${s.id}</span> ${s.icon} ${s.name}
+    </div>`
+  ).join('');
+}
+
+function goTo(id) {
+  state.currentSection = id;
+  render();
+}
+
+function renderContent() {
+  const c = document.getElementById('content');
+  switch(state.currentSection) {
+    case '3.1': c.innerHTML = render31(); break;
+    case '3.2': c.innerHTML = render32(); break;
+    case '3.3': c.innerHTML = render33(); break;
+    case '3.4': c.innerHTML = render34(); break;
+    case '3.5': c.innerHTML = render35(); break;
+    case '3.6': c.innerHTML = render36(); break;
+    case '3.7': c.innerHTML = render37(); break;
+    case '3.8': c.innerHTML = render38(); break;
+    case 'quiz': c.innerHTML = renderQuiz(); break;
+  }
+}
+
+function render31() {
+  return `
+    <div class="section-number">3.1</div>
+    <div class="section-title">The Power of Teams</div>
+    <div class="section-subtitle">What makes teams effective or dysfunctional? Culture is created through conditioning — teams either consciously shape it or unconsciously inherit it.</div>
+    
+    <div class="insight-box">
+      <div class="insight-title">🐵 The Monkeys & The Ladder</div>
+      <p>Four monkeys learn to avoid climbing a ladder (sprinklers punish them). New monkeys are brought in one by one. Eventually, four new monkeys avoid the ladder — but none know why. <strong>This is organisational culture:</strong> "We've always done it this way."</p>
+    </div>
+    
+    <div class="subsection">
+      <div class="subsection-title">Cross-Cultural Teamwork</div>
+      <div class="clickable-grid">
+        <div class="clickable-item item-blue" onclick="showDetail31('learning')">
+          <div class="clickable-icon">📚</div>
+          <div class="clickable-name">Mutual Learning</div>
+          <div class="clickable-desc">Absorbing, asking, relating</div>
+        </div>
+        <div class="clickable-item item-green" onclick="showDetail31('understanding')">
+          <div class="clickable-icon">🧠</div>
+          <div class="clickable-name">Mutual Understanding</div>
+          <div class="clickable-desc">Grasp WHY, not just WHAT</div>
+        </div>
+        <div class="clickable-item item-purple" onclick="showDetail31('teaching')">
+          <div class="clickable-icon">🌉</div>
+          <div class="clickable-name">Mutual Teaching</div>
+          <div class="clickable-desc">Be a cultural broker</div>
+        </div>
+      </div>
+      <div id="detail31" class="detail-box">
+        <p>Click an element above to learn more about cross-cultural teamwork strategies.</p>
+      </div>
+    </div>
+    
+    <div class="cultural-note">
+      <div class="note-title">🌍 Culture Map (Erin Meyer)</div>
+      <p>8 scales for understanding cultural differences: Communication style, Feedback approach, Persuasion, Leadership, Decision-making, Trust-building, Disagreement, and Scheduling. Map your team to anticipate friction points.</p>
+    </div>
+  `;
+}
+
+function showDetail31(type) {
+  const details = {
+    learning: { title: '📚 Mutual Learning', text: 'Learn from teammates through careful listening, observation, and questions. Absorb cultural knowledge, ask to fill contextual gaps, and relate on a personal level. Trust develops through common interests.' },
+    understanding: { title: '🧠 Mutual Understanding', text: 'Go beyond WHAT people do to understand WHY. Grasp the underlying logic of cultural behaviours. Suspend judgment during moments of confusion. Accept ambiguity and let go of assumptions from your own culture.' },
+    teaching: { title: '🌉 Mutual Teaching', text: 'Serve as a cultural broker between different groups. Notice when teammates interpret things differently. Help each side see where the other is coming from. Bridge gaps through instructing and facilitating.' }
+  };
+  const d = details[type];
+  document.getElementById('detail31').innerHTML = `<h4>${d.title}</h4><p>${d.text}</p>`;
+}
+
+function render32() {
+  return `
+    <div class="section-number">3.2</div>
+    <div class="section-title">Culture, Accountability & the Line of Choice</div>
+    <div class="section-subtitle"><strong>Culture = Individual Behaviour × Number of People.</strong> Every choice either lifts the team up or drags it down.</div>
+    
+    <div class="line-zone zone-above" onclick="showLineZone('above')">
+      <strong style="font-size:16px;">☀️ Above the Line — Personal Responsibility</strong>
+      <div class="behavior-tags">
+        <span class="tag tag-green">Ownership</span>
+        <span class="tag tag-green">Accountability</span>
+        <span class="tag tag-green">Solution-focused</span>
+        <span class="tag tag-green">We/Us/Together</span>
+        <span class="tag tag-green">Learning</span>
+        <span class="tag tag-green">Open</span>
+      </div>
+    </div>
+    
+    <div class="line-divider"><span class="line-label">⬆️ LINE OF CHOICE ⬇️</span></div>
+    
+    <div class="line-zone zone-below" onclick="showLineZone('below')">
+      <strong style="font-size:16px;">🌧️ Below the Line — Defensive Behaviours</strong>
+      <div class="behavior-tags">
+        <span class="tag tag-red">Defend</span>
+        <span class="tag tag-red">Deny</span>
+        <span class="tag tag-red">Blame</span>
+        <span class="tag tag-red">Justify</span>
+        <span class="tag tag-red">Quit</span>
+        <span class="tag tag-red">Victim</span>
+      </div>
+    </div>
+    
+    <div id="lineDetail" class="detail-box">
+      <h4>💡 Quick Tip</h4>
+      <p><strong>"Who / When / Why"</strong> questions often signal below-the-line thinking.</p>
+      <p><strong>"How / What"</strong> questions help stay above the line.</p>
+      <p>Click each zone above to learn more.</p>
+    </div>
+    
+    <div class="insight-box">
+      <div class="insight-title">⚠️ Watch Out</div>
+      <p>"I know this is below the line, but..." is itself below the line! Don't use the model as a prefix — use it to check yourself and make a different choice.</p>
+    </div>
+  `;
+}
+
+function showLineZone(zone) {
+  const data = {
+    above: { title: '☀️ Above the Line', text: 'Taking personal responsibility for outcomes. Teams here focus on solutions, learning, and collective success. Ask: "How can I help? What can we do? How did this happen?" This builds trust and drives results.' },
+    below: { title: '🌧️ Below the Line', text: 'Defensive behaviours: defend, deny, blame, justify, quit, victim. Teams here focus on self-protection. Questions like "Who did this? Why did they...?" signal this zone. It destroys trust and stalls progress.' }
+  };
+  const d = data[zone];
+  document.getElementById('lineDetail').innerHTML = `<h4>${d.title}</h4><p>${d.text}</p>`;
+}
+
+function render33() {
+  const stage = tuckmanStages[state.tuckman];
+  return `
+    <div class="section-number">3.3</div>
+    <div class="section-title">Tuckman's Stages of Team Development</div>
+    <div class="section-subtitle">Teams move through these stages — sometimes linearly, sometimes cycling back. A below-the-line culture makes each stage more destructive.</div>
+    
+    <div class="clickable-grid">
+      ${tuckmanStages.map((s, i) => `
+        <div class="clickable-item ${s.color} ${i === state.tuckman ? 'active' : ''}" onclick="selectTuckman(${i})">
+          <div class="clickable-icon">${s.icon}</div>
+          <div class="clickable-name">${s.name}</div>
+          <div class="clickable-desc">${s.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+    
+    <div class="detail-box">
+      <h4>${stage.icon} Stage ${state.tuckman + 1}: ${stage.name}</h4>
+      <p>${stage.details}</p>
+      <p><strong>🎯 Leadership:</strong> ${stage.leadership}</p>
+    </div>
+    
+    <div class="insight-box">
+      <div class="insight-title">🚨 Four Meetings for One Meeting</div>
+      <p>Red flag pattern: (1) Corridor talk before, (2) The actual meeting, (3) Unspoken meeting in your head, (4) Corridor debrief after. <strong>Above-the-line teams have ONE meeting.</strong></p>
+    </div>
+  `;
+}
+
+function selectTuckman(i) { state.tuckman = i; renderContent(); }
+
+function render34() {
+  const level = lencioniLevels[state.lencioni];
+  return `
+    <div class="section-number">3.4</div>
+    <div class="section-title">The Dysfunctions of a Team & Absence of Trust</div>
+    <div class="section-subtitle">Lencioni's pyramid: Trust is the foundation. Without it, everything else crumbles upward to inattention to results.</div>
+    
+    <div class="pyramid">
+      ${lencioniLevels.map((l, i) => `
+        <div class="pyramid-level ${l.color} ${i === state.lencioni ? 'active' : ''}" onclick="selectLencioni(${i})">
+          ${l.name}
+        </div>
+      `).join('')}
+    </div>
+    
+    <div class="detail-box">
+      <h4>Level ${level.level}: ${level.name}</h4>
+      <p><strong>The dysfunction:</strong> ${level.desc}</p>
+      <p><strong>🔧 How to fix:</strong> ${level.fix}</p>
+    </div>
+    
+    <div class="subsection">
+      <div class="subsection-title">Building Trust</div>
+      <div class="clickable-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="clickable-item item-blue" onclick="showTrust('cognitive')">
+          <div class="clickable-icon">🧠</div>
+          <div class="clickable-name">Cognitive Trust</div>
+          <div class="clickable-desc">Task-based (head)</div>
+        </div>
+        <div class="clickable-item item-purple" onclick="showTrust('affective')">
+          <div class="clickable-icon">❤️</div>
+          <div class="clickable-name">Affective Trust</div>
+          <div class="clickable-desc">Relationship-based (heart)</div>
+        </div>
+      </div>
+      <div id="trustDetail" class="cultural-note">
+        <div class="note-title">🌍 Cross-Cultural Trust</div>
+        <p>Click above to compare cognitive vs. affective trust and how different cultures prioritise each.</p>
+      </div>
+    </div>
+  `;
+}
+
+function selectLencioni(i) { state.lencioni = i; renderContent(); }
+
+function showTrust(type) {
+  const data = {
+    cognitive: { title: '🧠 Cognitive Trust (Task-Based)', text: 'Trust from the HEAD. Built through demonstrating competence, reliability, and accomplishments. Cultures like US, Germany, UK, Australia prioritise this. Prove yourself through work quality.' },
+    affective: { title: '❤️ Affective Trust (Relationship-Based)', text: 'Trust from the HEART. Built through emotional closeness, personal connection, shared meals and experiences. Cultures like China, Brazil, Saudi Arabia prioritise this. Build guanxi before business.' }
+  };
+  const d = data[type];
+  document.getElementById('trustDetail').innerHTML = `<div class="note-title">${d.title}</div><p>${d.text}</p>`;
+}
+
+function render35() {
+  const mode = tkiModes[state.tki];
+  return `
+    <div class="section-number">3.5</div>
+    <div class="section-title">Addressing the Fear of Conflict</div>
+    <div class="section-subtitle">Trusting teams engage in healthy conflict. The Thomas-Kilmann model maps 5 conflict styles. No style is always right — the skill is matching style to situation.</div>
+    
+    <div class="clickable-grid">
+      ${tkiModes.map((m, i) => `
+        <div class="clickable-item ${m.color} ${i === state.tki ? 'active' : ''}" onclick="selectTki(${i})">
+          <div class="clickable-icon">${m.icon}</div>
+          <div class="clickable-name">${m.name}</div>
+          <div class="clickable-desc">${m.outcome}</div>
+        </div>
+      `).join('')}
+    </div>
+    
+    <div class="detail-box">
+      <h4>${mode.icon} ${mode.name} <span style="font-weight:normal;color:#666;">(${mode.outcome})</span></h4>
+      <p>${mode.desc}</p>
+      <p><strong>✅ Use when:</strong> ${mode.when}</p>
+      <p><strong>⚠️ Risk:</strong> ${mode.risk}</p>
+    </div>
+    
+    <div class="insight-box">
+      <div class="insight-title">📚 Library Book Example</div>
+      <p><strong>Competing:</strong> "Rules say return it — there's a fine." <strong>Accommodating:</strong> "Keep it as long as you need." <strong>Collaborating:</strong> "We need it back, but here's the ebook, we can photocopy pages, or reserve another copy." Collaboration meets both needs.</p>
+    </div>
+  `;
+}
+
+function selectTki(i) { state.tki = i; renderContent(); }
+
+function render36() {
+  const style = commitmentStyles[state.commitment];
+  return `
+    <div class="section-number">3.6</div>
+    <div class="section-title">Commitment & Tell-Sell Decision Making</div>
+    <div class="section-subtitle">Tannenbaum-Schmidt spectrum: from leader authority to team influence. Be transparent about which approach you're using.</div>
+    
+    <div class="spectrum">
+      ${commitmentStyles.map((c, i) => `
+        <div class="spectrum-item spec-${i+1} ${i === state.commitment ? 'active' : ''}" onclick="selectCommitment(${i})">
+          <div class="spectrum-icon">${c.icon}</div>
+          <div class="spectrum-name">${c.name}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="spectrum-labels">
+      <span>← Leader Authority</span>
+      <span>Team Influence →</span>
+    </div>
+    
+    <div class="detail-box">
+      <h4>${style.icon} ${style.name}</h4>
+      <p>${style.desc}</p>
+      <p><strong>✅ Use when:</strong> ${style.when}</p>
+    </div>
+    
+    <div class="insight-box">
+      <div class="insight-title">⚠️ The Dysfunction</div>
+      <p>Problems occur when people think they're in "consult" or "joint" but the decision is already made. That's a "tell" disguised as something else — and it destroys trust.</p>
+    </div>
+  `;
+}
+
+function selectCommitment(i) { state.commitment = i; renderContent(); }
+
+function render37() {
+  return `
+    <div class="section-number">3.7</div>
+    <div class="section-title">Learning to Hold One Another Accountable</div>
+    <div class="section-subtitle">Accountable teams apply peer pressure on poor performance, resolve problems quickly, give open feedback, and focus on solutions.</div>
+    
+    <div class="formula-box">
+      <div class="formula-title">🎯 The Commitment Request Formula</div>
+      <div class="formula-steps">
+        <div class="formula-step">In order to [context]...</div>
+        <span class="formula-arrow">→</span>
+        <div class="formula-step">I request you do [X]</div>
+        <span class="formula-arrow">→</span>
+        <div class="formula-step">by [date & time]</div>
+        <span class="formula-arrow">→</span>
+        <div class="formula-step">Do you commit?</div>
+      </div>
+      <div class="formula-note">⚠️ "Maybe" and "I'll do my best" = NO</div>
+    </div>
+    
+    <div class="subsection">
+      <div class="subsection-title">The Accountability Conversation (7 Steps)</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-number">1</div><div class="step-text"><strong>Check your intention</strong> — manage emotions first</div></div>
+        <div class="step-item"><div class="step-number">2</div><div class="step-text"><strong>Set the scene</strong></div></div>
+        <div class="step-item"><div class="step-number">3</div><div class="step-text"><strong>Assert prior commitment</strong></div></div>
+        <div class="step-item"><div class="step-number">4</div><div class="step-text"><strong>Assert the breakdown</strong></div></div>
+        <div class="step-item"><div class="step-number">5</div><div class="step-text"><strong>Inquire their perspective</strong></div></div>
+        <div class="step-item"><div class="step-number">6</div><div class="step-text"><strong>Issue damage report</strong> — impact on work, feelings, relationship</div></div>
+        <div class="step-item"><div class="step-number">7</div><div class="step-text"><strong>Make a new request</strong></div></div>
+      </div>
+    </div>
+    
+    <div class="cultural-note">
+      <div class="note-title">🧠 Unconscious Bias & Accountability</div>
+      <p>Biases (in-group favouritism, halo effect, confirmation bias) distort how we evaluate performance. Awareness helps, but structured processes are needed to mitigate bias in reviews and promotions.</p>
+    </div>
+  `;
+}
+
+function render38() {
+  const quad = scorecardQuadrants[state.scorecard];
+  return `
+    <div class="section-number">3.8</div>
+    <div class="section-title">The Achievement of Collective Results</div>
+    <div class="section-subtitle">The top of Lencioni's pyramid. Trust → Conflict → Commitment → Accountability must ultimately drive collective outcomes.</div>
+    
+    <div class="vision-banner">🎯 VISION: What are we trying to achieve?</div>
+    
+    <div class="scorecard-grid">
+      ${scorecardQuadrants.map((q, i) => `
+        <div class="scorecard-item ${q.color} ${i === state.scorecard ? 'active' : ''}" onclick="selectScorecard(${i})">
+          <div class="scorecard-icon">${q.icon}</div>
+          <div class="scorecard-name">${q.name}</div>
+        </div>
+      `).join('')}
+    </div>
+    
+    <div class="detail-box">
+      <h4>${quad.icon} ${quad.name} Perspective</h4>
+      <p><strong>Key question:</strong> ${quad.question}</p>
+      <p><strong>Focus areas:</strong> ${quad.focus}</p>
+    </div>
+    
+    <div class="insight-box">
+      <div class="insight-title">📊 Lead vs. Lag Indicators</div>
+      <p>One perspective typically serves as the <strong>lead indicator</strong> (driving the others), while the rest are <strong>lag indicators</strong> (outcomes). Making results visible through scoreboards reinforces accountability.</p>
+    </div>
+  `;
+}
+
+function selectScorecard(i) { state.scorecard = i; renderContent(); }
+
+function renderQuiz() {
+  if (state.quizComplete) {
+    const score = state.quizAnswers.filter((a, i) => a === quizQuestions[i].correct).length;
+    const pct = Math.round((score / quizQuestions.length) * 100);
+    const emoji = pct === 100 ? '🏆' : pct >= 75 ? '⭐' : pct >= 50 ? '👍' : '📚';
+    const msg = pct === 100 ? 'Perfect! You\'ve mastered Module 3!' : 
+                pct >= 75 ? 'Great job! You understand the key concepts well.' : 
+                pct >= 50 ? 'Good effort! Review the sections you missed.' :
+                'Keep studying — revisit the sections and try again!';
+    return `
+      <div class="quiz-result">
+        <div class="section-number">Quiz</div>
+        <div class="section-title">Results</div>
+        <div class="quiz-score">${emoji}</div>
+        <p style="font-size:24px; font-weight:700; color:#1e3a5f;">${score} / ${quizQuestions.length} (${pct}%)</p>
+        <p class="quiz-message">${msg}</p>
+        <button class="quiz-btn quiz-btn-primary" onclick="resetQuiz()">Try Again</button>
+      </div>
+    `;
+  }
+  
+  const q = quizQuestions[state.quiz];
+  const answered = state.quizAnswers[state.quiz] !== undefined;
+  const isCorrect = answered && state.quizAnswers[state.quiz] === q.correct;
+  
+  return `
+    <div class="section-number">Quiz</div>
+    <div class="section-title">Test Your Knowledge</div>
+    
+    <div class="quiz-progress">
+      ${quizQuestions.map((_, i) => {
+        let cls = i === state.quiz ? 'active' : '';
+        if (state.quizAnswers[i] !== undefined) {
+          cls = state.quizAnswers[i] === quizQuestions[i].correct ? 'correct' : 'incorrect';
+        }
+        return `<div class="quiz-dot ${cls}"></div>`;
+      }).join('')}
+    </div>
+    
+    <div class="quiz-question">Q${state.quiz + 1}. ${q.q}</div>
+    
+    <div class="quiz-options">
+      ${q.opts.map((opt, i) => {
+        let cls = answered ? 'disabled ' : '';
+        if (answered && i === q.correct) cls += 'correct';
+        else if (answered && state.quizAnswers[state.quiz] === i) cls += 'incorrect';
+        return `<div class="quiz-option ${cls}" onclick="${answered ? '' : `answerQuiz(${i})`}">${opt}</div>`;
+      }).join('')}
+    </div>
+    
+    ${answered ? `<div class="quiz-feedback ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✅ Correct!' : '❌ Not quite.'} ${q.explain}</div>` : ''}
+    
+    <div class="quiz-nav">
+      ${state.quiz > 0 ? '<button class="quiz-btn quiz-btn-secondary" onclick="prevQuiz()">← Previous</button>' : ''}
+      ${answered ? (state.quiz < quizQuestions.length - 1 ? 
+        '<button class="quiz-btn quiz-btn-primary" onclick="nextQuiz()">Next →</button>' : 
+        '<button class="quiz-btn quiz-btn-primary" onclick="finishQuiz()">See Results</button>') : ''}
+    </div>
+  `;
+}
+
+function answerQuiz(i) { state.quizAnswers[state.quiz] = i; renderContent(); }
+function prevQuiz() { state.quiz--; renderContent(); }
+function nextQuiz() { state.quiz++; renderContent(); }
+function finishQuiz() { state.quizComplete = true; renderContent(); }
+function resetQuiz() { state.quiz = 0; state.quizAnswers = []; state.quizComplete = false; renderContent(); }
+
+// Initialize
+render();
+</script>
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       

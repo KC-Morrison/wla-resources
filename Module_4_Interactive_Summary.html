@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4 — Problem Solving & Decision Making</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #f5f0e8; color: #2c2416; min-height: 100vh; }
+  .page-header { background: #1a2744; border-bottom: 3px solid #c9a84c; padding: 24px 28px 0; }
+  .header-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #c9a84c; margin-bottom: 6px; font-weight: 500; text-align: center; }
+  h1 { font-family: 'Playfair Display', serif; text-align: center; font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .subtitle { text-align: center; font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 14px; }
+  .header-inner { max-width: 960px; margin: 0 auto; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 0 12px; }
+  .tab { padding: 7px 13px; border-radius: 20px; border: 1.5px solid transparent; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); font-size: 0.73rem; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { color: #fff; background: rgba(255,255,255,0.18); }
+  .tab.active { background: #c9a84c; color: #1a2744; border-color: #c9a84c; }
+  .content-area { padding: 24px 28px 40px; max-width: 960px; margin: 0 auto; }
+  .panel { display: none; animation: fadeIn 0.3s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+.section-number { display: inline-block; background: #1a2744; color: #c9a84c; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; margin-right: 10px; vertical-align: middle; }
+  .section-title { display: inline; font-size: 22px; font-weight: 600; color: #1a2744; vertical-align: middle; }
+  .section-subtitle { display: block; font-size: 13px; color: #5a5040; margin-top: 12px; margin-bottom: 20px; line-height: 1.6; border-left: 3px solid #c9a84c; padding: 10px 14px; background: #ede8dc; border-radius: 0 6px 6px 0; }
+
+  .cards { display: grid; gap: 12px; }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .card { background: #fff; border: 1px solid #d4c9b0; border-radius: 12px; padding: 26px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent, #1a2744); opacity: 0; transition: opacity 0.2s; }
+  .card:hover { border-color: #b8a98a; transform: translateY(-2px); }
+  .card:hover::before, .card.expanded::before { opacity: 1; }
+  .card.expanded { border-color: #c9a84c; background: #fdfaf5; }
+  .card-title { font-size: 0.82rem; font-weight: 700; color: #1a2744; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .card-tag { font-size: 0.63rem; background: #f0e6c8; color: var(--accent, #7a5c00); padding: 2px 7px; border-radius: 10px; font-weight: 600; margin-left: auto; flex-shrink: 0; }
+  .card-preview { font-size: 0.75rem; color: #7a6e5e; line-height: 1.45; }
+  .card-detail { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid #ede8dc; animation: fadeIn 0.2s ease; }
+  .card.expanded .card-detail { display: block; }
+  .dp { display: flex; gap: 8px; margin-bottom: 7px; font-size: 0.75rem; color: #4a3f2f; line-height: 1.45; }
+  .dp::before { content: '→'; color: var(--accent, #c9a84c); flex-shrink: 0; font-weight: 700; }
+  .expand-hint { font-size: 0.67rem; color: #b8a98a; margin-top: 8px; text-align: right; }
+  .card:hover .expand-hint { color: #7a5c00; }
+  .iceberg-wrap { background: #fff; border: 1px solid #d4c9b0; border-radius: 10px; padding: 20px; margin-bottom: 12px; }
+  .ice-level { border-radius: 8px; padding: 13px 16px; cursor: pointer; transition: all 0.2s; border: 1.5px solid transparent; margin-bottom: 8px; }
+  .ice-level:last-child { margin-bottom: 0; }
+  .ice-level:hover { transform: translateX(3px); }
+  .ice-level.open { border-color: var(--lc, #c9a84c); }
+  .ice-head { display: flex; justify-content: space-between; align-items: center; }
+  .ice-title { font-size: 0.82rem; font-weight: 700; }
+  .ice-q { font-size: 0.7rem; color: #7a6e5e; margin-top: 3px; }
+  .ice-badge { font-size: 0.67rem; font-weight: 700; padding: 3px 10px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .ice-detail { display: none; margin-top: 10px; font-size: 0.74rem; color: #4a3f2f; line-height: 1.55; padding-top: 10px; border-top: 1px solid rgba(0,0,0,0.08); }
+  .ice-level.open .ice-detail { display: block; }
+  .waterline-bar { text-align: center; font-size: 0.62rem; color: #8a6e00; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; padding: 8px 0; border-top: 1px dashed #c9a84c; border-bottom: 1px dashed #c9a84c; margin: 8px 0; }
+  .d-step { display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid #d4c9b0; border-radius: 8px; padding: 12px 14px; cursor: pointer; transition: all 0.2s; margin-bottom: 4px; }
+  .d-step:hover, .d-step.open { border-color: #1a2744; background: #f5f0e8; }
+  .d-num { width: 28px; height: 28px; border-radius: 50%; background: #1a2744; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #c9a84c; flex-shrink: 0; }
+  .d-step.open .d-num { background: #c9a84c; color: #1a2744; }
+  .d-title { font-size: 0.8rem; font-weight: 600; color: #1a2744; flex: 1; }
+  .d-arr { font-size: 0.7rem; color: #b8a98a; transition: transform 0.2s; }
+  .d-step.open .d-arr { transform: rotate(180deg); color: #c9a84c; }
+  .d-body { display: none; padding: 10px 14px 12px 54px; background: #fdfaf5; border: 1px solid #d4c9b0; border-top: none; border-radius: 0 0 8px 8px; font-size: 0.74rem; color: #4a3f2f; line-height: 1.55; margin-bottom: 8px; margin-top: -4px; }
+  .d-step.open + .d-body { display: block; }
+  .dt-flow { display: flex; margin-bottom: 12px; border-radius: 10px; overflow: hidden; border: 1px solid #d4c9b0; }
+  .dt-step { flex: 1; padding: 14px 8px; text-align: center; cursor: pointer; background: #fff; border-right: 1px solid #d4c9b0; transition: all 0.2s; }
+  .dt-step:last-child { border-right: none; }
+  .dt-step:hover, .dt-step.active { background: #f0e6c8; }
+  .dt-step.active { border-bottom: 3px solid var(--dtc, #c9a84c); }
+  .dt-icon { font-size: 1.4rem; margin-bottom: 5px; }
+  .dt-name { font-size: 0.68rem; font-weight: 700; color: #1a2744; text-transform: uppercase; letter-spacing: 0.04em; }
+  .dt-detail-box { background: #fff; border: 1px solid #d4c9b0; border-radius: 12px; padding: 26px; margin-bottom: 16px; min-height: 80px; }
+  .dt-detail-box h3 { font-size: 0.85rem; font-weight: 700; color: #1a2744; margin-bottom: 10px; }
+  .mindsets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .m-chip { padding: 7px 14px; border-radius: 20px; border: 1.5px solid #d4c9b0; background: #fff; font-size: 0.73rem; font-weight: 600; color: #5a5040; cursor: pointer; transition: all 0.2s; }
+  .m-chip:hover, .m-chip.active { background: #f0e6c8; border-color: #c9a84c; color: #1a2744; }
+  .m-desc { background: #fff; border: 1px solid #d4c9b0; border-radius: 10px; padding: 14px 16px; font-size: 0.76rem; color: #4a3f2f; line-height: 1.55; min-height: 56px; }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .c-col { background: #fff; border: 1px solid #d4c9b0; border-radius: 12px; padding: 26px; }
+  .c-col h3 { font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #ede8dc; }
+  .c-row { display: flex; gap: 8px; margin-bottom: 7px; font-size: 0.73rem; color: #5a5040; line-height: 1.4; }
+  .key-msg { background: #f0e6c8; border: 1px solid #c9a84c; border-radius: 10px; padding: 14px 16px; font-size: 0.77rem; color: #5c4400; line-height: 1.55; margin-top: 12px; }
+  .key-msg strong { color: #7a5c00; }
+  .label { font-size: 0.78rem; color: #1a2744; margin-bottom: 10px; font-weight: 700; margin-top: 20px; }
+  .label:first-child { margin-top: 0; }
+  @media (max-width: 600px) {
+    .cols-2, .cols-3, .compare { grid-template-columns: 1fr; }
+    .dt-step { padding: 10px 4px; }
+    .dt-name { font-size: 0.6rem; }
+    .content-area { padding: 16px 16px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-inner">
+    <div class="header-label">Executive Ready Leadership · Module 4</div>
+    <h1>Problem Solving & Decision Making</h1>
+    <p class="subtitle">Click any section to explore</p>
+    <div class="tabs">
+      <div class="tab active" onclick="showPanel('framing',this)">4.1 Problem Framing</div>
+      <div class="tab" onclick="showPanel('strategic',this)">4.2 Strategic Thinking</div>
+      <div class="tab" onclick="showPanel('iceberg',this)">4.3 Iceberg</div>
+      <div class="tab" onclick="showPanel('decision',this)">4.4 Decision Making</div>
+      <div class="tab" onclick="showPanel('design',this)">4.5 Design Thinking</div>
+      <div class="tab" onclick="showPanel('research',this)">Research</div>
+    </div>
+  </div>
+</div>
+<div class="content-area">
+
+<!-- 4.1 PROBLEM FRAMING -->
+<div id="panel-framing" class="panel active" style="--accent:#4a9fd4">
+  <div class="section-number">4.1</div>
+<div class="section-title">Problem Framing</div>
+<div class="section-subtitle">How we define a problem shapes every decision that follows. Framing too narrowly — or in terms of a solution — limits the possibilities we can see.</div>
+  <div class="cards cols-2">
+    <div class="card" onclick="toggleCard(this)" style="--accent:#4a9fd4">
+      <div class="card-title">The Core Principle <span class="card-tag">Foundational</span></div>
+      <div class="card-preview">Frame defines the entire solution space.</div>
+      <div class="card-detail">
+        <div class="dp">Frame at the right level of abstraction — not in terms of a solution</div>
+        <div class="dp">❌ "I need to buy a car" &rarr; ✅ "I need to address my transportation needs"</div>
+        <div class="dp">Be mindful of your own biases and involve people with different perspectives</div>
+        <div class="dp">Good framing provides clarity, narrows scope, achieves alignment, and increases efficiency</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+    <div class="card" onclick="toggleCard(this)" style="--accent:#4a9fd4">
+      <div class="card-title">Sound Decision Making <span class="card-tag">Principles</span></div>
+      <div class="card-preview">Good decisions don't guarantee good outcomes.</div>
+      <div class="card-detail">
+        <div class="dp">Decision making is often the final step in problem solving</div>
+        <div class="dp">Better decisions usually lead to better outcomes</div>
+        <div class="dp">We can't always know the best decision — but we can make a good one</div>
+        <div class="dp">We are subject to many factors that influence the quality of our decisions</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+    <div class="card" onclick="toggleCard(this)" style="--accent:#e74c3c">
+      <div class="card-title">6 Problem Solving Traps <span class="card-tag" style="color:#e74c3c">Watch Out</span></div>
+      <div class="card-preview">Common traps that distort how we frame and solve problems.</div>
+      <div class="card-detail">
+        <div class="dp"><strong>Overconfidence</strong> — overestimating the accuracy of your own judgement</div>
+        <div class="dp"><strong>Confirmation bias</strong> — seeking evidence that supports existing beliefs</div>
+        <div class="dp"><strong>Ignoring new information</strong> — dismissing data that challenges your frame</div>
+        <div class="dp"><strong>Short-term focus</strong> — prioritising present needs over future ones</div>
+        <div class="dp"><strong>Self-interest</strong> — allowing personal gain to distort analysis</div>
+        <div class="dp"><strong>Mental models</strong> — unconscious assumptions that constrain thinking</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+    <div class="card" onclick="toggleCard(this)" style="--accent:#27ae60">
+      <div class="card-title">Leader's Reflection <span class="card-tag" style="color:#27ae60">Reflect</span></div>
+      <div class="card-preview">How do different people in your team perceive the problem?</div>
+      <div class="card-detail">
+        <div class="dp">Different people perceive the same problem differently — this is a resource, not a problem</div>
+        <div class="dp">As a leader, surface multiple frames before locking in a definition</div>
+        <div class="dp">Stakeholder conversations often reveal that your initial frame was incomplete or biased</div>
+        <div class="dp">Ask: "Is my PLP framed as a problem — or as a solution?"</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+  </div>
+</div>
+
+<!-- 4.2 STRATEGIC THINKING -->
+<div id="panel-strategic" class="panel" style="--accent:#9b59b6">
+  <div class="section-number">4.2</div>
+<div class="section-title">Strategic Thinking Skills</div>
+<div class="section-subtitle">Stepping back from day-to-day reactive work to analyse the broader environment and organisational realities. Five skills (Hughes &amp; Colarelli Beatty) and two scanning tools.</div>
+  <div class="cards" style="grid-template-columns:1fr;margin-bottom:12px">
+    <div class="card" onclick="toggleCard(this)" style="--accent:#9b59b6">
+      <div class="card-title">The 5 Strategic Thinking Skills <span class="card-tag" style="color:#9b59b6">Hughes &amp; Beatty</span></div>
+      <div class="card-preview">Scanning · Visioning · Reframing · Making Meaning · Thinking Systemically</div>
+      <div class="card-detail">
+        <div class="dp"><strong>Scanning</strong> — Analysing the current environment; looking outward at competitors, markets, technology</div>
+        <div class="dp"><strong>Visioning</strong> — Communicating a compelling picture of what the organisation can become</div>
+        <div class="dp"><strong>Reframing</strong> — Questioning beliefs and assumptions; seeing problems as potential opportunities</div>
+        <div class="dp"><strong>Making meaning</strong> — Translating vision into meaningful day-to-day decisions people can apply</div>
+        <div class="dp"><strong>Thinking systemically</strong> — Looking at interrelationships, structures, and mental models to find high-leverage interventions</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+  </div>
+  <div class="cards cols-2">
+    <div class="card" onclick="toggleCard(this)" style="--accent:#9b59b6">
+      <div class="card-title">SWOT Analysis <span class="card-tag" style="color:#9b59b6">Tool</span></div>
+      <div class="card-preview">Strengths · Weaknesses · Opportunities · Threats</div>
+      <div class="card-detail">
+        <div class="dp"><strong>Strengths</strong> — Internal: what the organisation does well</div>
+        <div class="dp"><strong>Weaknesses</strong> — Internal: requires honesty and courage to surface</div>
+        <div class="dp"><strong>Opportunities</strong> — External: technology, market changes, new possibilities</div>
+        <div class="dp"><strong>Threats</strong> — External: risks in the market that could impact the organisation</div>
+        <div class="dp">Key question: how can strengths counter weaknesses and threats? How can threats become opportunities?</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+    <div class="card" onclick="toggleCard(this)" style="--accent:#9b59b6">
+      <div class="card-title">STEEPLED Analysis <span class="card-tag" style="color:#9b59b6">Tool</span></div>
+      <div class="card-preview">A broader scan of the external environment across 8 dimensions.</div>
+      <div class="card-detail">
+        <div class="dp"><strong>S</strong>ocial · <strong>T</strong>echnological · <strong>E</strong>conomic · <strong>E</strong>nvironmental</div>
+        <div class="dp"><strong>P</strong>olitical · <strong>L</strong>egal · <strong>E</strong>thical · <strong>D</strong>emographic</div>
+        <div class="dp">Use together with SWOT — STEEPLED stretches scanning beyond internal organisational concerns</div>
+        <div class="dp">Diverse perspectives improve the quality of the analysis — invite others in</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+    <div class="card" onclick="toggleCard(this)" style="--accent:#f39c12">
+      <div class="card-title">Key Strategic Drivers <span class="card-tag" style="color:#f39c12">Output</span></div>
+      <div class="card-preview">The 3–5 pivot points that drive the entire strategy.</div>
+      <div class="card-detail">
+        <div class="dp">Analysis narrows to 3–5 critical factors for success that drive the whole strategy</div>
+        <div class="dp">Everything the organisation invests in is shaped by these drivers</div>
+        <div class="dp">Example: differentiating on quality (high price, low volume) vs. price (low quality, high volume)</div>
+        <div class="dp">Example: if R&amp;D is the key driver, attracting specialist talent becomes the strategic priority</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+    <div class="card" onclick="toggleCard(this)" style="--accent:#27ae60">
+      <div class="card-title">Leader's Application <span class="card-tag" style="color:#27ae60">Apply</span></div>
+      <div class="card-preview">Putting strategic thinking into practice with your team.</div>
+      <div class="card-detail">
+        <div class="dp">What are your critical factors for success? How can strategic thinking help?</div>
+        <div class="dp">With your team: develop a STEEPLED-SWOT draft to identify your team's key strategic drivers</div>
+        <div class="dp">Look at a complex problem your team faces and brainstorm using the SWOT approach</div>
+        <div class="dp">Invite diverse perspectives — others will prompt thinking you can't access alone</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+  </div>
+</div>
+
+<!-- 4.3 ICEBERG -->
+<div id="panel-iceberg" class="panel" style="--accent:#1abc9c">
+  <div class="section-number">4.3</div>
+<div class="section-title">The Systems Thinking Iceberg</div>
+<div class="section-subtitle">Most organisations react to events. Leaders who think systemically work below the waterline — addressing patterns, structures, and mental models to produce lasting change.</div>
+  <p style="font-size:0.73rem;color:#5a7090;margin-bottom:12px;text-align:center;">Click each level to explore what lies beneath the surface</p>
+  <div class="iceberg-wrap">
+    <div class="ice-level" style="background:#fdf0f0;--lc:#c0392b" onclick="toggleIce(this)">
+      <div class="ice-head">
+        <div><div class="ice-title" style="color:#8a2020">▲ EVENTS</div><div class="ice-q">What just happened?</div></div>
+        <div class="ice-badge" style="background:#f5d5d0;color:#8a2020">React</div>
+      </div>
+      <div class="ice-detail">Visible incidents — a client complaint, a missed deadline, something breaking down. We react and fix the immediate problem. While necessary, continually reacting to events prevents strategic action. These are the <em>newspaper headlines</em> — anyone can see them. They sit above the waterline.</div>
+    </div>
+    <div class="waterline-bar">· · · waterline · · ·</div>
+    <div class="ice-level" style="background:#fef8ee;--lc:#c9a84c" onclick="toggleIce(this)">
+      <div class="ice-head">
+        <div><div class="ice-title" style="color:#7a5c00">PATTERNS</div><div class="ice-q">What has been happening?</div></div>
+        <div class="ice-badge" style="background:#f0e6c8;color:#6a4800">Anticipate</div>
+      </div>
+      <div class="ice-detail">When enough events are observed over time, patterns and trends emerge. Working at this level allows leaders to anticipate, predict, or forecast rather than simply react. Our interpretations and thinking occur here — and they aren't always visible until we make them so.</div>
+    </div>
+    <div class="ice-level" style="background:#edf4fb;--lc:#2980b9" onclick="toggleIce(this)">
+      <div class="ice-head">
+        <div><div class="ice-title" style="color:#1a5276">STRUCTURE</div><div class="ice-q">Why is this happening?</div></div>
+        <div class="ice-badge" style="background:#d4e8f5;color:#1a4060">Change</div>
+      </div>
+      <div class="ice-detail">The organisational systems that produce patterns: hierarchy, sign-off processes, physical design, policies, reward mechanisms, decision-making criteria, information access, and what leadership pays attention to (the unspoken rules of the game). <strong style="color:#1a5276">Structure drives behaviour — if you want people to act differently, change the structure.</strong></div>
+    </div>
+    <div class="ice-level" style="background:#edfaf6;--lc:#1abc9c" onclick="toggleIce(this)">
+      <div class="ice-head">
+        <div><div class="ice-title" style="color:#0e6655">▼ MENTAL MODELS</div><div class="ice-q">How does our thinking shape the situation?</div></div>
+        <div class="ice-badge" style="background:#d0f5ec;color:#0a4a3a">Transform</div>
+      </div>
+      <div class="ice-detail">Deeply held internal images of how the world works — the assumptions and beliefs that drive the structures we create. Peter Senge: <em>"Mental models are deeply held internal images of how the world works, images that limit us to familiar ways of thinking and acting."</em> Surfacing and testing mental models produces the most profound and lasting change.</div>
+    </div>
+  </div>
+  <div class="key-msg"><strong>Key message:</strong> Our mental models drive our decisions and the structures we create. Being open to exploring, surfacing, and testing mental models is crucial for significant and lasting change in our organisations.</div>
+</div>
+
+<!-- 4.4 DECISION MAKING -->
+<div id="panel-decision" class="panel" style="--accent:#e74c3c">
+  <div class="section-number">4.4</div>
+<div class="section-title">Rational Decision Making</div>
+<div class="section-subtitle">A methodical six-step model for well-defined problems, three pre-decision steps, and an awareness that cultural background shapes how decisions are made and implemented.</div>
+
+  <p class="label">The Six-Step Model (Bazerman &amp; Moore, 2012)</p>
+  <div style="margin-bottom:16px">
+    <div class="d-step" onclick="toggleDStep(this)"><div class="d-num">1</div><div class="d-title">Define the problem</div><div class="d-arr">▼</div></div>
+    <div class="d-body">Articulate the problem clearly before jumping to solutions. A well-defined problem is half solved. Avoid framing in terms of a preferred solution.</div>
+    <div class="d-step" onclick="toggleDStep(this)"><div class="d-num">2</div><div class="d-title">Identify the criteria</div><div class="d-arr">▼</div></div>
+    <div class="d-body">What factors matter in making this decision? List all relevant criteria — cost, risk, feasibility, stakeholder impact, time, alignment with values.</div>
+    <div class="d-step" onclick="toggleDStep(this)"><div class="d-num">3</div><div class="d-title">Assess the criteria</div><div class="d-arr">▼</div></div>
+    <div class="d-body">Weigh the criteria relative to each other. Not all criteria are equal — some matter more than others in this specific context.</div>
+    <div class="d-step" onclick="toggleDStep(this)"><div class="d-num">4</div><div class="d-title">Generate alternatives</div><div class="d-arr">▼</div></div>
+    <div class="d-body">Identify all realistic options before evaluating any of them. Avoid anchoring too early on one solution. More options = better decision quality.</div>
+    <div class="d-step" onclick="toggleDStep(this)"><div class="d-num">5</div><div class="d-title">Rate each alternative on each criterion</div><div class="d-arr">▼</div></div>
+    <div class="d-body">Systematically evaluate each option against every criterion identified. A simple scoring matrix makes this process transparent and defensible.</div>
+    <div class="d-step" onclick="toggleDStep(this)"><div class="d-num">6</div><div class="d-title">Compute the optimal decision</div><div class="d-arr">▼</div></div>
+    <div class="d-body">Combine ratings and weights to arrive at the highest-scoring option. Note: this model works best for well-defined problems — not all situations suit this level of analysis.</div>
+  </div>
+
+  <p class="label">3 Pre-Decision Steps (Matthew Confer)</p>
+  <div class="cards cols-3" style="margin-bottom:16px">
+    <div class="card" onclick="toggleCard(this)" style="--accent:#e74c3c">
+      <div class="card-title">1. Challenge the Constraints</div>
+      <div class="card-preview">What barriers are actually fixed?</div>
+      <div class="card-detail">
+        <div class="dp">Too many people accept all constraints as given — start by questioning them</div>
+        <div class="dp">Stanford $5 team: ignored the seed money entirely and sold their presentation slot — the real asset was the audience of students</div>
+        <div class="dp">Constraints prevent innovative ideas from ever developing</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+    <div class="card" onclick="toggleCard(this)" style="--accent:#f39c12">
+      <div class="card-title">2. Embrace a Premortem</div>
+      <div class="card-preview">How could this fail before we begin?</div>
+      <div class="card-detail">
+        <div class="dp">Flip the postmortem: contemplate failure before going down a path</div>
+        <div class="dp">The Cobra Effect: British government paid bounties for dead cobras &rarr; people bred cobras &rarr; program cancelled &rarr; breeders released snakes &rarr; worse problem than before</div>
+        <div class="dp">A premortem would have identified this unintended consequence</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+    <div class="card" onclick="toggleCard(this)" style="--accent:#3498db">
+      <div class="card-title">3. Check the Basics</div>
+      <div class="card-preview">Don't let small details be the downfall.</div>
+      <div class="card-detail">
+        <div class="dp">Even brilliant strategic plans fail on overlooked details</div>
+        <div class="dp">NASA's 1999 Mars Climate Orbiter: one team used metric, another used imperial — $125 million lost to a unit-of-measurement error</div>
+        <div class="dp">Under pressure, teams struggle to complete the most basic tasks — check them deliberately</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+  </div>
+
+  <p class="label">Cultural Dimensions of Decision Making (Erin Meyer)</p>
+  <div class="compare">
+    <div class="c-col" style="border-color:#3498db">
+      <h3 style="color:#3498db">Unilateral <span style="font-weight:400;color:#5a7090;text-transform:none">e.g. American</span></h3>
+      <div class="c-row"><span>🔵</span> Decisions made quickly, often by one person</div>
+      <div class="c-row"><span>🔵</span> Flexible and revisable as new info emerges</div>
+      <div class="c-row"><span>🔵</span> Implementation can take longer — not everyone aligned</div>
+      <div class="c-row"><span>🔵</span> A decision with a lowercase <em>d</em></div>
+    </div>
+    <div class="c-col" style="border-color:#9b59b6">
+      <h3 style="color:#9b59b6">Consensual <span style="font-weight:400;color:#5a7090;text-transform:none">e.g. Swedish, Japanese</span></h3>
+      <div class="c-row"><span>🟣</span> Decision-making takes longer — everyone consulted</div>
+      <div class="c-row"><span>🟣</span> Once made, the decision is fixed</div>
+      <div class="c-row"><span>🟣</span> Implementation is rapid — everyone already on board</div>
+      <div class="c-row"><span>🟣</span> A decision with a capital <em>D</em> (e.g. Japanese <em>ringi</em>)</div>
+    </div>
+  </div>
+  <div class="key-msg">
+    <strong>Tip for multicultural teams:</strong> Explicitly discuss and agree upon a decision-making method early in any collaboration. Define whether it's by vote or by the leader, whether 100% agreement is needed, and how open the group will be to later changes.
+  </div>
+</div>
+
+<!-- 4.5 DESIGN THINKING -->
+<div id="panel-design" class="panel" style="--accent:#f39c12">
+  <div class="section-number">4.5</div>
+<div class="section-title">Design Thinking</div>
+<div class="section-subtitle">A human-centred, non-linear, iterative process for solving complex and ill-defined problems. A journey of divergence and convergence — expanding, then focusing. (d.school, Stanford)</div>
+
+  <p style="font-size:0.73rem;color:#5a7090;margin-bottom:10px;text-align:center;">Click each stage to explore it in detail</p>
+  <div class="dt-flow">
+    <div class="dt-step active" onclick="selectDT(this,0)" style="--dtc:#3498db"><div class="dt-icon">👁️</div><div class="dt-name">Empathise</div></div>
+    <div class="dt-step" onclick="selectDT(this,1)" style="--dtc:#27ae60"><div class="dt-icon">📌</div><div class="dt-name">Define</div></div>
+    <div class="dt-step" onclick="selectDT(this,2)" style="--dtc:#f39c12"><div class="dt-icon">💡</div><div class="dt-name">Ideate</div></div>
+    <div class="dt-step" onclick="selectDT(this,3)" style="--dtc:#e67e22"><div class="dt-icon">🔧</div><div class="dt-name">Prototype</div></div>
+    <div class="dt-step" onclick="selectDT(this,4)" style="--dtc:#e74c3c"><div class="dt-icon">🧪</div><div class="dt-name">Test</div></div>
+  </div>
+  <div class="dt-detail-box" id="dt-box">
+    <h3 id="dt-title">👁️ Empathise — Research Your Users' Needs</h3>
+    <div id="dt-body">
+      <div class="dp">Who is my user? What matters to them?</div>
+      <div class="dp">Observe, engage, watch, and listen — immerse yourself in their environment</div>
+      <div class="dp">Set aside your own assumptions to gain real insight into user needs and motivations</div>
+      <div class="dp">Empathy allows design thinkers to understand rather than assume</div>
+      <div class="dp">Aim: develop the best possible understanding of your users and the problems they face</div>
+    </div>
+  </div>
+
+  <p class="label">Design Thinking Mindsets — click a mindset to read its description</p>
+  <div class="mindsets">
+    <div class="m-chip active" onclick="selectM(this,0)">🤝 Empathetic</div>
+    <div class="m-chip" onclick="selectM(this,1)">👥 Collaborative</div>
+    <div class="m-chip" onclick="selectM(this,2)">☀️ Optimistic</div>
+    <div class="m-chip" onclick="selectM(this,3)">🌀 Embrace Ambiguity</div>
+    <div class="m-chip" onclick="selectM(this,4)">🔍 Curious</div>
+    <div class="m-chip" onclick="selectM(this,5)">🔄 Reframe</div>
+    <div class="m-chip" onclick="selectM(this,6)">🌍 Embrace Diversity</div>
+    <div class="m-chip" onclick="selectM(this,7)">🏗️ Make Tangible</div>
+    <div class="m-chip" onclick="selectM(this,8)">⚡ Take Action</div>
+  </div>
+  <div class="m-desc" id="m-desc">Place yourself in the user's shoes. Understand their needs and motivations. Design thinking begins from a deep understanding of the people affected — not from your own assumptions about what they need.</div>
+</div>
+
+<!-- RESEARCH -->
+<div id="panel-research" class="panel" style="--accent:#1abc9c">
+  <div class="section-number">Research</div>
+<div class="section-title">Cultural Brokerage &amp; Creative Performance</div>
+<div class="section-subtitle">Jang, S. (2017). INSEAD Working Paper. How multicultural team members leverage diverse knowledge to produce creative outcomes.</div>
+  <div class="cards cols-2" style="margin-bottom:12px">
+    <div class="card" onclick="toggleCard(this)" style="--accent:#1abc9c">
+      <div class="card-title">Key Definitions <span class="card-tag" style="color:#1abc9c">Concepts</span></div>
+      <div class="card-preview">Cultural brokerage, insiders, outsiders, integrating, eliciting.</div>
+      <div class="card-detail">
+        <div class="dp"><strong>Cultural brokerage:</strong> facilitating interactions across cultural boundaries</div>
+        <div class="dp"><strong>Cultural insider:</strong> multicultural whose background overlaps with other team members</div>
+        <div class="dp"><strong>Cultural outsider:</strong> multicultural whose background has no overlap with other team members</div>
+        <div class="dp"><strong>Integrating:</strong> synthesising knowledge from different cultures into a novel whole</div>
+        <div class="dp"><strong>Eliciting:</strong> inquiring about and drawing out relevant cultural knowledge from others</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+    <div class="card" onclick="toggleCard(this)" style="--accent:#1abc9c">
+      <div class="card-title">Key Findings <span class="card-tag" style="color:#1abc9c">Results</span></div>
+      <div class="card-preview">What both studies found about multicultural teams and creativity.</div>
+      <div class="card-detail">
+        <div class="dp">Both cultural insiders and outsiders enhanced team creative performance</div>
+        <div class="dp">Insiders tend to broker by <strong>integrating</strong>; outsiders tend to broker by <strong>eliciting</strong></div>
+        <div class="dp">Both integrating and eliciting — when enacted by multiculturals — significantly improved team creativity</div>
+        <div class="dp">Integrating and eliciting together explained <strong>28% of the variance</strong> in team creative performance</div>
+        <div class="dp">Monocultural members who attempted to elicit actually <strong>decreased</strong> team creative performance</div>
+        <div class="dp">Cultural outsiders are as valuable as insiders — despite being consistently overlooked</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+    <div class="card" onclick="toggleCard(this)" style="--accent:#f39c12">
+      <div class="card-title">Leadership Implication <span class="card-tag" style="color:#f39c12">Apply</span></div>
+      <div class="card-preview">What this means for how you lead diverse teams.</div>
+      <div class="card-detail">
+        <div class="dp">Understand who the cultural brokers are in your team — and create conditions for them to play that role</div>
+        <div class="dp">Both cultural insiders and outsiders contribute meaningfully — don't overlook the outsiders</div>
+        <div class="dp">Don't expect monocultural members to bridge cultural divides — this role belongs to the multiculturals</div>
+        <div class="dp">Formal role assignment (appointing someone as cultural broker) can help legitimise brokerage behaviour</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+    <div class="card" onclick="toggleCard(this)" style="--accent:#e74c3c">
+      <div class="card-title">Connection to Module 4 <span class="card-tag" style="color:#e74c3c">Link</span></div>
+      <div class="card-preview">How cultural brokerage ties to the other concepts in this module.</div>
+      <div class="card-detail">
+        <div class="dp"><strong>Problem framing:</strong> multiculturals bring different frames — expanding the solution space before it's locked in</div>
+        <div class="dp"><strong>Systems thinking:</strong> cultural mental models are a form of the mental model layer in the iceberg</div>
+        <div class="dp"><strong>Design thinking:</strong> the Empathise stage depends on genuine cultural understanding</div>
+        <div class="dp"><strong>Decision making:</strong> cultural background shapes consensus vs. unilateral decision styles</div>
+      </div>
+      <div class="expand-hint">click to expand</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end content-area -->
+
+<script>
+function showPanel(id, tab) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  tab.classList.add('active');
+}
+
+function toggleCard(card) {
+  const wasOpen = card.classList.contains('expanded');
+  card.closest('.panel').querySelectorAll('.card').forEach(c => {
+    c.classList.remove('expanded');
+    const h = c.querySelector('.expand-hint');
+    if (h) h.textContent = 'click to expand';
+  });
+  if (!wasOpen) {
+    card.classList.add('expanded');
+    const h = card.querySelector('.expand-hint');
+    if (h) h.textContent = 'click to close';
+  }
+}
+
+function toggleIce(el) {
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.ice-level').forEach(l => l.classList.remove('open'));
+  if (!wasOpen) el.classList.add('open');
+}
+
+function toggleDStep(step) {
+  const wasOpen = step.classList.contains('open');
+  document.querySelectorAll('.d-step').forEach(s => s.classList.remove('open'));
+  if (!wasOpen) step.classList.add('open');
+}
+
+const dtData = [
+  { title: "👁️ Empathise — Research Your Users' Needs", pts: ["Who is my user? What matters to them?","Observe, engage, watch, and listen — immerse yourself in their environment","Set aside your own assumptions to gain real insight into user needs and motivations","Empathy allows design thinkers to understand rather than assume","Aim: develop the best possible understanding of your users and the problems they face"] },
+  { title: "📌 Define — State Your Users' Needs and Problems", pts: ["Unpack and synthesise what you learned in the Empathise stage","Frame the problem from the user's perspective — not the organisation's","❌ 'We need to increase market share by 5%' → ✅ 'Users need X in order to thrive'","Identify needs, capture insights, define a meaningful and actionable problem statement","Starts to generate 'How might we...?' questions that lead into Ideate"] },
+  { title: "💡 Ideate — Challenge Assumptions and Create Ideas", pts: ["Generate new ideas — divergent, wild, and creative thinking encouraged","Use brainstorming, Brainwriting, Nominal Group Technique, Worst Possible Idea","Defer judgement — explore as many ideas as possible before evaluating any","'Considered selection' of the most promising ideas follows (e.g. dot voting)","Diverge first, converge later — quantity of ideas before quality judgement"] },
+  { title: "🔧 Prototype — Start to Create Solutions", pts: ["Iteratively experiment — start building, even crudely","Do not get attached to any one prototype","Know what question you are answering with your prototype","Inexpensive, scaled-down versions help identify the best solution","By end of this stage: better understanding of product limitations and user behaviour"] },
+  { title: "🧪 Test — Try Your Solutions Out", pts: ["Collate feedback and generate new insights","Show don't tell — create experiences rather than explanations","Ask users to compare options between prototypes","Results often loop back to earlier stages — Design Thinking is non-linear","Ultimate goal: as deep an understanding of the product and its users as possible"] }
+];
+
+function selectDT(step, idx) {
+  document.querySelectorAll('.dt-step').forEach(s => s.classList.remove('active'));
+  step.classList.add('active');
+  document.getElementById('dt-title').textContent = dtData[idx].title;
+  document.getElementById('dt-body').innerHTML = dtData[idx].pts.map(p => `<div class="dp">${p}</div>`).join('');
+}
+
+const mData = [
+  "Place yourself in the user's shoes. Understand their needs and motivations. Design thinking begins from a deep understanding of the people affected — not from your own assumptions about what they need.",
+  "No one person is responsible for the outcome when working in a team. Several great minds are always stronger than just one. Design thinking benefits from multiple perspectives and lets others' creativity bolster your own.",
+  "Be confident about achieving favourable outcomes. Design thinking is the fundamental belief that we can all create change — no matter how big a problem, how little time, or how small a budget.",
+  "Get comfortable with ambiguous and complex situations. If you expect perfection, it is difficult to take risks, which limits your ability to create radical change. Experiment and learn by doing.",
+  "Be open to different ideas. Recognise that you are not the user — your experience of the problem is not the same as the user's experience of it. Stay genuinely curious about their perspective.",
+  "Challenge and reframe assumptions associated with a given situation or problem. Don't take problems at face value. Humans form patterns — and sometimes these become false or limiting assumptions.",
+  "Work with and engage people with different cultural backgrounds, experiences, and ways of thinking. Everyone brings a unique perspective. Including diverse voices helps break through your own assumptions.",
+  "When you make ideas tangible — a sketch, a scenario, a rough prototype — it is faster and easier for everyone to be on the same page than through elaborate presentations or documents.",
+  "Run experiments and learn from them. Don't wait for perfection before acting. Design thinking is about iterating toward the right solution through action and reflection, not analysis alone."
+];
+
+function selectM(chip, idx) {
+  document.querySelectorAll('.m-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  document.getElementById('m-desc').textContent = mData[idx];
+}
+</script>
+</body>
+</html>

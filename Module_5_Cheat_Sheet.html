@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5 Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #f5f0e8; color: #2c2416; padding: 20px; font-size: 12px; line-height: 1.45; }
+
+  @media print {
+    body { background: #fff; color: #1a1a1a; padding: 10px; font-size: 9.5px; }
+    .no-print { display: none; }
+    .page { box-shadow: none; border: 1px solid #d4c9b0; }
+    .col-header, .tag, .connector, .connectors-row, .door { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  .no-print { text-align: center; margin-bottom: 16px; }
+  .print-btn { padding: 9px 22px; background: #1a2744; color: #c9a84c; border: 1.5px solid #c9a84c; border-radius: 20px; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.04em; }
+  .print-btn:hover { background: #2c3e6b; }
+
+  .page { max-width: 1100px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(26,39,68,0.12); border: 1px solid #d4c9b0; padding: 20px 22px; }
+
+  .page-title { text-align: center; margin-bottom: 16px; }
+  .page-title .label { font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase; color: #c9a84c; font-weight: 500; margin-bottom: 4px; }
+  .page-title h1 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: #1a2744; }
+  .page-title p { font-size: 0.68rem; color: #7a6e5e; letter-spacing: 0.04em; margin-top: 2px; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+  .col { background: #fff; border-radius: 10px; border: 1px solid #d4c9b0; overflow: hidden; display: flex; flex-direction: column; }
+  .col-header { padding: 9px 12px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #fff; background: #1a2744; border-bottom: 2px solid #c9a84c; }
+  .col-body { padding: 10px 12px; flex: 1; }
+
+  .sec { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; margin-top: 10px; color: #c9a84c; }
+  .sec:first-child { margin-top: 0; }
+
+  .items { list-style: none; padding: 0; }
+  .items li { display: flex; gap: 6px; margin-bottom: 4px; font-size: 0.72rem; color: #4a3f2f; }
+  .items li::before { content: '›'; color: #c9a84c; font-weight: 700; flex-shrink: 0; }
+
+  .numbered { counter-reset: step; list-style: none; padding: 0; }
+  .numbered li { display: flex; gap: 7px; margin-bottom: 5px; font-size: 0.71rem; color: #4a3f2f; align-items: flex-start; }
+  .numbered li::before { counter-increment: step; content: counter(step); background: #1a2744; color: #c9a84c; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  .tag { display: inline-block; font-size: 0.62rem; font-weight: 700; padding: 2px 7px; border-radius: 8px; margin-right: 3px; margin-bottom: 3px; }
+
+  .kv { display: flex; gap: 0; margin-bottom: 4px; font-size: 0.71rem; }
+  .kv-k { color: #1a2744; min-width: 80px; flex-shrink: 0; font-weight: 700; }
+  .kv-v { color: #5a5040; }
+
+  .div { height: 1px; background: #d4c9b0; margin: 8px 0; }
+
+  .tbl { width: 100%; border-collapse: collapse; font-size: 0.68rem; }
+  .tbl th { padding: 4px 6px; font-weight: 700; text-align: left; border-bottom: 1px solid #d4c9b0; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.04em; color: #1a2744; background: #f5f0e8; }
+  .tbl td { padding: 3px 6px; color: #4a3f2f; border-bottom: 1px solid #ede8dc; vertical-align: top; }
+  .tbl tr:last-child td { border-bottom: none; }
+
+  .callout { background: #f0e6c8; border: 1px solid #c9a84c; border-radius: 6px; padding: 6px 9px; margin: 6px 0; font-size: 0.67rem; color: #5c4400; line-height: 1.4; }
+  .callout strong { color: #7a5c00; }
+
+  .quote { font-size: 0.67rem; color: #5a5040; font-style: italic; line-height: 1.45; border-left: 2px solid #c9a84c; padding-left: 8px; margin: 5px 0; }
+
+  /* DOORS */
+  .doors { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin: 5px 0; }
+  .door { border-radius: 6px; padding: 6px 8px; }
+  .door-title { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+  .door-desc { font-size: 0.63rem; line-height: 1.35; }
+  .door-action { display: inline-block; font-size: 0.6rem; font-weight: 700; padding: 1px 6px; border-radius: 8px; margin-top: 3px; }
+  .d1 { background: #e8f0e8; border: 1px solid #b5d4b5; }
+  .d1 .door-title { color: #2d7a2d; }
+  .d1 .door-action { background: #b5d4b5; color: #1a4d1a; }
+  .d2 { background: #e8edf5; border: 1px solid #b5c4d4; }
+  .d2 .door-title { color: #2c4a7a; }
+  .d2 .door-action { background: #b5c4d4; color: #1a2d4d; }
+  .d3 { background: #f5e8e8; border: 1px solid #d4b5b5; }
+  .d3 .door-title { color: #7a2c2c; }
+  .d3 .door-action { background: #d4b5b5; color: #4d1a1a; }
+  .d4 { background: #f0e6c8; border: 1px solid #c9a84c; }
+  .d4 .door-title { color: #8a6a1a; }
+  .d4 .door-action { background: #c9a84c; color: white; }
+
+  /* IMMUNITY MAP */
+  .imm-map { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin: 6px 0; }
+  .imm-col { background: #fff; border: 1px solid #d4c9b0; border-radius: 7px; padding: 7px 8px; }
+  .imm-num { width: 20px; height: 20px; background: #1a2744; color: #c9a84c; border-radius: 50%; font-size: 0.6rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: 5px; }
+  .imm-title { font-size: 0.62rem; font-weight: 700; color: #1a2744; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; line-height: 1.2; }
+  .imm-desc { font-size: 0.6rem; color: #5a5040; line-height: 1.4; }
+  .imm-ex { font-size: 0.58rem; color: #7a6e5e; font-style: italic; margin-top: 3px; }
+
+  /* KOTTER STEPS */
+  .kotter-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin: 5px 0; }
+  .k-step { display: flex; gap: 5px; align-items: flex-start; padding: 4px 6px; background: #f5f0e8; border-radius: 5px; border-left: 2px solid #c9a84c; }
+  .k-num { background: #1a2744; color: #c9a84c; border-radius: 50%; width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .k-text { font-size: 0.63rem; color: #4a3f2f; line-height: 1.35; }
+
+  /* STAT BOXES */
+  .stats { display: flex; gap: 6px; margin: 6px 0; }
+  .stat { flex: 1; text-align: center; background: #fff; border: 1px solid #d4c9b0; border-radius: 7px; padding: 7px 5px; }
+  .stat-num { font-size: 1.4rem; font-weight: 700; color: #1a2744; line-height: 1; }
+  .stat-label { font-size: 0.58rem; color: #5a5040; margin-top: 2px; line-height: 1.3; }
+
+  /* CONNECTORS */
+  .connectors-row { grid-column: 1 / -1; background: #1a2744; border-radius: 10px; border: 1px solid #d4c9b0; padding: 10px 14px; display: flex; align-items: center; gap: 0; flex-wrap: nowrap; overflow-x: auto; }
+  .connector { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px 8px; border-radius: 8px; flex: 1; min-width: 80px; text-align: center; background: rgba(255,255,255,0.08); }
+  .cn-title { font-size: 0.63rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; color: #c9a84c; }
+  .cn-desc { font-size: 0.58rem; color: rgba(255,255,255,0.55); line-height: 1.3; }
+  .cn-arrow { font-size: 1rem; color: #c9a84c; padding: 0 4px; flex-shrink: 0; }
+
+  strong { font-weight: 700; }
+
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } .imm-map { grid-template-columns: 1fr 1fr; } .connectors-row { flex-wrap: wrap; } }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  <button class="print-btn" onclick="window.print()">🖨 Print / Save as PDF</button>
+</div>
+
+<div class="page">
+  <div class="page-title">
+    <div class="label">Executive Ready Leadership · Module 5</div>
+    <h1>Leading Innovation & Change</h1>
+    <p>Quick Reference Cheat Sheet</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- COL 1: CREATIVITY & INNOVATION -->
+    <div class="col">
+      <div class="col-header">💡 5.1–5.2 Creativity & Innovation</div>
+      <div class="col-body">
+        <div class="sec">Key Distinction</div>
+        <table class="tbl">
+          <tr><th>Creativity</th><th>Innovation</th></tr>
+          <tr><td>Entirely new concept from inception</td><td>New application of established ideas</td></tr>
+          <tr><td>Original — nothing before it</td><td>New process, enactment, reconceptualisation</td></tr>
+          <tr><td colspan="2" style="color:#7a5c00;font-style:italic">Innovation is less daunting — it's doing things differently, not from nothing</td></tr>
+        </table>
+
+        <div class="div"></div>
+        <div class="sec">Culture Shapes Creativity (Shao et al., 2019)</div>
+        <ul class="items">
+          <li><strong>Western:</strong> Novelty, originality, radical ideas, personal success</li>
+          <li><strong>Eastern:</strong> Usefulness, social contribution, incremental change, tradition reinterpreted</li>
+          <li>Neither is superior — both are valid and valuable</li>
+        </ul>
+
+        <div class="div"></div>
+        <div class="sec">Brainstorming Barriers in Diverse Teams</div>
+        <div style="margin-bottom:4px">
+          <span class="tag" style="background:#fee2e2;color:#991b1b">First idea wins</span>
+          <span class="tag" style="background:#fee2e2;color:#991b1b">Language fluency gap</span>
+          <span class="tag" style="background:#fee2e2;color:#991b1b">Saving face</span>
+          <span class="tag" style="background:#fee2e2;color:#991b1b">Big picture vs. detail</span>
+        </div>
+        <div class="callout"><strong>Key finding (Livermore, HBR):</strong> Diverse teams with <em>low</em> CQ produce <em>less</em> creative output than homogeneous teams.</div>
+
+        <div class="div"></div>
+        <div class="sec">Strategies for Inclusive Brainstorming</div>
+        <ol class="numbered">
+          <li><strong>Clearly define the objective</strong> — align everyone on the goal beforehand</li>
+          <li><strong>Give advance warning</strong> — allow prep time; offer written alternatives</li>
+          <li><strong>Insist on 100% participation</strong> — multiple formats (verbal, written, collective)</li>
+        </ol>
+
+        <div class="div"></div>
+        <div class="sec">Barriers to Creativity (5.2)</div>
+        <div class="kv"><span class="kv-k">External:</span><span class="kv-v">Org culture, resource constraints, change fatigue, lack of buy-in</span></div>
+        <div class="kv"><span class="kv-k">Internal:</span><span class="kv-v">Fixed mindset, low intrinsic motivation, conflict aversion, self-doubt</span></div>
+      </div>
+    </div>
+
+    <!-- COL 2: RESISTANCE TO CHANGE -->
+    <div class="col">
+      <div class="col-header">🚧 5.5 Resistance to Change</div>
+      <div class="col-body">
+        <div class="sec">Why Resistance Occurs</div>
+        <ul class="items">
+          <li><strong>Sense of loss</strong> — familiar culture, role identity, ways of working</li>
+          <li><strong>Lack of willingness</strong> — long-established habits are hard to shift</li>
+          <li><strong>Lack of transparency</strong> — unclear communication or absent shared vision</li>
+          <li><strong>Lack of skill</strong> — people fear they can't do what the change requires</li>
+        </ul>
+
+        <div class="div"></div>
+        <div class="sec">Real Reasons People Resist (Jason Clarke)</div>
+        <ul class="items">
+          <li>Emotional overwhelm — too much fear to engage</li>
+          <li>Fear of the <em>transition</em>, not the idea itself</li>
+          <li>Uncertainty about how big the change really is</li>
+          <li>Not seeing how they fit into the change</li>
+          <li>Feeling they have no say</li>
+          <li>Scepticism from past experiences of <em>fake</em> change</li>
+        </ul>
+
+        <div class="div"></div>
+        <div class="sec">The Four Doors of Change</div>
+        <div class="doors">
+          <div class="door d1">
+            <div class="door-title">Door 1</div>
+            <div class="door-desc">Could do before · still can</div>
+            <span class="door-action">Business as usual</span>
+          </div>
+          <div class="door d2">
+            <div class="door-title">Door 2</div>
+            <div class="door-desc">Couldn't do before · still can't</div>
+            <span class="door-action">Business as usual</span>
+          </div>
+          <div class="door d3">
+            <div class="door-title">Door 3</div>
+            <div class="door-desc">Could do before · can't now</div>
+            <span class="door-action">Let it go</span>
+          </div>
+          <div class="door d4">
+            <div class="door-title">Door 4</div>
+            <div class="door-desc">Couldn't do before · can now</div>
+            <span class="door-action">Go for it!</span>
+          </div>
+        </div>
+        <div class="callout">Making visible what <strong>won't</strong> change helps people feel safe enough to accept what <strong>will</strong>.</div>
+
+        <div class="div"></div>
+        <div class="sec">Authorship vs. Ownership</div>
+        <table class="tbl">
+          <tr><th>Ownership</th><th>Authorship</th></tr>
+          <tr><td>"Own this change"</td><td>"You design how it works"</td></tr>
+          <tr><td>Imposed, doesn't stick</td><td>Genuine buy-in created</td></tr>
+        </table>
+        <div class="quote">"If you say: Here's why we have to change. You tell me how. You give them authorship." — Jason Clarke</div>
+
+        <div class="div"></div>
+        <div class="sec">Real vs. Fake Change</div>
+        <div class="kv"><span class="kv-k">Real:</span><span class="kv-v">Cultural + offered (invited)</span></div>
+        <div class="kv"><span class="kv-k">Fake:</span><span class="kv-v">Structural + foisted (imposed) — reorganising charts without changing culture</span></div>
+      </div>
+    </div>
+
+    <!-- COL 3: KOTTER -->
+    <div class="col">
+      <div class="col-header">🔑 5.6 Kotter's 8-Step Model</div>
+      <div class="col-body">
+        <div class="sec">Change Management vs. Change Leadership</div>
+        <table class="tbl">
+          <tr><th>Management</th><th>Leadership</th></tr>
+          <tr><td>Processes &amp; tools</td><td>Vision &amp; momentum</td></tr>
+          <tr><td>Smaller changes</td><td>Large-scale transformation</td></tr>
+          <tr><td>Planned &amp; deliberate</td><td>Urgent &amp; empowering</td></tr>
+          <tr><td>On budget &amp; controlled</td><td>Faster &amp; smarter</td></tr>
+        </table>
+
+        <div class="div"></div>
+        <div class="sec">The 8 Steps</div>
+        <div class="kotter-steps">
+          <div class="k-step"><div class="k-num">1</div><div class="k-text"><strong>Create urgency</strong> — honest dialogue about threats &amp; opportunities</div></div>
+          <div class="k-step"><div class="k-num">2</div><div class="k-text"><strong>Guiding coalition</strong> — diverse, influential leaders; emotional commitment</div></div>
+          <div class="k-step"><div class="k-num">3</div><div class="k-text"><strong>Develop vision</strong> — clear, memorable, describable in 5 minutes</div></div>
+          <div class="k-step"><div class="k-num">4</div><div class="k-text"><strong>Communicate vision</strong> — embed in everything; walk the talk</div></div>
+          <div class="k-step"><div class="k-num">5</div><div class="k-text"><strong>Empower others</strong> — remove structural and human barriers</div></div>
+          <div class="k-step"><div class="k-num">6</div><div class="k-text"><strong>Short-term wins</strong> — celebrate early; use wins to build momentum</div></div>
+          <div class="k-step"><div class="k-num">7</div><div class="k-text"><strong>Consolidate gains</strong> — don't declare victory early; kaizen thinking</div></div>
+          <div class="k-step"><div class="k-num">8</div><div class="k-text"><strong>Anchor in culture</strong> — embed in hiring, training, succession</div></div>
+        </div>
+
+        <div class="div"></div>
+        <div class="sec">Getting Started on Innovation (5.3–5.4)</div>
+        <ol class="numbered">
+          <li><strong>Take the balcony view</strong> — step back, look holistically</li>
+          <li><strong>Create an opportunity list</strong> — what could be enhanced?</li>
+          <li><strong>Refine the list</strong> — what to move forward with?</li>
+          <li><strong>Anticipate challenges</strong> — whose mindset may not align?</li>
+          <li><strong>Choose the right time</strong> — consult widely, seek shared ownership</li>
+          <li><strong>Move incrementally</strong> — not radically</li>
+        </ol>
+        <div class="callout"><strong>Timing matters:</strong> Avoid change fatigue — if the org is already in flux, staff may lack capacity for more.</div>
+      </div>
+    </div>
+
+    <!-- ROW 2 COL 4: IMMUNITY TO CHANGE (spans 2) -->
+    <div class="col" style="grid-column: 1 / 3">
+      <div class="col-header">🧠 5.7–5.8 Immunity to Change (Kegan & Lahey)</div>
+      <div class="col-body">
+        <div class="callout" style="margin-bottom:8px"><strong>Core insight:</strong> The gap between intention and action is not about willpower or knowledge — it's a hidden psychological immune system protecting us from anxiety. (1 in 7 heart patients make the necessary changes even when told their life depends on it.)</div>
+
+        <div class="sec">The Five-Column Immunity Map</div>
+        <div class="imm-map">
+          <div class="imm-col">
+            <div class="imm-num">1</div>
+            <div class="imm-title">Improvement Goal</div>
+            <div class="imm-desc">The change you want. Adaptive, behavioural, stated positively, about you.</div>
+            <div class="imm-ex">e.g. "I am committed to backing myself and my abilities"</div>
+          </div>
+          <div class="imm-col">
+            <div class="imm-num">2</div>
+            <div class="imm-title">Doing / Not Doing Instead</div>
+            <div class="imm-desc">Behaviours (conscious or unconscious) that sabotage your goal. Specific, honest, no justification.</div>
+            <div class="imm-ex">e.g. "I browse the internet; I avoid the task with trivial work"</div>
+          </div>
+          <div class="imm-col">
+            <div class="imm-num">3</div>
+            <div class="imm-title">Hidden Competing Commitments</div>
+            <div class="imm-desc">What you're actually committed to protecting. The "oh shit" feeling — what you fear if you did the opposite of col 2.</div>
+            <div class="imm-ex">e.g. "I am committed to not being exposed as inadequate"</div>
+          </div>
+          <div class="imm-col">
+            <div class="imm-num">4</div>
+            <div class="imm-title">Big Assumptions</div>
+            <div class="imm-desc">Unconscious beliefs treated as absolute truth. "If [col 3 situation], then something really bad will happen."</div>
+            <div class="imm-ex">e.g. "I assume that if I back myself and fail, people will see I'm not capable"</div>
+          </div>
+          <div class="imm-col">
+            <div class="imm-num">5</div>
+            <div class="imm-title">Testing Strategies</div>
+            <div class="imm-desc"><strong>SMART experiments:</strong> Safe · Modest · Actionable · Research-focused · Test. Small experiments to challenge whether col 4 is actually true.</div>
+            <div class="imm-ex">e.g. "Back myself in one low-stakes meeting this week; observe what actually happens"</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">
+          <div>
+            <div class="sec">Three Mindset Blocks (Crowell)</div>
+            <ul class="items">
+              <li><strong>"I can't do it"</strong> — fixed mindset. Counter: growth mindset — effort over time produces accomplishment</li>
+              <li><strong>"People like me don't do this"</strong> — identity threat. Counter: find people with similar identity who do it successfully</li>
+              <li><strong>"I don't actually want to"</strong> — extrinsic motivation only. Counter: build intrinsic interest and genuine connection to long-term hopes</li>
+            </ul>
+          </div>
+          <div>
+            <div class="sec">Three Elements for Change to Stick</div>
+            <div class="kv"><span class="kv-k">🔥 Gut:</span><span class="kv-v">Fire in the belly — felt deeply, connected to people who matter</span></div>
+            <div class="kv"><span class="kv-k">🧠 Head+Heart:</span><span class="kv-v">Both reason and feeling must work together</span></div>
+            <div class="kv"><span class="kv-k">✋ Hand:</span><span class="kv-v">Intentional behavioural action — test the assumptions</span></div>
+            <div class="quote" style="margin-top:6px">"There's a big difference between deciding to do something and actually doing it." — Suzi Finkelstein</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 2 COL 5: RESEARCH -->
+    <div class="col">
+      <div class="col-header">📄 Research Highlights</div>
+      <div class="col-body">
+        <div class="sec">Women as Better Crisis Leaders (Zenger & Folkman, HBR 2020)</div>
+        <div class="stats">
+          <div class="stat"><div class="stat-num">13</div><div class="stat-label">of 19 competencies women outscored men</div></div>
+          <div class="stat"><div class="stat-num">55.2</div><div class="stat-label">vs 49.2 employee engagement score</div></div>
+        </div>
+        <ul class="items" style="margin-top:4px">
+          <li>Data from 360° assessments during COVID-19 (March–June 2020)</li>
+          <li>Gap was <strong>larger</strong> during the pandemic than pre-pandemic</li>
+          <li>Women showed more awareness of followers' fears &amp; confidence in plans</li>
+          <li>Key competencies: initiative, learning agility, integrity, collaboration, championing change</li>
+        </ul>
+
+        <div class="div"></div>
+        <div class="sec">The Glass Cliff (Vongas & Al Hajj, 2015)</div>
+        <table class="tbl">
+          <tr><th>Glass Ceiling</th><th>Glass Cliff</th></tr>
+          <tr><td>Invisible barrier to reaching the top</td><td>Appointed to <em>declining</em> orgs — high failure risk</td></tr>
+        </table>
+        <ul class="items" style="margin-top:4px">
+          <li>"Think crisis — think female" heuristic drives appointments</li>
+          <li>Women preferred for <strong>intraorganisational</strong> crises (trust breakdown, internal conflict)</li>
+          <li>Men preferred for <strong>interorganisational</strong> crises (external threats, competitive warfare)</li>
+          <li>At extreme crisis intensity, stereotypically masculine traits become more desirable</li>
+          <li>Glass cliff perpetuates stereotypes by placing women in pre-set-up-to-fail roles</li>
+        </ul>
+
+        <div class="div"></div>
+        <div class="sec">Key Theorists</div>
+        <div class="kv"><span class="kv-k">Kotter</span><span class="kv-v">8-Step Change Leadership Model</span></div>
+        <div class="kv"><span class="kv-k">Kegan & Lahey</span><span class="kv-v">Immunity to Change</span></div>
+        <div class="kv"><span class="kv-k">Jason Clarke</span><span class="kv-v">Real reasons for resistance; 4 Doors</span></div>
+        <div class="kv"><span class="kv-k">Livermore</span><span class="kv-v">CQ &amp; brainstorming across cultures</span></div>
+        <div class="kv"><span class="kv-k">Dabrowski</span><span class="kv-v">Getting started on innovation</span></div>
+        <div class="kv"><span class="kv-k">Ryan & Haslam</span><span class="kv-v">Glass cliff (2005)</span></div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div class="connectors-row">
+      <div class="connector"><div class="cn-title">Creativity</div><div class="cn-desc">Distinguish creativity from innovation — less daunting</div></div>
+      <div class="cn-arrow">→</div>
+      <div class="connector"><div class="cn-title">Barriers</div><div class="cn-desc">Identify external &amp; internal barriers before acting</div></div>
+      <div class="cn-arrow">→</div>
+      <div class="connector"><div class="cn-title">Getting Started</div><div class="cn-desc">Balcony view → opportunity list → right timing</div></div>
+      <div class="cn-arrow">→</div>
+      <div class="connector"><div class="cn-title">Resistance</div><div class="cn-desc">4 Doors + authorship over ownership</div></div>
+      <div class="cn-arrow">→</div>
+      <div class="connector"><div class="cn-title">Kotter</div><div class="cn-desc">Lead the change — urgency → vision → wins → embed</div></div>
+      <div class="cn-arrow">→</div>
+      <div class="connector"><div class="cn-title">Immunity Map</div><div class="cn-desc">Uncover hidden competing commitments</div></div>
+      <div class="cn-arrow">→</div>
+      <div class="connector"><div class="cn-title">Test</div><div class="cn-desc">Small SMART experiments to challenge big assumptions</div></div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

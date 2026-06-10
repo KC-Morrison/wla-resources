@@ -18,7 +18,6 @@ If you find these useful or have questions, feel free to connect on [LinkedIn](h
 
 | File | Description |
 |---|---|
-| [Executive Ready Leadership Course](./Executive_Ready_Leadership_Course.md) | Program overview and orientation notes |
 | [Course Structure](./Course_Structure.md) | Full program map and module outline |
 
 ---

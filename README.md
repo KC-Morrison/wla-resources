@@ -18,6 +18,7 @@ If you find these useful or have questions, feel free to connect on [LinkedIn](h
 
 | File | Description |
 |---|---|
+| [Executive Ready Leadership Course](./Executive_Ready_Leadership_Course.md) | Program overview and orientation notes |
 | [Course Structure](./Course_Structure.md) | Full program map and module outline |
 
 ---
@@ -27,7 +28,7 @@ If you find these useful or have questions, feel free to connect on [LinkedIn](h
 | File | Type | Description |
 |---|---|---|
 | [Leadership and Authenticity](./Workshop_1_Leadership_and_Authenticity.md) | Notes | Written notes on leadership and authenticity |
-| [Visual Summary](./Workshop_1_Visual_Summary.html) | Interactive | Visual summary tool |
+| [Visual Summary](https://kc-morrison.github.io/wla-resources/Workshop_1_Visual_Summary.html) | Interactive | Visual summary tool |
 
 ---
 
@@ -35,7 +36,7 @@ If you find these useful or have questions, feel free to connect on [LinkedIn](h
 
 | File | Type | Description |
 |---|---|---|
-| [Module 1 Study Guide](./Module_1_Study_Guide.html) | Interactive | Study guide and reference tool |
+| [Module 1 Study Guide](https://kc-morrison.github.io/wla-resources/Module_1_Study_Guide.html) | Interactive | Study guide and reference tool |
 | [Module 1 Summary](./Module_1_Summary.md) | Notes | Written summary and key concepts |
 
 ---
@@ -51,9 +52,9 @@ If you find these useful or have questions, feel free to connect on [LinkedIn](h
 | File | Type | Description |
 |---|---|---|
 | [Building High-Performing Teams](./Module_3_Building_High-Performing_Teams.md) | Notes | Written notes on team dynamics |
-| [Cheat Sheet](./Module_3_Cheat_Sheet.html) | Interactive | Quick reference cheat sheet |
-| [Complete Guide](./Module_3_Complete_Guide.html) | Interactive | Comprehensive module guide |
-| [Interactive Summary](./Module_3_Interactive.html) | Interactive | Interactive summary tool |
+| [Cheat Sheet](https://kc-morrison.github.io/wla-resources/Module_3_Cheat_Sheet.html) | Interactive | Quick reference cheat sheet |
+| [Complete Guide](https://kc-morrison.github.io/wla-resources/Module_3_Complete_Guide.html) | Interactive | Comprehensive module guide |
+| [Interactive Summary](https://kc-morrison.github.io/wla-resources/Module_3_Interactive.html) | Interactive | Interactive summary tool |
 
 ---
 
@@ -68,8 +69,8 @@ If you find these useful or have questions, feel free to connect on [LinkedIn](h
 | File | Type | Description |
 |---|---|---|
 | [Problem Solving and Decision Making](./Module_4_Problem_Solving_and_Decision_Making.md) | Notes | Written notes on problem solving and decision making |
-| [Cheat Sheet](./Module_4_Cheat_Sheet.html) | Interactive | Quick reference cheat sheet |
-| [Interactive Summary](./Module_4_Interactive_Summary.html) | Interactive | Interactive summary tool |
+| [Cheat Sheet](https://kc-morrison.github.io/wla-resources/Module_4_Cheat_Sheet.html) | Interactive | Quick reference cheat sheet |
+| [Interactive Summary](https://kc-morrison.github.io/wla-resources/Module_4_Interactive_Summary.html) | Interactive | Interactive summary tool |
 
 ---
 
@@ -78,8 +79,8 @@ If you find these useful or have questions, feel free to connect on [LinkedIn](h
 | File | Type | Description |
 |---|---|---|
 | [Leading Innovation and Change](./Module_5_Leading_Innovation_and_Change.md) | Notes | Written notes on innovation and change |
-| [Cheat Sheet](./Module_5_Cheat_Sheet.html) | Interactive | Quick reference cheat sheet |
-| [Visual Summary](./Module_5_Visual_Summary.html) | Interactive | Visual summary tool |
+| [Cheat Sheet](https://kc-morrison.github.io/wla-resources/Module_5_Cheat_Sheet.html) | Interactive | Quick reference cheat sheet |
+| [Visual Summary](https://kc-morrison.github.io/wla-resources/Module_5_Visual_Summary.html) | Interactive | Visual summary tool |
 
 ---
 

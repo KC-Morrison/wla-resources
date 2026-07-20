@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2: Communication, Presence and Influence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ── THEME TOKENS ─────────────────────────────────────── */
+  :root {
+    --navy:       #1a2744;
+    --navy-mid:   #2c3e6b;
+    --gold:       #c9a84c;
+    --gold-light: #f0e6c8;
+    --cream:      #f5f0e8;
+    --cream-dark: #ede8dc;
+    --border:     #d4c9b0;
+    --text:       #2c2416;
+    --text-muted: #5a5040;
+    --text-dim:   #7a6e5e;
+  }
+
+  /* ── RESET ────────────────────────────────────────────── */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+
+  /* ── PAGE HEADER ──────────────────────────────────────── */
+  .page-header { background: var(--navy); border-bottom: 3px solid var(--gold); padding: 24px 28px 0; }
+  .container   { max-width: 960px; margin: 0 auto; }
+  .header-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-weight: 500; text-align: center; }
+  h1 { font-family: 'Playfair Display', serif; color: #fff; text-align: center; margin-bottom: 4px; font-size: 24px; font-weight: 700; }
+  .subtitle { color: rgba(255,255,255,0.65); text-align: center; margin-bottom: 14px; font-size: 13px; }
+
+  /* ── NAV PILLS ────────────────────────────────────────── */
+  .nav-container { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 0 12px; }
+  .nav-item { padding: 7px 13px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); border: 1.5px solid transparent; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .nav-item:hover { color: #fff; background: rgba(255,255,255,0.18); transform: translateY(-1px); }
+  .nav-item.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+  .nav-number { font-size: 11px; opacity: 0.8; }
+  .nav-item.active .nav-number { opacity: 1; }
+
+  /* ── CONTENT AREA & CARD ──────────────────────────────── */
+  .content-area { padding: 24px 28px 40px; }
+  .card { background: #fff; border-radius: 12px; padding: 26px; border: 1px solid var(--border); min-height: 520px; }
+
+  /* ── SECTION HEADER ───────────────────────────────────── */
+  .section-number   { display: inline-block; background: var(--navy); color: var(--gold); padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; margin-right: 10px; vertical-align: middle; }
+  .section-title    { display: inline; font-size: 22px; font-weight: 600; color: var(--navy); vertical-align: middle; }
+  .section-subtitle { display: block; font-size: 13px; color: var(--text-muted); margin-top: 12px; margin-bottom: 20px; line-height: 1.6; border-left: 3px solid var(--gold); padding: 10px 14px; background: var(--cream-dark); border-radius: 0 6px 6px 0; }
+  .subsection { margin: 20px 0; }
+  .subsection-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .subsection-title::before { content: ''; width: 3px; height: 16px; background: var(--gold); border-radius: 2px; flex-shrink: 0; }
+
+  /* ── CLICKABLE GRID ───────────────────────────────────── */
+  /* Use for: comparing items, frameworks with multiple elements, Tuckman stages, TKI modes */
+  .clickable-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 16px 0; }
+  .clickable-item { padding: 16px; border-radius: 10px; cursor: pointer; transition: all 0.25s; text-align: center; border: 2px solid transparent; }
+  .clickable-item:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(26,39,68,0.12); }
+  .clickable-item.active { border-color: var(--gold); box-shadow: 0 6px 18px rgba(201,168,76,0.25); }
+  .clickable-icon { font-size: 30px; margin-bottom: 8px; }
+  .clickable-name { font-weight: 700; font-size: 13px; color: var(--text); }
+  .clickable-desc { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+  /* Item colour schemes, pick one per item */
+  .item-blue   { background: #dbeafe; }
+  .item-green  { background: #dcfce7; }
+  .item-yellow { background: #fef3c7; }
+  .item-red    { background: #fee2e2; }
+  .item-purple { background: #ede9fe; }
+  .item-orange { background: #ffedd5; }
+  .item-teal   { background: #ccfbf1; }
+  .item-gray   { background: #f1f5f9; }
+
+  /* ── DETAIL BOX ───────────────────────────────────────── */
+  /* Use for: expanded detail when a clickable item is selected */
+  .detail-box { margin-top: 14px; padding: 18px; background: #fff; border-radius: 8px; border: 1px solid var(--border); border-left: 3px solid var(--gold); }
+  .detail-box h4 { color: var(--navy); margin-bottom: 8px; font-size: 15px; font-weight: 700; }
+  .detail-box p  { color: #4a3f2f; line-height: 1.6; margin-bottom: 8px; font-size: 13.5px; }
+  .detail-box p:last-child { margin-bottom: 0; }
+
+  /* ── INSIGHT / CALLOUT BOX ────────────────────────────── */
+  /* Use for: key takeaways, warnings, leadership tips */
+  .insight-box { background: var(--gold-light); border: 1px solid var(--gold); border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .insight-title { font-size: 12px; font-weight: 700; color: #7a5c00; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .insight-box p { color: #5c4400; font-size: 13.5px; line-height: 1.5; }
+
+  /* ── CULTURAL / INFO NOTE BOX ─────────────────────────── */
+  /* Use for: cross-cultural context, research findings, extra context */
+  .info-note { background: #e8edf5; border: 1px solid #b5c4d4; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .info-note .note-title { font-weight: 700; color: var(--navy); margin-bottom: 8px; font-size: 13px; }
+  .info-note p { color: #2c3e6b; font-size: 13.5px; line-height: 1.5; }
+
+  /* ── LINE OF CHOICE / ABOVE-BELOW ZONES ──────────────── */
+  /* Use for: above/below the line, positive/negative behaviours */
+  .line-zone  { padding: 18px; border-radius: 10px; margin: 10px 0; cursor: pointer; transition: all 0.25s; }
+  .line-zone:hover { transform: scale(1.01); }
+  .zone-above { background: #dcfce7; border: 2px solid #22c55e; }
+  .zone-below { background: #fee2e2; border: 2px solid #ef4444; }
+  .line-divider { height: 4px; background: linear-gradient(90deg, #22c55e, var(--gold), #ef4444); border-radius: 2px; margin: 16px 0; position: relative; }
+  .line-label { position: absolute; left: 50%; transform: translateX(-50%); top: -13px; background: #fff; padding: 3px 12px; font-weight: 700; font-size: 11px; color: var(--navy); border-radius: 10px; border: 1px solid var(--border); white-space: nowrap; }
+  .behavior-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .tag { padding: 4px 10px; border-radius: 14px; font-size: 12px; font-weight: 600; }
+  .tag-green { background: #22c55e; color: white; }
+  .tag-red   { background: #ef4444; color: white; }
+
+  /* ── PYRAMID ──────────────────────────────────────────── */
+  /* Use for: hierarchies, Lencioni's 5 Dysfunctions, Maslow etc. */
+  /* Colours encode severity, keep red at top, navy at base */
+  .pyramid { display: flex; flex-direction: column; align-items: center; gap: 5px; margin: 16px 0; }
+  .pyramid-level { padding: 13px 16px; text-align: center; cursor: pointer; transition: all 0.25s; border-radius: 7px; font-weight: 600; color: white; font-size: 13px; }
+  .pyramid-level:hover { transform: scale(1.02); filter: brightness(1.08); }
+  .pyramid-level.active { box-shadow: 0 0 0 3px var(--gold), 0 6px 18px rgba(0,0,0,0.2); }
+  .pyr-5 { width: 40%; background: #ef4444; }
+  .pyr-4 { width: 52%; background: #f97316; }
+  .pyr-3 { width: 64%; background: #eab308; }
+  .pyr-2 { width: 78%; background: #22c55e; }
+  .pyr-1 { width: 100%; background: var(--navy); }
+
+  /* ── SPECTRUM / HORIZONTAL SELECTOR ──────────────────── */
+  /* Use for: scales, spectrums, Tannenbaum-Schmidt etc. */
+  .spectrum { display: flex; gap: 6px; margin: 16px 0; }
+  .spectrum-item { flex: 1; padding: 14px 8px; text-align: center; cursor: pointer; transition: all 0.25s; border-radius: 10px; border: 2px solid transparent; color: white; }
+  .spectrum-item:hover { transform: translateY(-3px); }
+  .spectrum-item.active { border-color: var(--gold); box-shadow: 0 6px 18px rgba(0,0,0,0.2); }
+  .spec-1 { background: #1a2744; }
+  .spec-2 { background: #2c3e6b; }
+  .spec-3 { background: #3d5088; }
+  .spec-4 { background: #4e62a0; }
+  .spec-5 { background: #6074b8; }
+  .spectrum-icon   { font-size: 22px; margin-bottom: 4px; }
+  .spectrum-name   { font-weight: 700; font-size: 12px; }
+  .spectrum-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); margin-top: 8px; font-weight: 600; }
+
+  /* ── FORMULA BOX ──────────────────────────────────────── */
+  /* Use for: step-by-step formulas, commitment request formula */
+  .formula-box   { background: var(--gold-light); border: 1.5px solid var(--gold); border-radius: 10px; padding: 18px; margin: 16px 0; }
+  .formula-title { font-weight: 700; margin-bottom: 12px; text-align: center; color: #7a5c00; font-size: 14px; }
+  .formula-steps { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+  .formula-step  { background: white; padding: 9px 13px; border-radius: 7px; font-weight: 600; font-size: 13px; border: 1px solid var(--border); color: var(--text); }
+  .formula-arrow { color: var(--gold); font-size: 16px; font-weight: bold; }
+  .formula-note  { text-align: center; margin-top: 12px; font-size: 13px; color: #7a5c00; font-weight: 600; }
+
+  /* ── NUMBERED STEPS LIST ──────────────────────────────── */
+  /* Use for: processes, accountability conversations, how-to steps */
+  .steps-list  { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 16px 0; }
+  .step-item   { display: flex; align-items: flex-start; gap: 10px; padding: 12px; background: #fff; border-radius: 8px; border: 1px solid var(--border); border-left: 3px solid var(--navy); }
+  .step-number { background: var(--navy); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .step-text   { font-size: 13px; color: #4a3f2f; }
+
+  /* ── CIRCLE-NUMBER STEP LIST (vertical) ──────────────── */
+  /* Use for: brainstorming strategies, design thinking stages */
+  .vsteps { display: flex; flex-direction: column; gap: 16px; margin: 16px 0; }
+  .vstep  { display: flex; gap: 20px; align-items: flex-start; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; transition: box-shadow 0.2s; }
+  .vstep:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .vstep-num  { width: 38px; height: 38px; background: var(--navy); color: white; font-size: 18px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .vstep-body h4 { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .vstep-body p  { font-size: 13.5px; color: #6b6b6b; line-height: 1.6; }
+
+  /* ── EXPANDABLE CARDS ─────────────────────────────────── */
+  /* Use for: reference material, research summaries, detailed definitions */
+  .exp-cards { display: grid; gap: 12px; }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .exp-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+  .exp-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--navy); opacity: 0; transition: opacity 0.2s; }
+  .exp-card:hover { border-color: #b8a98a; transform: translateY(-2px); }
+  .exp-card:hover::before, .exp-card.expanded::before { opacity: 1; }
+  .exp-card.expanded { border-color: var(--gold); background: #fdfaf5; }
+  .exp-title   { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .exp-tag     { font-size: 10px; background: var(--gold-light); color: #7a5c00; padding: 2px 7px; border-radius: 10px; font-weight: 600; margin-left: auto; flex-shrink: 0; }
+  .exp-preview { font-size: 12px; color: var(--text-dim); line-height: 1.45; }
+  .exp-detail  { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--cream-dark); }
+  .exp-card.expanded .exp-detail { display: block; }
+  .dp { display: flex; gap: 8px; margin-bottom: 7px; font-size: 12px; color: #4a3f2f; line-height: 1.45; }
+  .dp::before { content: '→'; color: var(--gold); flex-shrink: 0; font-weight: 700; }
+  .expand-hint { font-size: 11px; color: #b8a98a; margin-top: 8px; text-align: right; }
+  .exp-card:hover .expand-hint { color: #7a5c00; }
+
+  /* ── PULL QUOTE ───────────────────────────────────────── */
+  /* Use for: key quotes from theorists, memorable principles */
+  .pullquote { background: var(--navy); color: white; border-radius: 12px; padding: 28px 32px; margin: 24px 0; position: relative; }
+  .pullquote::before { content: '\201C'; font-family: 'Playfair Display', serif; font-size: 100px; color: var(--gold); opacity: 0.3; position: absolute; top: -10px; left: 16px; line-height: 1; }
+  .pullquote p    { font-size: 15px; line-height: 1.65; font-weight: 400; position: relative; z-index: 1; }
+  .pullquote cite { display: block; margin-top: 10px; font-size: 12px; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; font-style: normal; font-weight: 500; position: relative; z-index: 1; }
+
+  /* ── STAT BOXES ───────────────────────────────────────── */
+  /* Use for: research statistics, key numbers */
+  .stats    { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin: 20px 0; }
+  .stat-box { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px 20px; text-align: center; }
+  .stat-num   { font-size: 42px; font-weight: 700; color: var(--navy); line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-size: 13px; color: #6b6b6b; line-height: 1.5; }
+
+  /* ── COMPARE COLUMNS ──────────────────────────────────── */
+  /* Use for: contrasting two approaches, cultural comparisons */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .c-col   { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .c-col h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--cream-dark); }
+  .c-row { display: flex; gap: 8px; margin-bottom: 7px; font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+  /* ── VISION BANNER ────────────────────────────────────── */
+  /* Use for: central concept that connects elements (e.g. Balanced Scorecard) */
+  .vision-banner { text-align: center; padding: 13px; background: var(--navy); color: white; border-radius: 8px; font-weight: 700; font-size: 13px; margin-bottom: 12px; }
+
+  /* ── QUIZ ─────────────────────────────────────────────── */
+  .quiz-progress { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
+  .quiz-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--border); transition: all 0.3s; }
+  .quiz-dot.active    { background: var(--navy); transform: scale(1.3); }
+  .quiz-dot.correct   { background: var(--gold); }
+  .quiz-dot.incorrect { background: #c07060; }
+  .quiz-question { font-size: 17px; font-weight: 700; margin-bottom: 18px; color: var(--navy); line-height: 1.4; }
+  .quiz-options  { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option   { padding: 13px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s; border: 1.5px solid var(--border); background: white; font-size: 13.5px; color: var(--text); }
+  .quiz-option:hover:not(.disabled) { border-color: var(--navy); background: var(--cream); transform: translateX(3px); }
+  .quiz-option.correct  { border-color: var(--gold); background: var(--gold-light); color: #5c4400; }
+  .quiz-option.incorrect { border-color: #c07060; background: #f5e8e5; color: #6b2a1e; }
+  .quiz-option.disabled { cursor: default; }
+  .quiz-feedback { margin-top: 14px; padding: 14px 16px; border-radius: 8px; font-size: 13.5px; line-height: 1.5; }
+  .quiz-feedback.correct   { background: var(--gold-light); color: #5c4400; border: 1px solid var(--gold); }
+  .quiz-feedback.incorrect { background: #f5e8e5; color: #6b2a1e; border: 1px solid #c07060; }
+  .quiz-nav { display: flex; gap: 12px; margin-top: 20px; justify-content: center; }
+  .quiz-btn { padding: 11px 22px; border-radius: 8px; cursor: pointer; font-weight: 700; border: none; transition: all 0.2s; font-size: 13.5px; }
+  .quiz-btn:hover { transform: translateY(-1px); }
+  .quiz-btn-primary   { background: var(--navy); color: var(--gold); }
+  .quiz-btn-secondary { background: var(--cream-dark); color: var(--navy); }
+  .quiz-result  { text-align: center; padding: 30px 20px; }
+  .quiz-score   { font-size: 64px; margin: 16px 0; }
+  .quiz-message { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     PAGE HEADER: edit label, h1, subtitle only
+     ═══════════════════════════════════════════ -->
+<div class="page-header">
+  <div class="container">
+    <div class="header-label">Executive Ready Leadership · Module 2</div>
+    <h1>Communication, Presence and Influence</h1>
+    <p class="subtitle">Building the self-awareness and interpersonal skills to communicate flexibly, manage emotions and build relationships that lead to results.</p>
+    <div class="nav-container" id="nav"></div>
+  </div>
+</div>
+
+<div class="content-area">
+  <div class="container">
+    <div class="card" id="content"></div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   STEP 1, Define sections (drives nav pills + routing)
+   ═══════════════════════════════════════════════════════════ */
+const sections = [
+  { id: '2.1', name: 'Johari Window',        icon: '🪟' },
+  { id: '2.2', name: 'People Styles',        icon: '🧩' },
+  { id: '2.3', name: 'Ladder of Inference',  icon: '🪜' },
+  { id: '2.4', name: 'Emotional Intelligence', icon: '❤️' },
+  { id: '2.5', name: 'Difficult Conversations', icon: '💬' },
+  { id: '2.6', name: 'Negotiation & Influence', icon: '🤝' },
+  { id: '2.7', name: 'GROW Coaching',        icon: '🌱' },
+  { id: 'quiz', name: 'Quiz',                icon: '🧠' }
+];
+
+/* ═══════════════════════════════════════════════════════════
+   STEP 2, State for interactive elements
+   One property per interactive component to avoid interference.
+   ═══════════════════════════════════════════════════════════ */
+const state = {
+  currentSection: sections[0].id,
+  selJohari:  0,   // clickable grid, Johari quadrants
+  selStyle:   0,   // clickable grid, People Styles
+  selLadder:  0,   // pyramid, Ladder of Inference rungs
+  selEQ:      0,   // clickable grid, EQ components
+  selConv:    0,   // clickable grid, three conversations
+  selNego:    0,   // clickable grid, negotiation steps
+  expandGrow: [],  // expandable cards, GROW stages
+  quiz:           0,
+  quizAnswers:    [],
+  quizComplete:   false
+};
+
+/* ═══════════════════════════════════════════════════════════
+   STEP 3, Quiz questions
+   ═══════════════════════════════════════════════════════════ */
+const quizQuestions = [
+  {
+    q: 'In the Johari Window, which behaviour reduces your BLIND SPOT and grows the public arena?',
+    opts: ['Advocacy (disclosing more)', 'Inquiry (asking for feedback)', 'Keeping a large facade', 'Withdrawing into the oyster style'],
+    correct: 1,
+    explain: 'Inquiry, asking for feedback and questions, reduces the blind spot. Advocacy (disclosing more) reduces the facade. Both grow the public arena.'
+  },
+  {
+    q: 'Which People Style is MORE assertive and MORE responsive?',
+    opts: ['Driving', 'Analytical', 'Expressive', 'Amiable'],
+    correct: 2,
+    explain: 'The Expressive style is more assertive and more responsive: flamboyant, visionary, energetic and people oriented. Driving is more assertive but less responsive.'
+  },
+  {
+    q: 'On the Ladder of Inference, what sits at the base (the safest place to be)?',
+    opts: ['The story we tell ourselves', 'What we say and do', 'Our conclusions and emotions', 'The data we see and hear'],
+    correct: 3,
+    explain: 'The base is the data we See and Hear. Staying on the ground and gathering more data is the safest place, before we build a story, form feelings and act.'
+  },
+  {
+    q: 'According to the Ladder of Inference, to change what you SAY AND DO you must...',
+    opts: ['Insist the other person changes first', 'Come down the ladder and change the story you tell yourself', 'Gather less data to decide faster', 'Focus only on your emotions'],
+    correct: 1,
+    explain: 'Actions are driven by how we think and feel, which is driven by our story. To change actions you must come down the ladder: check assumptions, suspend beliefs, check the data and re-examine your interpretation.'
+  },
+  {
+    q: 'Who popularised emotional intelligence in 1995 and described its four components?',
+    opts: ['Chris Argyris', 'Daniel Goleman', 'Luft and Ingham', 'Margaret Neale'],
+    correct: 1,
+    explain: 'Daniel Goleman popularised EQ in his 1995 book and described four components: self-awareness, self-management, social awareness and social skills. Salovey and Mayer first formulated the concept in 1990.'
+  },
+  {
+    q: 'In the "line of choice", which behaviours are BELOW the line?',
+    opts: ['Taking personal responsibility', 'Denial, blame, justification and defensiveness', 'Switching on the inner observer', 'Choosing a constructive response'],
+    correct: 1,
+    explain: 'Below the line are automatic, often negative reactions: denial, blame, justification and defensiveness. Above the line is taking personal responsibility and choosing a constructive response.'
+  },
+  {
+    q: 'A difficult conversation is really three conversations in one. Which are they?',
+    opts: ['Past, Present and Future', 'What Happened, Feelings and Identity', 'Goal, Reality and Options', 'State, Share and Commit'],
+    correct: 1,
+    explain: 'The three are the What Happened conversation, the Feelings conversation and the Identity conversation (what you say to yourself about yourself).'
+  },
+  {
+    q: 'What is the FIRST step in the seven-step process for a challenging conversation?',
+    opts: ['Share the data', 'Invite a reply', 'State the issue (short, one sentence)', 'Commit to a resolution'],
+    correct: 2,
+    explain: 'Step one is to state the issue in eight words or less. It is quickly followed by acknowledging your own part, which settles the other person’s defensiveness.'
+  },
+  {
+    q: 'In negotiation, why is "solve the easy issues first" considered a bad idea?',
+    opts: ['It wastes time on trivial matters', 'It assumes your easy issues are their easy issues, and leaves nothing to trade', 'It makes you look unprepared', 'It anchors the counterpart too early'],
+    correct: 1,
+    explain: 'Solving easy issues first assumes your easy issues are the counterpart’s easy issues and burns concessions. Better to negotiate at the package level using if/then (yoking) language.'
+  },
+  {
+    q: 'In the GROW coaching model, what is the coach’s role?',
+    opts: ['To provide answers, solutions and advice', 'To set the agenda for the coachee', 'To listen, ask questions and help the coachee find their own answers', 'To evaluate the coachee’s performance'],
+    correct: 2,
+    explain: 'Coaching empowers others. The coach stays in the seat of the coach: listening and asking open, curious questions so the coachee finds their own answers. The coachee sets the agenda and owns the commitment.'
+  }
+];
+
+/* ═══════════════════════════════════════════════════════════
+   STEP 4, Section render functions
+   ═══════════════════════════════════════════════════════════ */
+
+/* -- Section 2.1: Johari Window, clickable grid -- */
+const johariItems = [
+  { name: 'Public Arena', icon: '🌟', color: 'item-green', desc: 'Known to self & others', detail: 'What is known to you and made known to others. This is where all the action takes place and information is fully shared. The larger the public arena, the better the communication and the better the results.', tip: 'Grow it through both inquiry and advocacy, this is full engagement.' },
+  { name: 'Blind Spot', icon: '🙈', color: 'item-yellow', desc: 'Known to others, not self', detail: 'What others can see but you cannot, including what others think of you that you are unaware of. Only 10 to 15% of people actually meet the criteria for being self-aware.', tip: 'Shrink it with INQUIRY: ask for feedback and ask questions.' },
+  { name: 'Facade (Mask)', icon: '🎭', color: 'item-purple', desc: 'Known to self, not others', detail: 'What you know but keep from others. Useful in a negotiation, but often driven by fear of embarrassment or a wish to hide motives. Maintaining a facade takes a lot of energy.', tip: 'Shrink it with ADVOCACY: disclose more and share your point of view.' },
+  { name: 'Unknown', icon: '🌌', color: 'item-blue', desc: 'Unknown to self & others', detail: 'Neither you nor others are aware of this, untapped potential and a creative space uncovered in powerful conversations, when someone shines a flashlight of insight neither of you could have had alone.', tip: 'Explored through deep reflection and powerful, open conversation.' }
+];
+function renderS1() {
+  const it = johariItems[state.selJohari];
+  return `
+    <div class="section-number">2.1</div>
+    <div class="section-title">The Johari Window</div>
+    <div class="section-subtitle">Luft & Ingham (1955). A model of your own role in communicating with others. Click each quadrant to explore.</div>
+
+    <div class="clickable-grid">
+      ${johariItems.map((q, i) => `
+        <div class="clickable-item ${q.color} ${i === state.selJohari ? 'active' : ''}" onclick="selectJohari(${i})">
+          <div class="clickable-icon">${q.icon}</div>
+          <div class="clickable-name">${q.name}</div>
+          <div class="clickable-desc">${q.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${it.icon} ${it.name}</h4>
+      <p>${it.detail}</p>
+      <p><strong>💡 Tip:</strong> ${it.tip}</p>
+    </div>
+
+    <div class="info-note">
+      <div class="note-title">🔑 Two levers &amp; four archetypes</div>
+      <p><strong>Inquiry</strong> (ask for feedback) shrinks the blind spot; <strong>advocacy</strong> (disclose more) shrinks the facade. Four archetypes emerge: the <em>Oyster</em> (small arena), the <em>Interview</em> (large facade, breeds distrust), the <em>Lecturer</em> (discloses but never asks), and <em>Full Engagement</em>, the aim.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 Key Insight</div>
+      <p>There is a direct correlation between the size of your public arena and the results you achieve. Grow it with more inquiry and more advocacy. Awareness is the starting point.</p>
+    </div>
+  `;
+}
+function selectJohari(i) { state.selJohari = i; renderContent(); }
+
+/* -- Section 2.2: People Styles, clickable grid -- */
+const styleItems = [
+  { name: 'Driving', icon: '🚀', color: 'item-red', desc: 'Assertive · task', detail: 'More assertive, less responsive. Fast to speak, walk and decide; efficient, outcome focused, blunt and tell oriented; favours facts over feelings and wants it done yesterday.', tip: 'If you want something done, give it to a Driving style.' },
+  { name: 'Expressive', icon: '🎨', color: 'item-orange', desc: 'Assertive · people', detail: 'More assertive, more responsive. Flamboyant, visionary and energetic; loves the limelight and feedback; impulsive, weak on detail and follow-through; wears their heart on their sleeve.', tip: 'For innovation and inspiration, call on an Expressive.' },
+  { name: 'Amiable', icon: '🤗', color: 'item-green', desc: 'Reserved · people', detail: 'Less assertive, more responsive. The most personable style: friendly, empathetic and easygoing; interested in others’ concerns; reluctant to offend; slower to form opinions and slow to anger.', tip: 'To read where the team is at, ask an Amiable, they are the barometer.' },
+  { name: 'Analytical', icon: '📐', color: 'item-blue', desc: 'Reserved · task', detail: 'Less assertive, less responsive. Values exactness and quality; systematic and perfectionist; by the book; agonises over decisions to get them right; most introverted of the styles.', tip: 'The Analytical style keeps the team out of harm’s way.' }
+];
+function renderS2() {
+  const it = styleItems[state.selStyle];
+  return `
+    <div class="section-number">2.2</div>
+    <div class="section-title">Exploring People Styles</div>
+    <div class="section-subtitle">Merrill & Reid (1999); developed by Bolton & Bolton. Four styles from two axes, assertiveness and responsiveness. Click each style.</div>
+
+    <div class="clickable-grid">
+      ${styleItems.map((s, i) => `
+        <div class="clickable-item ${s.color} ${i === state.selStyle ? 'active' : ''}" onclick="selectStyle(${i})">
+          <div class="clickable-icon">${s.icon}</div>
+          <div class="clickable-name">${s.name}</div>
+          <div class="clickable-desc">${s.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${it.icon} ${it.name}</h4>
+      <p>${it.detail}</p>
+      <p><strong>💡 Strength:</strong> ${it.tip}</p>
+    </div>
+
+    <div class="info-note">
+      <div class="note-title">📊 The two axes</div>
+      <p><strong>Assertiveness</strong> is how direct or forceful your behaviour appears. <strong>Responsiveness</strong> is how much you show emotion and awareness of others’ feelings. Their intersection creates the four styles. We are all four styles, but most of us have a dominant one.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 Key Insight</div>
+      <p>No style is better or worse, and none maps to leadership, awareness enables leadership. Effective leaders surround themselves with other styles for diversity of thought. Learn about the style you find hardest to work with, and watch for stereotype bias.</p>
+    </div>
+  `;
+}
+function selectStyle(i) { state.selStyle = i; renderContent(); }
+
+/* -- Section 2.3: Ladder of Inference, pyramid -- */
+/* Base (index 0) = data; top = actions */
+const ladderRungs = [
+  { name: 'See & Hear (Data)', color: 'pyr-1', desc: 'The raw data around us. We notice some things and filter out others. This is the base and the safest place to stand.', fix: 'Stay on the ground: gather more data before you climb.' },
+  { name: 'Story', color: 'pyr-2', desc: 'The meaning, assumptions, beliefs and past experiences we attach to the data to make sense of it.', fix: 'Suspend your beliefs and check the assumptions you have added.' },
+  { name: 'Think & Feel', color: 'pyr-3', desc: 'The conclusions, judgments and emotions the story produces. Assumptions start to feel like truths.', fix: 'Recognise the emotion, then trace it back to the story driving it.' },
+  { name: 'Say & Do', color: 'pyr-4', desc: 'The actions we take, what we say and do, all in a second, based on a story we do not even know is true.', fix: 'To change your actions, come back down the ladder and change the story.' }
+];
+function renderS3() {
+  const lvl = ladderRungs[state.selLadder];
+  return `
+    <div class="section-number">2.3</div>
+    <div class="section-title">The Ladder of Inference</div>
+    <div class="section-subtitle">Argyris (1985). We climb from data to action in a second, often on little data and many assumptions. Click each rung, the base is the safest place.</div>
+
+    <div class="pyramid">
+      ${[...ladderRungs].reverse().map((l, ri) => {
+        const i = ladderRungs.length - 1 - ri;
+        return `<div class="pyramid-level ${l.color} ${i === state.selLadder ? 'active' : ''}" onclick="selectLadder(${i})">${l.name}</div>`;
+      }).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>Rung ${state.selLadder + 1}: ${lvl.name}</h4>
+      <p><strong>What it is:</strong> ${lvl.desc}</p>
+      <p><strong>🔧 To stay low:</strong> ${lvl.fix}</p>
+    </div>
+
+    <div class="pullquote">
+      <p>Between stimulus and response there is a space. In that space is our power to choose our response. In our response lies our growth and our freedom.</p>
+      <cite>Viktor E. Frankl</cite>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 Key Insight</div>
+      <p>The most powerful way to improve communication is to take control of your story. Check your assumptions, suspend your beliefs, check the data you selected and re-examine your interpretation. In relationships, coming down your own ladder changes how others experience you, which shifts their ladder too.</p>
+    </div>
+  `;
+}
+function selectLadder(i) { state.selLadder = i; renderContent(); }
+
+/* -- Section 2.4: Emotional Intelligence, clickable grid + stats + line zones -- */
+const eqItems = [
+  { name: 'Self-Awareness', icon: '🔍', color: 'item-blue', desc: 'Know your emotions', detail: 'Recognising your own emotions as they happen. In one study, women were 86% more likely than men to use this competency consistently, the largest EQ gender difference.', tip: 'Notice your triggers before they drive your behaviour.' },
+  { name: 'Self-Management', icon: '🎯', color: 'item-green', desc: 'Manage your emotions', detail: 'Managing and regulating your own emotions, especially in the neutral zone between what you feel but don’t say and what is actually said and done.', tip: 'Use the ladder and alternative stories to manage the moment.' },
+  { name: 'Social Awareness', icon: '👀', color: 'item-yellow', desc: 'Read others & the room', detail: 'Reading others’ emotions and the room, picking up subtle signals like body language, tone and language, as in noticing your manager is overwhelmed before you launch into your request.', tip: 'The indicators are often subtle and can be well masked.' },
+  { name: 'Social Skills', icon: '🤝', color: 'item-purple', desc: 'Manage relationships', detail: 'Managing relationships and interactions well, building rapport, influencing and collaborating, using emotional data to act adaptively.', tip: 'Emotions are a source of inspiration and feedback, not noise.' }
+];
+function renderS4() {
+  const it = eqItems[state.selEQ];
+  return `
+    <div class="section-number">2.4</div>
+    <div class="section-title">What is Emotional Intelligence?</div>
+    <div class="section-subtitle">Salovey & Mayer (1990); popularised by Goleman (1995). EQ differentiates average from exceptional leaders. Click each of the four components.</div>
+
+    <div class="clickable-grid">
+      ${eqItems.map((e, i) => `
+        <div class="clickable-item ${e.color} ${i === state.selEQ ? 'active' : ''}" onclick="selectEQ(${i})">
+          <div class="clickable-icon">${e.icon}</div>
+          <div class="clickable-name">${e.name}</div>
+          <div class="clickable-desc">${e.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${it.icon} ${it.name}</h4>
+      <p>${it.detail}</p>
+      <p><strong>💡 Tip:</strong> ${it.tip}</p>
+    </div>
+
+    <div class="pullquote">
+      <p>In a very real sense we have two minds, one that thinks and one that feels.</p>
+      <cite>Daniel Goleman</cite>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">The Line of Choice</div>
+      <div class="line-zone zone-above">
+        <strong>⬆️ Above the line</strong>: taking personal responsibility and choosing a thoughtful, constructive response.
+        <div class="behavior-tags"><span class="tag tag-green">Responsibility</span><span class="tag tag-green">Inner observer</span><span class="tag tag-green">Constructive response</span></div>
+      </div>
+      <div class="line-divider"><span class="line-label">THE LINE OF CHOICE</span></div>
+      <div class="line-zone zone-below">
+        <strong>⬇️ Below the line</strong>: automatic, often negative reactions to a challenging situation.
+        <div class="behavior-tags"><span class="tag tag-red">Denial</span><span class="tag tag-red">Blame</span><span class="tag tag-red">Justification</span><span class="tag tag-red">Defensiveness</span></div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-box"><div class="stat-num">86%</div><div class="stat-label">more likely women use emotional self-awareness consistently</div></div>
+      <div class="stat-box"><div class="stat-num">45%</div><div class="stat-label">more likely women demonstrate empathy consistently</div></div>
+      <div class="stat-box"><div class="stat-num">5</div><div class="stat-label">top workplace triggers: disrespect, unfairness, being unappreciated, not heard, unrealistic deadlines</div></div>
+    </div>
+
+    <div class="info-note">
+      <div class="note-title">🌍 Cross-cultural note</div>
+      <p>Being emotionally intelligent in one culture does not always translate to another. A smile may mask awkwardness rather than signal happiness. <strong>Display rules</strong> (learned in childhood) govern whether we amplify, mask or neutralise emotion, East Asian cultures read emotion more from the eyes, Western cultures from the mouth.</p>
+    </div>
+  `;
+}
+function selectEQ(i) { state.selEQ = i; renderContent(); }
+
+/* -- Section 2.5: Difficult Conversations, clickable grid + numbered steps -- */
+const convItems = [
+  { name: 'What Happened', icon: '🗂️', color: 'item-blue', desc: 'Truth & blame', detail: 'We assume we know the truth: my interpretation is correct, I’m right and you’re wrong. We also invent the other person’s intentions and focus on blame.', tip: 'Separate intention from impact; shift from a blame frame to a contribution frame. What is important matters more than who is right.' },
+  { name: 'Feelings', icon: '💗', color: 'item-red', desc: 'The heart of it', detail: 'Feelings sit at the heart of difficult conversations. There is a discrepancy between what we think and feel and what we actually say.', tip: 'Ask: what was I thinking but not saying? What was I feeling but not saying? Then understand and manage those feelings.' },
+  { name: 'Identity', icon: '🪞', color: 'item-purple', desc: 'Self-image', detail: 'This conversation is what you say to yourself about yourself. Our self-image can be knocked off balance, prompting all-or-nothing responses.', tip: 'Three identity questions: Am I competent? Am I a good person? Am I worthy of love?' }
+];
+function renderS5() {
+  const it = convItems[state.selConv];
+  return `
+    <div class="section-number">2.5</div>
+    <div class="section-title">Difficult Conversations</div>
+    <div class="section-subtitle">A difficult conversation is any conversation you find difficult, and it is really three conversations in one. Click each one.</div>
+
+    <div class="clickable-grid">
+      ${convItems.map((c, i) => `
+        <div class="clickable-item ${c.color} ${i === state.selConv ? 'active' : ''}" onclick="selectConv(${i})">
+          <div class="clickable-icon">${c.icon}</div>
+          <div class="clickable-name">${c.name}</div>
+          <div class="clickable-desc">${c.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${it.icon} The ${it.name} Conversation</h4>
+      <p>${it.detail}</p>
+      <p><strong>💡 Shift to make:</strong> ${it.tip}</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Engaging: the 7-step process (Janet Horton)</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-number">1</div><div class="step-text"><strong>State the issue</strong>: short, eight words or less</div></div>
+        <div class="step-item"><div class="step-number">2</div><div class="step-text"><strong>Acknowledge your part</strong>: settles defensiveness</div></div>
+        <div class="step-item"><div class="step-number">3</div><div class="step-text"><strong>Share the data</strong>: what you saw, heard, when</div></div>
+        <div class="step-item"><div class="step-number">4</div><div class="step-text"><strong>Describe the emotion</strong>: what am I owning?</div></div>
+        <div class="step-item"><div class="step-number">5</div><div class="step-text"><strong>Clarify the impact</strong>: of that emotion</div></div>
+        <div class="step-item"><div class="step-number">6</div><div class="step-text"><strong>Commit to a resolution</strong>: gives hope and intent</div></div>
+        <div class="step-item"><div class="step-number">7</div><div class="step-text"><strong>Invite a reply</strong>: stop and listen</div></div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 Key Insight</div>
+      <p>Start with yourself, the only person you can change. Accept your contribution, choose your mindset, be curious, and stay low on the Ladder of Inference. Acknowledging your part early settles defensiveness so the other person can actually hear you.</p>
+    </div>
+  `;
+}
+function selectConv(i) { state.selConv = i; renderContent(); }
+
+/* -- Section 2.6: Negotiation & Influence, clickable grid + compare -- */
+const negoItems = [
+  { name: 'Assess', icon: '🔎', color: 'item-blue', desc: 'Can I improve?', detail: 'Ask: can I change the outcome in a way that makes me better off than my status quo or alternatives?', tip: 'A good deal beats the status quo, the goal is a good deal, not always "yes".' },
+  { name: 'Prepare', icon: '📋', color: 'item-green', desc: 'What do they want?', detail: 'Preparation is the single most important factor you can control. Understand their interests and what motivates them.', tip: 'Most negotiators are woefully underprepared, do not be one of them.' },
+  { name: 'Engage', icon: '💬', color: 'item-yellow', desc: 'What’s the plan?', detail: 'Bring your assessment and preparation together into a plan. Listen for what people tell you is hard or easy for them.', tip: 'Negotiation is about influence, there is no true command and control.' },
+  { name: 'Package', icon: '📦', color: 'item-orange', desc: 'If / then', detail: 'Negotiate at the package level, not issue by issue. Use "if/then" yoking language so concessions are linked.', tip: 'Do NOT solve the easy issues first, it burns concessions with nothing left to trade.' },
+  { name: 'Mindset', icon: '🧭', color: 'item-purple', desc: 'The key', detail: 'Mindset is the key to every step: move from a battle mentality to one of fluency. Know your alternatives, bottom line and aspiration.', tip: 'Wise negotiators stay centered, energized and resilient in the face of strong feelings.' }
+];
+function renderS6() {
+  const it = negoItems[state.selNego];
+  return `
+    <div class="section-number">2.6</div>
+    <div class="section-title">Negotiations and Influence</div>
+    <div class="section-subtitle">Margaret Neale. Move from battle armour to fluency. Click each step of the negotiation approach.</div>
+
+    <div class="clickable-grid">
+      ${negoItems.map((n, i) => `
+        <div class="clickable-item ${n.color} ${i === state.selNego ? 'active' : ''}" onclick="selectNego(${i})">
+          <div class="clickable-icon">${n.icon}</div>
+          <div class="clickable-name">${n.name}</div>
+          <div class="clickable-desc">${n.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${it.icon} ${it.name}</h4>
+      <p>${it.detail}</p>
+      <p><strong>💡 Tip:</strong> ${it.tip}</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Two mentalities</div>
+      <div class="compare">
+        <div class="c-col">
+          <h3 style="color:#b91c1c;">⚔️ Battle</h3>
+          <div class="c-row">Adversarial: get what you won’t give me</div>
+          <div class="c-row">Issue by issue, a series of battles, keeping score</div>
+          <div class="c-row">Assumes command and control</div>
+          <div class="c-row">Underprepared, "flow with it"</div>
+        </div>
+        <div class="c-col">
+          <h3 style="color:#15803d;">🤝 Fluency</h3>
+          <div class="c-row">Collaborative problem-solving</div>
+          <div class="c-row">Package level with if/then language</div>
+          <div class="c-row">Interdependent, influence, not control</div>
+          <div class="c-row">Thoroughly prepared; knows alternatives, bottom line and aspiration</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      <p>Just like star athletes who are "in the zone", wise negotiators are centered, energized, and resilient in the face of strong feelings.</p>
+      <cite>Margaret Neale · HBR</cite>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 Key Insight</div>
+      <p>Seek a solution that leaves you better off than your alternatives while leaving your counterpart whole or better off, they must willingly agree. Before asking, answer three questions: why am I asking, how am I asking, and for whom am I asking?</p>
+    </div>
+  `;
+}
+function selectNego(i) { state.selNego = i; renderContent(); }
+
+/* -- Section 2.7: GROW Coaching, formula + expandable cards -- */
+const growStages = [
+  { letter: 'G', name: 'Goal', tag: 'Set & clarify', preview: 'Set the coaching contract, clarify what the coachee wants to achieve.', points: ['Frame it as an approach goal (what they want), not an avoidance goal', 'Keep asking until it is crystal clear, then read it back', 'What would need to happen for this time to feel well spent?'] },
+  { letter: 'R', name: 'Reality', tag: 'Explore', preview: 'Bring the coachee into the present and test assumptions.', points: ['What is happening now? What have you tried?', 'How do you know that is accurate?', 'Surface limiting beliefs and thinking traps, hold up the mirror respectfully'] },
+  { letter: 'O', name: 'Options', tag: 'Diverge', preview: 'Generate as many possibilities as possible before refining.', points: ['What are your options? What else is possible?', 'Who could help and what resources could you gather?', 'Then refine for benefits and pitfalls'] },
+  { letter: 'W', name: 'Wrap-up (What Now?)', tag: 'Converge', preview: 'Land on next steps and a commitment the coachee owns.', points: ['What one small step will you take now, and when?', 'On a scale of 1 to 10, how committed are you?', 'The coachee must own the commitment, not the coach'] }
+];
+function renderS7() {
+  return `
+    <div class="section-number">2.7</div>
+    <div class="section-title">Peer Coaching: The GROW Model</div>
+    <div class="section-subtitle">Whitmore (2010). Coaching empowers others to find their own answers, the coach listens and asks, never advises. Click a stage to expand its questions.</div>
+
+    <div class="formula-box">
+      <div class="formula-title">🌱 The GROW Conversation</div>
+      <div class="formula-steps">
+        <div class="formula-step">G: Goal</div>
+        <span class="formula-arrow">→</span>
+        <div class="formula-step">R: Reality</div>
+        <span class="formula-arrow">→</span>
+        <div class="formula-step">O: Options</div>
+        <span class="formula-arrow">→</span>
+        <div class="formula-step">W: Wrap-up</div>
+      </div>
+      <div class="formula-note">First half diverges (explore broadly) · second half converges (decide and commit)</div>
+    </div>
+
+    <div class="exp-cards cols-2">
+      ${growStages.map((g, i) => `
+        <div class="exp-card ${state.expandGrow.includes(i) ? 'expanded' : ''}" onclick="toggleGrow(${i})">
+          <div class="exp-title">${g.letter}: ${g.name} <span class="exp-tag">${g.tag}</span></div>
+          <div class="exp-preview">${g.preview}</div>
+          <div class="exp-detail">
+            ${g.points.map(p => `<div class="dp">${p}</div>`).join('')}
+          </div>
+          <div class="expand-hint">${state.expandGrow.includes(i) ? 'click to collapse' : 'click for sample questions'}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 Key Insight</div>
+      <p>Stay in the seat of the coach. Use open, curious, divergent questions (never leading ones) and let the coachee set the agenda and own the commitment. Ask "what else?" to keep expanding options, and take this model into your everyday conversations.</p>
+    </div>
+  `;
+}
+function toggleGrow(i) {
+  const idx = state.expandGrow.indexOf(i);
+  if (idx === -1) state.expandGrow.push(i); else state.expandGrow.splice(idx, 1);
+  renderContent();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CORE ENGINE, do not edit below this line (switch cases per section)
+   ═══════════════════════════════════════════════════════════ */
+function render() { renderNav(); renderContent(); }
+
+function renderNav() {
+  document.getElementById('nav').innerHTML = sections.map(s =>
+    `<div class="nav-item ${s.id === state.currentSection ? 'active' : ''}" onclick="goTo('${s.id}')">
+      <span class="nav-number">${s.id}</span> ${s.icon} ${s.name}
+    </div>`
+  ).join('');
+}
+
+function goTo(id) { state.currentSection = id; render(); }
+
+function renderContent() {
+  const c = document.getElementById('content');
+  switch(state.currentSection) {
+    case sections[0].id: c.innerHTML = renderS1();   break;
+    case sections[1].id: c.innerHTML = renderS2();   break;
+    case sections[2].id: c.innerHTML = renderS3();   break;
+    case sections[3].id: c.innerHTML = renderS4();   break;
+    case sections[4].id: c.innerHTML = renderS5();   break;
+    case sections[5].id: c.innerHTML = renderS6();   break;
+    case sections[6].id: c.innerHTML = renderS7();   break;
+    case 'quiz':         c.innerHTML = renderQuiz(); break;
+  }
+}
+
+function renderQuiz() {
+  if (state.quizComplete) {
+    const score = state.quizAnswers.filter((a, i) => a === quizQuestions[i].correct).length;
+    const pct   = Math.round((score / quizQuestions.length) * 100);
+    const emoji = pct === 100 ? '🏆' : pct >= 75 ? '⭐' : pct >= 50 ? '👍' : '📚';
+    const msg   = pct === 100 ? 'Perfect! You\'ve mastered this module.' :
+                  pct >= 75  ? 'Great work! You understand the key concepts.' :
+                  pct >= 50  ? 'Good effort, revisit the sections you found tricky.' :
+                               'Keep studying and try again!';
+    return `
+      <div class="quiz-result">
+        <div class="section-number">Quiz</div>
+        <div class="section-title" style="display:block;margin-bottom:16px;">Results</div>
+        <div class="quiz-score">${emoji}</div>
+        <p style="font-size:22px;font-weight:700;color:var(--navy);margin-bottom:8px;">${score} / ${quizQuestions.length} (${pct}%)</p>
+        <p class="quiz-message">${msg}</p>
+        <button class="quiz-btn quiz-btn-primary" onclick="resetQuiz()">Try Again</button>
+      </div>`;
+  }
+  const q        = quizQuestions[state.quiz];
+  const answered = state.quizAnswers[state.quiz] !== undefined;
+  const isCorrect = answered && state.quizAnswers[state.quiz] === q.correct;
+  return `
+    <div class="section-number">Quiz</div>
+    <div class="section-title" style="display:block;margin-bottom:16px;">Test Your Knowledge</div>
+    <div class="quiz-progress">
+      ${quizQuestions.map((_, i) => {
+        let cls = i === state.quiz ? 'active' : '';
+        if (state.quizAnswers[i] !== undefined)
+          cls = state.quizAnswers[i] === quizQuestions[i].correct ? 'correct' : 'incorrect';
+        return `<div class="quiz-dot ${cls}"></div>`;
+      }).join('')}
+    </div>
+    <div class="quiz-question">Q${state.quiz + 1}. ${q.q}</div>
+    <div class="quiz-options">
+      ${q.opts.map((opt, i) => {
+        let cls = answered ? 'disabled ' : '';
+        if (answered && i === q.correct) cls += 'correct';
+        else if (answered && state.quizAnswers[state.quiz] === i) cls += 'incorrect';
+        return `<div class="quiz-option ${cls}" onclick="${answered ? '' : `answerQuiz(${i})`}">${opt}</div>`;
+      }).join('')}
+    </div>
+    ${answered ? `<div class="quiz-feedback ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✅ Correct!' : '❌ Not quite.'} ${q.explain}</div>` : ''}
+    <div class="quiz-nav">
+      ${state.quiz > 0 ? '<button class="quiz-btn quiz-btn-secondary" onclick="prevQuiz()">← Previous</button>' : ''}
+      ${answered ? (state.quiz < quizQuestions.length - 1
+        ? '<button class="quiz-btn quiz-btn-primary" onclick="nextQuiz()">Next →</button>'
+        : '<button class="quiz-btn quiz-btn-primary" onclick="finishQuiz()">See Results</button>') : ''}
+    </div>`;
+}
+
+function answerQuiz(i) { state.quizAnswers[state.quiz] = i; renderContent(); }
+function prevQuiz()    { state.quiz--; renderContent(); }
+function nextQuiz()    { state.quiz++; renderContent(); }
+function finishQuiz()  { state.quizComplete = true; renderContent(); }
+function resetQuiz()   { state.quiz = 0; state.quizAnswers = []; state.quizComplete = false; renderContent(); }
+
+render();
+</script>
+</body>
+</html>

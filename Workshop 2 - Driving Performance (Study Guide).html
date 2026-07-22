@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2: Driving Performance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ── THEME TOKENS ─────────────────────────────────────── */
+  :root {
+    --navy:       #1a2744;
+    --navy-mid:   #2c3e6b;
+    --gold:       #c9a84c;
+    --gold-light: #f0e6c8;
+    --cream:      #f5f0e8;
+    --cream-dark: #ede8dc;
+    --border:     #d4c9b0;
+    --text:       #2c2416;
+    --text-muted: #5a5040;
+    --text-dim:   #7a6e5e;
+  }
+
+  /* ── RESET ────────────────────────────────────────────── */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+
+  /* ── PAGE HEADER ──────────────────────────────────────── */
+  .page-header { background: var(--navy); border-bottom: 3px solid var(--gold); padding: 24px 28px 0; }
+  .container   { max-width: 960px; margin: 0 auto; }
+  .header-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-weight: 500; text-align: center; }
+  h1 { font-family: 'Playfair Display', serif; color: #fff; text-align: center; margin-bottom: 4px; font-size: 24px; font-weight: 700; }
+  .subtitle { color: rgba(255,255,255,0.65); text-align: center; margin-bottom: 14px; font-size: 13px; }
+
+  /* ── NAV PILLS ────────────────────────────────────────── */
+  .nav-container { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 0 12px; }
+  .nav-item { padding: 7px 13px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); border: 1.5px solid transparent; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .nav-item:hover { color: #fff; background: rgba(255,255,255,0.18); transform: translateY(-1px); }
+  .nav-item.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+  .nav-number { font-size: 11px; opacity: 0.8; }
+  .nav-item.active .nav-number { opacity: 1; }
+
+  /* ── CONTENT AREA & CARD ──────────────────────────────── */
+  .content-area { padding: 24px 28px 40px; }
+  .card { background: #fff; border-radius: 12px; padding: 26px; border: 1px solid var(--border); min-height: 520px; }
+
+  /* ── SECTION HEADER ───────────────────────────────────── */
+  .section-number   { display: inline-block; background: var(--navy); color: var(--gold); padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; margin-right: 10px; vertical-align: middle; }
+  .section-title    { display: inline; font-size: 22px; font-weight: 600; color: var(--navy); vertical-align: middle; }
+  .section-subtitle { display: block; font-size: 13px; color: var(--text-muted); margin-top: 12px; margin-bottom: 20px; line-height: 1.6; border-left: 3px solid var(--gold); padding: 10px 14px; background: var(--cream-dark); border-radius: 0 6px 6px 0; }
+  .subsection { margin: 20px 0; }
+  .subsection-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .subsection-title::before { content: ''; width: 3px; height: 16px; background: var(--gold); border-radius: 2px; flex-shrink: 0; }
+
+  /* ── CLICKABLE GRID ───────────────────────────────────── */
+  /* Use for: comparing items, frameworks with multiple elements, Tuckman stages, TKI modes */
+  .clickable-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 16px 0; }
+  .clickable-item { padding: 16px; border-radius: 10px; cursor: pointer; transition: all 0.25s; text-align: center; border: 2px solid transparent; }
+  .clickable-item:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(26,39,68,0.12); }
+  .clickable-item.active { border-color: var(--gold); box-shadow: 0 6px 18px rgba(201,168,76,0.25); }
+  .clickable-icon { font-size: 30px; margin-bottom: 8px; }
+  .clickable-name { font-weight: 700; font-size: 13px; color: var(--text); }
+  .clickable-desc { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+  /* Item colour schemes — pick one per item */
+  .item-blue   { background: #dbeafe; }
+  .item-green  { background: #dcfce7; }
+  .item-yellow { background: #fef3c7; }
+  .item-red    { background: #fee2e2; }
+  .item-purple { background: #ede9fe; }
+  .item-orange { background: #ffedd5; }
+  .item-teal   { background: #ccfbf1; }
+  .item-gray   { background: #f1f5f9; }
+
+  /* ── DETAIL BOX ───────────────────────────────────────── */
+  /* Use for: expanded detail when a clickable item is selected */
+  .detail-box { margin-top: 14px; padding: 18px; background: #fff; border-radius: 8px; border: 1px solid var(--border); border-left: 3px solid var(--gold); }
+  .detail-box h4 { color: var(--navy); margin-bottom: 8px; font-size: 15px; font-weight: 700; }
+  .detail-box p  { color: #4a3f2f; line-height: 1.6; margin-bottom: 8px; font-size: 13.5px; }
+  .detail-box p:last-child { margin-bottom: 0; }
+
+  /* ── INSIGHT / CALLOUT BOX ────────────────────────────── */
+  /* Use for: key takeaways, warnings, leadership tips */
+  .insight-box { background: var(--gold-light); border: 1px solid var(--gold); border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .insight-title { font-size: 12px; font-weight: 700; color: #7a5c00; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .insight-box p { color: #5c4400; font-size: 13.5px; line-height: 1.5; }
+
+  /* ── CULTURAL / INFO NOTE BOX ─────────────────────────── */
+  /* Use for: cross-cultural context, research findings, extra context */
+  .info-note { background: #e8edf5; border: 1px solid #b5c4d4; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .info-note .note-title { font-weight: 700; color: var(--navy); margin-bottom: 8px; font-size: 13px; }
+  .info-note p { color: #2c3e6b; font-size: 13.5px; line-height: 1.5; }
+
+  /* ── LINE OF CHOICE / ABOVE-BELOW ZONES ──────────────── */
+  /* Use for: above/below the line, positive/negative behaviours */
+  .line-zone  { padding: 18px; border-radius: 10px; margin: 10px 0; cursor: pointer; transition: all 0.25s; }
+  .line-zone:hover { transform: scale(1.01); }
+  .zone-above { background: #dcfce7; border: 2px solid #22c55e; }
+  .zone-below { background: #fee2e2; border: 2px solid #ef4444; }
+  .line-divider { height: 4px; background: linear-gradient(90deg, #22c55e, var(--gold), #ef4444); border-radius: 2px; margin: 16px 0; position: relative; }
+  .line-label { position: absolute; left: 50%; transform: translateX(-50%); top: -13px; background: #fff; padding: 3px 12px; font-weight: 700; font-size: 11px; color: var(--navy); border-radius: 10px; border: 1px solid var(--border); white-space: nowrap; }
+  .behavior-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .tag { padding: 4px 10px; border-radius: 14px; font-size: 12px; font-weight: 600; }
+  .tag-green { background: #22c55e; color: white; }
+  .tag-red   { background: #ef4444; color: white; }
+
+  /* ── PYRAMID ──────────────────────────────────────────── */
+  /* Use for: hierarchies, Lencioni's 5 Dysfunctions, Maslow etc. */
+  /* Colours encode severity — keep red at top, navy at base */
+  .pyramid { display: flex; flex-direction: column; align-items: center; gap: 5px; margin: 16px 0; }
+  .pyramid-level { padding: 13px 16px; text-align: center; cursor: pointer; transition: all 0.25s; border-radius: 7px; font-weight: 600; color: white; font-size: 13px; }
+  .pyramid-level:hover { transform: scale(1.02); filter: brightness(1.08); }
+  .pyramid-level.active { box-shadow: 0 0 0 3px var(--gold), 0 6px 18px rgba(0,0,0,0.2); }
+  .pyr-5 { width: 40%; background: #ef4444; }
+  .pyr-4 { width: 52%; background: #f97316; }
+  .pyr-3 { width: 64%; background: #eab308; }
+  .pyr-2 { width: 78%; background: #22c55e; }
+  .pyr-1 { width: 100%; background: var(--navy); }
+
+  /* ── SPECTRUM / HORIZONTAL SELECTOR ──────────────────── */
+  /* Use for: scales, spectrums, Tannenbaum-Schmidt etc. */
+  .spectrum { display: flex; gap: 6px; margin: 16px 0; }
+  .spectrum-item { flex: 1; padding: 14px 8px; text-align: center; cursor: pointer; transition: all 0.25s; border-radius: 10px; border: 2px solid transparent; color: white; }
+  .spectrum-item:hover { transform: translateY(-3px); }
+  .spectrum-item.active { border-color: var(--gold); box-shadow: 0 6px 18px rgba(0,0,0,0.2); }
+  .spec-1 { background: #1a2744; }
+  .spec-2 { background: #2c3e6b; }
+  .spec-3 { background: #3d5088; }
+  .spec-4 { background: #4e62a0; }
+  .spec-5 { background: #6074b8; }
+  .spectrum-icon   { font-size: 22px; margin-bottom: 4px; }
+  .spectrum-name   { font-weight: 700; font-size: 12px; }
+  .spectrum-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); margin-top: 8px; font-weight: 600; }
+
+  /* ── FORMULA BOX ──────────────────────────────────────── */
+  /* Use for: step-by-step formulas, commitment request formula */
+  .formula-box   { background: var(--gold-light); border: 1.5px solid var(--gold); border-radius: 10px; padding: 18px; margin: 16px 0; }
+  .formula-title { font-weight: 700; margin-bottom: 12px; text-align: center; color: #7a5c00; font-size: 14px; }
+  .formula-steps { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+  .formula-step  { background: white; padding: 9px 13px; border-radius: 7px; font-weight: 600; font-size: 13px; border: 1px solid var(--border); color: var(--text); }
+  .formula-arrow { color: var(--gold); font-size: 16px; font-weight: bold; }
+  .formula-note  { text-align: center; margin-top: 12px; font-size: 13px; color: #7a5c00; font-weight: 600; }
+
+  /* ── NUMBERED STEPS LIST ──────────────────────────────── */
+  /* Use for: processes, accountability conversations, how-to steps */
+  .steps-list  { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 16px 0; }
+  .step-item   { display: flex; align-items: flex-start; gap: 10px; padding: 12px; background: #fff; border-radius: 8px; border: 1px solid var(--border); border-left: 3px solid var(--navy); }
+  .step-number { background: var(--navy); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .step-text   { font-size: 13px; color: #4a3f2f; }
+
+  /* ── CIRCLE-NUMBER STEP LIST (vertical) ──────────────── */
+  /* Use for: brainstorming strategies, design thinking stages */
+  .vsteps { display: flex; flex-direction: column; gap: 16px; margin: 16px 0; }
+  .vstep  { display: flex; gap: 20px; align-items: flex-start; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; transition: box-shadow 0.2s; }
+  .vstep:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .vstep-num  { width: 38px; height: 38px; background: var(--navy); color: white; font-size: 18px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .vstep-body h4 { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .vstep-body p  { font-size: 13.5px; color: #6b6b6b; line-height: 1.6; }
+
+  /* ── EXPANDABLE CARDS ─────────────────────────────────── */
+  /* Use for: reference material, research summaries, detailed definitions */
+  .exp-cards { display: grid; gap: 12px; }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .exp-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+  .exp-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--navy); opacity: 0; transition: opacity 0.2s; }
+  .exp-card:hover { border-color: #b8a98a; transform: translateY(-2px); }
+  .exp-card:hover::before, .exp-card.expanded::before { opacity: 1; }
+  .exp-card.expanded { border-color: var(--gold); background: #fdfaf5; }
+  .exp-title   { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .exp-tag     { font-size: 10px; background: var(--gold-light); color: #7a5c00; padding: 2px 7px; border-radius: 10px; font-weight: 600; margin-left: auto; flex-shrink: 0; }
+  .exp-preview { font-size: 12px; color: var(--text-dim); line-height: 1.45; }
+  .exp-detail  { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--cream-dark); }
+  .exp-card.expanded .exp-detail { display: block; }
+  .dp { display: flex; gap: 8px; margin-bottom: 7px; font-size: 12px; color: #4a3f2f; line-height: 1.45; }
+  .dp::before { content: '→'; color: var(--gold); flex-shrink: 0; font-weight: 700; }
+  .expand-hint { font-size: 11px; color: #b8a98a; margin-top: 8px; text-align: right; }
+  .exp-card:hover .expand-hint { color: #7a5c00; }
+
+  /* ── PULL QUOTE ───────────────────────────────────────── */
+  /* Use for: key quotes from theorists, memorable principles */
+  .pullquote { background: var(--navy); color: white; border-radius: 12px; padding: 28px 32px; margin: 24px 0; position: relative; }
+  .pullquote::before { content: '\201C'; font-family: 'Playfair Display', serif; font-size: 100px; color: var(--gold); opacity: 0.3; position: absolute; top: -10px; left: 16px; line-height: 1; }
+  .pullquote p    { font-size: 15px; line-height: 1.65; font-weight: 400; position: relative; z-index: 1; }
+  .pullquote cite { display: block; margin-top: 10px; font-size: 12px; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; font-style: normal; font-weight: 500; position: relative; z-index: 1; }
+
+  /* ── STAT BOXES ───────────────────────────────────────── */
+  /* Use for: research statistics, key numbers */
+  .stats    { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin: 20px 0; }
+  .stat-box { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px 20px; text-align: center; }
+  .stat-num   { font-size: 42px; font-weight: 700; color: var(--navy); line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-size: 13px; color: #6b6b6b; line-height: 1.5; }
+
+  /* ── COMPARE COLUMNS ──────────────────────────────────── */
+  /* Use for: contrasting two approaches, cultural comparisons */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .c-col   { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .c-col h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--cream-dark); }
+  .c-row { display: flex; gap: 8px; margin-bottom: 7px; font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+  /* ── VISION BANNER ────────────────────────────────────── */
+  /* Use for: central concept that connects elements (e.g. Balanced Scorecard) */
+  .vision-banner { text-align: center; padding: 13px; background: var(--navy); color: white; border-radius: 8px; font-weight: 700; font-size: 13px; margin-bottom: 12px; }
+
+  /* ── QUIZ ─────────────────────────────────────────────── */
+  .quiz-progress { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
+  .quiz-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--border); transition: all 0.3s; }
+  .quiz-dot.active    { background: var(--navy); transform: scale(1.3); }
+  .quiz-dot.correct   { background: var(--gold); }
+  .quiz-dot.incorrect { background: #c07060; }
+  .quiz-question { font-size: 17px; font-weight: 700; margin-bottom: 18px; color: var(--navy); line-height: 1.4; }
+  .quiz-options  { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option   { padding: 13px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s; border: 1.5px solid var(--border); background: white; font-size: 13.5px; color: var(--text); }
+  .quiz-option:hover:not(.disabled) { border-color: var(--navy); background: var(--cream); transform: translateX(3px); }
+  .quiz-option.correct  { border-color: var(--gold); background: var(--gold-light); color: #5c4400; }
+  .quiz-option.incorrect { border-color: #c07060; background: #f5e8e5; color: #6b2a1e; }
+  .quiz-option.disabled { cursor: default; }
+  .quiz-feedback { margin-top: 14px; padding: 14px 16px; border-radius: 8px; font-size: 13.5px; line-height: 1.5; }
+  .quiz-feedback.correct   { background: var(--gold-light); color: #5c4400; border: 1px solid var(--gold); }
+  .quiz-feedback.incorrect { background: #f5e8e5; color: #6b2a1e; border: 1px solid #c07060; }
+  .quiz-nav { display: flex; gap: 12px; margin-top: 20px; justify-content: center; }
+  .quiz-btn { padding: 11px 22px; border-radius: 8px; cursor: pointer; font-weight: 700; border: none; transition: all 0.2s; font-size: 13.5px; }
+  .quiz-btn:hover { transform: translateY(-1px); }
+  .quiz-btn-primary   { background: var(--navy); color: var(--gold); }
+  .quiz-btn-secondary { background: var(--cream-dark); color: var(--navy); }
+  .quiz-result  { text-align: center; padding: 30px 20px; }
+  .quiz-score   { font-size: 64px; margin: 16px 0; }
+  .quiz-message { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     PAGE HEADER — edit label, h1, subtitle only
+     ═══════════════════════════════════════════ -->
+<div class="page-header">
+  <div class="container">
+    <div class="header-label">Executive Ready Leadership · Module 2</div>
+    <h1>Driving Performance</h1>
+    <p class="subtitle">How leaders drive performance through motivation, matched leadership styles, feedback and coaching.</p>
+    <div class="nav-container" id="nav"></div>
+  </div>
+</div>
+
+<div class="content-area">
+  <div class="container">
+    <div class="card" id="content"></div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   STEP 1 — Define sections (drives nav pills + routing)
+   ═══════════════════════════════════════════════════════════ */
+const sections = [
+  { id: '2.1', name: 'Toolbelt',        icon: '🧰' },
+  { id: '2.2', name: 'Motivation',      icon: '⚙️' },
+  { id: '2.3', name: 'Autonomy · Mastery · Purpose', icon: '🚀' },
+  { id: '2.4', name: 'Skill-Will',      icon: '🎛️' },
+  { id: '2.5', name: 'Feedback (SBI)',  icon: '💬' },
+  { id: '2.6', name: 'GROW Coaching',   icon: '🌱' },
+  { id: '2.7', name: 'GAPS',            icon: '🧭' },
+  { id: '2.8', name: 'Cross-Cultural',  icon: '🌍' },
+  { id: 'quiz', name: 'Quiz',           icon: '🧠' }
+];
+
+/* ═══════════════════════════════════════════════════════════
+   STEP 2 — State for interactive elements (one per section)
+   ═══════════════════════════════════════════════════════════ */
+const state = {
+  currentSection: sections[0].id,
+  selToolbelt:  0,
+  selHygiene:   0,
+  selAMP:       0,
+  selSkillWill: 0,
+  expandedSBI: -1,
+  selGROW:      0,
+  selGAPS:      0,
+  selTripwire:  0,
+  quiz:         0,
+  quizAnswers:  [],
+  quizComplete: false
+};
+
+/* ═══════════════════════════════════════════════════════════
+   STEP 3 — Quiz questions
+   ═══════════════════════════════════════════════════════════ */
+const quizQuestions = [
+  {
+    q: 'In the performance management "toolbelt", which component is the largest, because it is where most performance is actually shaped?',
+    opts: ['Counselling and discipline', 'Regular meetings and daily management', 'Recruitment', 'The Employee Assistance Program (EAP)'],
+    correct: 1,
+    explain: 'Most performance management is the everyday one-to-one relationship between a manager and their people. Like a well-set-up sailing boat, small subtle adjustments steer performance more than big corrections.'
+  },
+  {
+    q: 'What is the key difference between "counselling and discipline" and "grievance"?',
+    opts: ['They are two names for the same process', 'Counselling and discipline is accessed by the manager; grievance is accessed by the employee', 'Grievance happens before hire; counselling happens after', 'Counselling and discipline refers to psychological counselling'],
+    correct: 1,
+    explain: 'Counselling and discipline is the manager’s right and responsibility to manage a performance problem. Grievance is accessed by the employee. Knowing the difference lets you keep running the counselling and discipline process even if a grievance is raised.'
+  },
+  {
+    q: 'According to Herzberg’s Two-Factor Theory, what do hygiene factors (like salary and title) do?',
+    opts: ['They increase satisfaction the more you add', 'They reduce dissatisfaction but do not increase satisfaction', 'They are the true motivators', 'They have no effect on people at work'],
+    correct: 1,
+    explain: 'Hygiene factors are extrinsic and static: they reduce dissatisfaction, but adding more of them will not increase satisfaction. True motivators (purpose, autonomy, relationships) drive genuine engagement.'
+  },
+  {
+    q: 'The research popularised by Daniel Pink (the RSA "Drive" studies) found that for tasks requiring even rudimentary cognitive skill, larger financial rewards led to what?',
+    opts: ['Consistently better performance', 'No change in performance', 'Poorer performance', 'Better performance only in wealthy countries'],
+    correct: 2,
+    explain: 'Bigger rewards improve performance only for simple, mechanical, "if-then" tasks. Once a task needs conceptual or creative thinking, larger rewards demonstrably led to worse performance, replicated across MIT and rural India.'
+  },
+  {
+    q: 'What are the three intrinsic factors that Pink identifies as driving better performance and satisfaction?',
+    opts: ['Salary, status and security', 'Autonomy, mastery and purpose', 'Recruitment, induction and review', 'Situation, behaviour and impact'],
+    correct: 1,
+    explain: 'Once pay is enough to take the issue of money off the table, autonomy (self-direction), mastery (getting better) and purpose (something bigger than yourself) drive performance and satisfaction.'
+  },
+  {
+    q: 'In the Skill-Will model, which style suits a team member with HIGH skill but LOW will?',
+    opts: ['Direct', 'Guide', 'Delegate', 'Excite'],
+    correct: 3,
+    explain: 'High skill, low will calls for Excite: find the reason for the low will, then re-motivate and rebuild confidence and engagement. (Low skill/high will = Guide, high skill/high will = Delegate, low skill/low will = Direct.)'
+  },
+  {
+    q: 'What does the "B" in the SBI feedback model stand for, and how should it be described?',
+    opts: ['Belief, your judgement of the person', 'Behaviour, observable action, like playing back a video using only words', 'Background, the person’s history', 'Benefit, the upside of the change'],
+    correct: 1,
+    explain: 'Behaviour means the observable action only: "think of playing back a video recorder using only words." Effective feedback is behaviour-based, not your interpretation or judgement.'
+  },
+  {
+    q: 'In the GROW coaching model, what is the recommended stance during the Options stage?',
+    opts: ['Tell the coachee the best solution from your experience', 'Ask, do not tell; empower the coachee and ensure choice', 'Skip straight to the action plan', 'Diagnose the problem and direct them'],
+    correct: 1,
+    explain: 'Coaching empowers others to own the problem and create their own solutions. In Options you brainstorm and ask rather than tell, avoiding the trap of being "seduced into expertise".'
+  },
+  {
+    q: 'In the GAPS framework, what does "Success Factors" represent?',
+    opts: ['My own goals and aspirations', 'My view of my current strengths', 'The future as defined by the organisation or role requirements', 'How my peers rate me today'],
+    correct: 2,
+    explain: 'Success factors are the future as seen by others: what the organisation or manager defines as required to succeed in a role, rather than what you might assume they are.'
+  },
+  {
+    q: 'According to Hahn and Molinsky, in a "high-context" culture, where does the meaning of a conversation mostly reside?',
+    opts: ['Only in the exact words spoken', 'Across many frequencies, tone, setting, relationship and social context', 'In written contracts only', 'In the loudest speaker'],
+    correct: 1,
+    explain: 'In high-context cultures people read between the lines and find meaning in setting, relationship status and broader context, not just the literal words. This is one of the four common cross-cultural communication trip wires.'
+  }
+];
+
+/* ═══════════════════════════════════════════════════════════
+   STEP 4 — Section render functions
+   ═══════════════════════════════════════════════════════════ */
+
+/* -- Section 2.1: Performance Management Toolbelt (clickable grid) -- */
+const toolbeltItems = [
+  { name: 'Position Description', icon: '📄', color: 'item-green',  desc: 'Before hire', detail: 'Set before a person is hired. Does it adequately describe the role and expectations? A poor description is often the real root of a performance problem.', tip: 'Revisit the position description first when performance seems "off".' },
+  { name: 'Policy',               icon: '📕', color: 'item-green',  desc: 'Before hire', detail: 'Defines the behaviours, values and standards the organisation looks for in the job. Along with position description, this sits before the person even arrives.', tip: 'Always check the policy before acting on a concern.' },
+  { name: 'Recruitment',          icon: '🎯', color: 'item-blue',   desc: 'Attract', detail: 'How you brand the organisation to attract the right people. Recruitment is now a two-way street: with skilled workers in demand, you must show who you are as an organisation.', tip: 'Using consultants is efficient but costs you early relationship-building.' },
+  { name: 'Induction & Training', icon: '🧑‍🏫', color: 'item-blue', desc: 'Onboard', detail: 'The first few weeks are a ripe time to make an impression about who you are and how you expect people to perform. Not a 500-page document dump.', tip: 'Use a mentor and regular check-ins; ask each new starter how induction could be better.' },
+  { name: 'Daily Management',     icon: '⛵', color: 'item-purple', desc: 'The biggest tool', detail: 'The largest component. Most performance management is the everyday one-to-one relationship. Like a well-set-up boat, small adjustments steer better than big corrections.', tip: 'Subtle, consistent adjustments beat dramatic interventions.' },
+  { name: 'Performance Development', icon: '📈', color: 'item-purple', desc: 'Reviews & growth', detail: 'Formal reviews (part of your award or policy) plus informal check-ins on goals and professional development. Have those conversations regularly, not once a year.', tip: 'Blend the formal requirements with regular informal goal check-ins.' },
+  { name: 'EAP',                  icon: '🤝', color: 'item-teal',   desc: 'Support', detail: 'The Employee Assistance Program offers anonymous counselling and support when someone is struggling in some area of their life. Most organisations have this in some form.', tip: 'Make it clearly and repeatedly visible so people know it is there for them.' },
+  { name: 'Counselling & Discipline', icon: '📋', color: 'item-orange', desc: 'Manager-led', detail: 'An HR term (not psychological counselling) for managing poor performance. It is the manager’s right and responsibility to run this when there is a problem.', tip: 'This is accessed by the manager, not the employee.' },
+  { name: 'Grievance',            icon: '⚖️', color: 'item-red',    desc: 'Employee-led', detail: 'A separate process accessed by the employee. If an employee raises a grievance mid-conversation, acknowledge the policy exists while continuing the counselling and discipline process you are entitled to run.', tip: 'Grievance is the employee’s to access; it does not stop your process.' }
+];
+
+function renderToolbelt() {
+  const it = toolbeltItems[state.selToolbelt];
+  return `
+    <div class="section-number">2.1</div>
+    <div class="section-title">The Performance Management Toolbelt</div>
+    <div class="section-subtitle">Performance management is not a single conversation. It is a toolbelt of components, some acting before a person is even hired. Click each tool to explore.</div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 Key Insight</div>
+      <p>"The beginning of wisdom is the defining of terms." Before acting on any concern, always check the policy and check with your manager.</p>
+    </div>
+
+    <div class="clickable-grid">
+      ${toolbeltItems.map((t, i) => `
+        <div class="clickable-item ${t.color} ${i === state.selToolbelt ? 'active' : ''}" onclick="selectToolbelt(${i})">
+          <div class="clickable-icon">${t.icon}</div>
+          <div class="clickable-name">${t.name}</div>
+          <div class="clickable-desc">${t.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${it.icon} ${it.name}</h4>
+      <p>${it.detail}</p>
+      <p><strong>💡 Tip:</strong> ${it.tip}</p>
+    </div>
+  `;
+}
+function selectToolbelt(i) { state.selToolbelt = i; renderContent(); }
+
+/* -- Section 2.2: Herzberg Two-Factor (clickable grid + compare + pull quote) -- */
+const hygieneItems = [
+  { name: 'Salary',        icon: '💰', color: 'item-gray',   type: 'Hygiene factor', detail: 'A classic hygiene factor. It reduces dissatisfaction, but it is static: to keep motivating, it has to keep rising. Pay enough to take money off the table.', tip: 'Above a threshold, more money rarely buys more engagement.' },
+  { name: 'Title & Status',icon: '🏷️', color: 'item-gray',  type: 'Hygiene factor', detail: 'Job title, a corner office and perks are hygiene factors. Important, but they do not create lasting satisfaction on their own.', tip: 'Status quiets dissatisfaction; it does not ignite drive.' },
+  { name: 'Conditions',    icon: '🏢', color: 'item-gray',   type: 'Hygiene factor', detail: 'Standard remuneration and working conditions. Most people think of these as "the motivators", but Herzberg classes them as hygiene.', tip: 'Get conditions right so they stop being a distraction.' },
+  { name: 'Purpose',       icon: '🎯', color: 'item-yellow', type: 'True motivator', detail: 'A sense that what you do matters and connects to something bigger. A genuine, durable driver of satisfaction and effort.', tip: 'Link tasks to why they matter and to whom.' },
+  { name: 'Autonomy',      icon: '🕊️', color: 'item-yellow', type: 'True motivator', detail: 'A sense of choosing your own path. Intrinsic and powerful; even the perception of having your own way is highly motivating.', tip: 'Offer choice in how work gets done.' },
+  { name: 'Relationships', icon: '👥', color: 'item-yellow', type: 'True motivator', detail: 'People you respect and who respect you. A core true motivator that keeps people engaged and performing.', tip: 'Invest in respect and rapport, not just tasks.' },
+  { name: 'Creativity',    icon: '💡', color: 'item-yellow', type: 'True motivator', detail: 'Developing new and inventive ideas. Intrinsic engagement with the work itself, which hygiene factors cannot replace.', tip: 'Create space for people to invent, not just execute.' }
+];
+
+function renderHygiene() {
+  const it = hygieneItems[state.selHygiene];
+  return `
+    <div class="section-number">2.2</div>
+    <div class="section-title">Motivation: Hygiene Factors vs True Motivators</div>
+    <div class="section-subtitle">Frederick Herzberg’s Two-Factor Theory. Click each factor to see whether it is a hygiene factor or a true motivator, and why.</div>
+
+    <div class="clickable-grid">
+      ${hygieneItems.map((t, i) => `
+        <div class="clickable-item ${t.color} ${i === state.selHygiene ? 'active' : ''}" onclick="selectHygiene(${i})">
+          <div class="clickable-icon">${t.icon}</div>
+          <div class="clickable-name">${t.name}</div>
+          <div class="clickable-desc">${t.type}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${it.icon} ${it.name} (${it.type})</h4>
+      <p>${it.detail}</p>
+      <p><strong>💡 Tip:</strong> ${it.tip}</p>
+    </div>
+
+    <div class="compare">
+      <div class="c-col">
+        <h3>Hygiene factors (extrinsic)</h3>
+        <div class="c-row">Salary, title, perks, conditions</div>
+        <div class="c-row">Reduce dissatisfaction only</div>
+        <div class="c-row">Static: must keep rising to keep working</div>
+      </div>
+      <div class="c-col">
+        <h3>True motivators (intrinsic)</h3>
+        <div class="c-row">Purpose, autonomy, relationships, creativity</div>
+        <div class="c-row">Actually drive satisfaction and engagement</div>
+        <div class="c-row">Deeper and more durable</div>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      <p>It's the job of a manager not to light the fire of motivation, but to create an environment to let each person's own motivation flourish.</p>
+      <cite>Workshop 2, Driving Performance</cite>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 Key Insight</div>
+      <p>Hygiene factors quiet dissatisfaction; they never create lasting satisfaction. To motivate, work on the true motivators.</p>
+    </div>
+  `;
+}
+function selectHygiene(i) { state.selHygiene = i; renderContent(); }
+
+/* -- Section 2.3: Autonomy, Mastery & Purpose (clickable grid + stats + info note + pull quote) -- */
+const ampItems = [
+  { name: 'Autonomy',    icon: '🕊️', color: 'item-blue',   desc: 'Self-direction', detail: 'The desire to be self-directed. Management is great for compliance, but self-direction gets engagement. Atlassian’s quarterly 24-hour "work on anything you want" day produced fixes and new products that would never otherwise emerge.', tip: 'Even the perception of having your own way is highly motivating.' },
+  { name: 'Mastery',     icon: '📈', color: 'item-green',  desc: 'Getting better', detail: 'The urge to get better at something. A sense of progress and having metrics keeps people engaged. This is why people play instruments on weekends. It engages the brain’s sense of journey.', tip: 'Give people a way to see and measure their progress.' },
+  { name: 'Purpose',     icon: '🌟', color: 'item-yellow', desc: 'Bigger than self', detail: 'Something that transcends the self, often tied to how we relate to other people, such as a nurse and patients, or a teacher and students. It connects strongly to values.', tip: 'Connect the work to the people it serves.' },
+  { name: 'Relatedness', icon: '🔗', color: 'item-purple', desc: 'SDT need', detail: 'From Self-Determination Theory (Ryan & Deci), one of three innate needs alongside competence and autonomy. When satisfied, these needs enhance self-motivation and well-being; when thwarted, they diminish them.', tip: 'Belonging and connection are basic psychological fuel, not extras.' }
+];
+
+function renderAMP() {
+  const it = ampItems[state.selAMP];
+  return `
+    <div class="section-number">2.3</div>
+    <div class="section-title">Autonomy, Mastery & Purpose</div>
+    <div class="section-subtitle">Once pay is enough to take money off the table, these intrinsic drivers lift performance. Click each to explore.</div>
+
+    <div class="clickable-grid">
+      ${ampItems.map((t, i) => `
+        <div class="clickable-item ${t.color} ${i === state.selAMP ? 'active' : ''}" onclick="selectAMP(${i})">
+          <div class="clickable-icon">${t.icon}</div>
+          <div class="clickable-name">${t.name}</div>
+          <div class="clickable-desc">${t.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${it.icon} ${it.name}</h4>
+      <p>${it.detail}</p>
+      <p><strong>💡 Tip:</strong> ${it.tip}</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat-box"><div class="stat-num">3</div><div class="stat-label">Intrinsic drivers: autonomy, mastery, purpose (Pink)</div></div>
+      <div class="stat-box"><div class="stat-num">3</div><div class="stat-label">SDT needs: competence, autonomy, relatedness (Ryan &amp; Deci)</div></div>
+      <div class="stat-box"><div class="stat-num">24h</div><div class="stat-label">Atlassian’s quarterly autonomy day that sparked new ideas</div></div>
+    </div>
+
+    <div class="info-note">
+      <div class="note-title">🔬 Research: the reward paradox</div>
+      <p>MIT students, and a replication in rural Madurai (India) funded by the Federal Reserve Bank, showed bigger rewards improve only simple mechanical tasks. For anything needing cognitive or creative thinking, the largest rewards produced the worst performance.</p>
+    </div>
+
+    <div class="pullquote">
+      <p>People will work hard for a pay cheque, harder for a person, and hardest for a purpose or cause.</p>
+      <cite>Discretionary performance</cite>
+    </div>
+  `;
+}
+function selectAMP(i) { state.selAMP = i; renderContent(); }
+
+/* -- Section 2.4: Skill-Will Model (clickable grid + insight) -- */
+const skillWillItems = [
+  { name: 'Guide',    icon: '🧭', color: 'item-green',  desc: 'Low skill · High will', detail: 'The willing learner who lacks skill. Invest time to train and coach; nurture their enthusiasm while you build capability.', tip: 'Protect and channel high will while skill catches up.' },
+  { name: 'Delegate', icon: '🚀', color: 'item-teal',   desc: 'High skill · High will', detail: 'Capable and motivated. Empower and trust them with low involvement; give autonomy and get out of the way.', tip: 'Your job here is to stay out of the way and resource them.' },
+  { name: 'Direct',   icon: '📏', color: 'item-red',    desc: 'Low skill · Low will', detail: 'Lacks both capability and motivation. Provide clear instruction with close structure and supervision until both build.', tip: 'Be clear and specific; supervise closely at first.' },
+  { name: 'Excite',   icon: '⚡', color: 'item-orange', desc: 'High skill · Low will', detail: 'Capable but not engaged. Find the reason for the low will, then re-motivate and rebuild confidence and engagement.', tip: 'Diagnose the cause of low will before anything else.' }
+];
+
+function renderSkillWill() {
+  const it = skillWillItems[state.selSkillWill];
+  return `
+    <div class="section-number">2.4</div>
+    <div class="section-title">The Skill-Will Model</div>
+    <div class="section-subtitle">Based on Max Landsberg’s The Tao of Coaching. Match your style to the person and task by their skill (can they?) and will (do they want to?). Click each quadrant.</div>
+
+    <div class="clickable-grid">
+      ${skillWillItems.map((t, i) => `
+        <div class="clickable-item ${t.color} ${i === state.selSkillWill ? 'active' : ''}" onclick="selectSkillWill(${i})">
+          <div class="clickable-icon">${t.icon}</div>
+          <div class="clickable-name">${t.name}</div>
+          <div class="clickable-desc">${t.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${it.icon} ${it.name} (${it.desc})</h4>
+      <p>${it.detail}</p>
+      <p><strong>💡 Tip:</strong> ${it.tip}</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 Key Insight</div>
+      <p>There is no single best style. The same person may need different styles for different activities, so use the Skill-Will inventory to match style to each person/task combination.</p>
+    </div>
+  `;
+}
+function selectSkillWill(i) { state.selSkillWill = i; renderContent(); }
+
+/* -- Section 2.5: SBI Feedback & Underperformance (formula + expandable cards + steps) -- */
+const sbiCards = [
+  { title: 'Situation', tag: 'S', preview: 'Anchor in time and place.', detail: ['Pin the feedback to a specific moment: when and where.', 'Example: "At the end of the team meeting this morning..."', 'Specificity stops feedback feeling like a general character judgement.'] },
+  { title: 'Behaviour', tag: 'B', preview: 'Observable action only.', detail: ['Describe what the person actually said or did (playing back a video recorder using only words).', 'Example: "...you gave a concise summary of the key action steps..."', 'No interpretation, labels or judgement, just the observable.'] },
+  { title: 'Impact', tag: 'I', preview: 'What you felt and its effect.', detail: ['State what you felt or thought and the impact on others, the task and the work environment.', 'Example: "...I was glad, and it brought a clear sense of closure for the others."', 'Then explore their perspective and what they might do next.'] }
+];
+
+function renderSBI() {
+  return `
+    <div class="section-number">2.5</div>
+    <div class="section-title">Feedback with SBI & Managing Underperformance</div>
+    <div class="section-subtitle">The most effective feedback is behaviour-based. Click each element of SBI to expand it. Works for both recognition and correction.</div>
+
+    <div class="formula-box">
+      <div class="formula-title">🎯 The SBI Feedback Formula</div>
+      <div class="formula-steps">
+        <div class="formula-step">Situation (when &amp; where)</div>
+        <span class="formula-arrow">→</span>
+        <div class="formula-step">Behaviour (observable action)</div>
+        <span class="formula-arrow">→</span>
+        <div class="formula-step">Impact (effect on others)</div>
+      </div>
+      <div class="formula-note">⚠️ Describe behaviour, not your judgement of the person.</div>
+    </div>
+
+    <div class="exp-cards cols-3">
+      ${sbiCards.map((c, i) => `
+        <div class="exp-card ${i === state.expandedSBI ? 'expanded' : ''}" onclick="toggleSBI(${i})">
+          <div class="exp-title">${c.title}<span class="exp-tag">${c.tag}</span></div>
+          <div class="exp-preview">${c.preview}</div>
+          <div class="exp-detail">
+            ${c.detail.map(d => `<div class="dp">${d}</div>`).join('')}
+          </div>
+          <div class="expand-hint">${i === state.expandedSBI ? 'Click to collapse' : 'Click to expand'}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Before difficult feedback, every time</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-number">1</div><div class="step-text"><strong>Check with your manager</strong></div></div>
+        <div class="step-item"><div class="step-number">2</div><div class="step-text"><strong>Check your policies</strong></div></div>
+        <div class="step-item"><div class="step-number">3</div><div class="step-text"><strong>Check the award</strong></div></div>
+        <div class="step-item"><div class="step-number">4</div><div class="step-text"><strong>Check recent legislation and rulings</strong> (get HR advice)</div></div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">⚠️ Watch Out</div>
+      <p>Analyse underperformance first: have you and the organisation done everything required for the person to perform? Document carefully: metrics, emails, feedback, performance plans.</p>
+    </div>
+  `;
+}
+function toggleSBI(i) { state.expandedSBI = (state.expandedSBI === i ? -1 : i); renderContent(); }
+
+/* -- Section 2.6: GROW Model (spectrum + detail + insight) -- */
+const growStages = [
+  { name: 'Goal',    icon: '🎯', detail: 'Set goals, write them down and establish what the person wants from the session. Spend real time here to understand why this goal, and why now.', q: '"What would you like to achieve?" "What would need to happen for this time to feel well spent?"' },
+  { name: 'Reality', icon: '🔍', detail: 'Let them tell their story. Invite self-assessment, ask what is happening, and discuss the effects of the situation.', q: '"Where are you in relation to your goal?" "What have you tried so far?" "What is working well?"' },
+  { name: 'Options', icon: '💡', detail: 'Brainstorm options. Ask, do not tell. Empower and ensure choice, and resist being seduced into giving expert answers.', q: '"What are your options?" "What else might work?" "Would you like suggestions from me?"' },
+  { name: 'Wrap-up', icon: '✅', detail: 'Identify specific steps and any obstacles, and write an action plan. Confirm commitment.', q: '"What is one small step you’ll take now?" "On a scale of 1 to 10, how committed are you?"' }
+];
+
+function renderGROW() {
+  const s = growStages[state.selGROW];
+  return `
+    <div class="section-number">2.6</div>
+    <div class="section-title">Leader as Coach: The GROW Model</div>
+    <div class="section-subtitle">A coaching conversation flows from exploratory and divergent to focused and converging. Click each stage. It is fluid, not strictly linear.</div>
+
+    <div class="spectrum">
+      ${growStages.map((g, i) => `
+        <div class="spectrum-item spec-${i+1} ${i === state.selGROW ? 'active' : ''}" onclick="selectGROW(${i})">
+          <div class="spectrum-icon">${g.icon}</div>
+          <div class="spectrum-name">${g.name}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="spectrum-labels">
+      <span>← Explore / diverge</span>
+      <span>Decide / converge →</span>
+    </div>
+
+    <div class="detail-box">
+      <h4>${s.icon} ${s.name}</h4>
+      <p>${s.detail}</p>
+      <p><strong>❓ Sample questions:</strong> ${s.q}</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 Key Insight</div>
+      <p>Coaching empowers others to own the problem and create their own solutions. Ask, do not tell; use the power of the pause; and remember: "investing 10 minutes of coaching can actually save an hour."</p>
+    </div>
+  `;
+}
+function selectGROW(i) { state.selGROW = i; renderContent(); }
+
+/* -- Section 2.7: GAPS & Development Priorities (clickable grid + compare) -- */
+const gapsItems = [
+  { name: 'Goals',          icon: '🎯', color: 'item-yellow', desc: 'Future · my view', detail: 'The future as I see it: my goals, values, aspirations, ambitions and purpose. What I want to achieve.', tip: 'If you feel stuck, set more aspirational goals to create tension.' },
+  { name: 'Abilities',      icon: '💪', color: 'item-green',  desc: 'Now · my view', detail: 'The now as I see it: my perception of my own strengths and weaknesses, what I am good at and less good at.', tip: 'Compare honestly against the success factors for your target role.' },
+  { name: 'Perceptions',    icon: '👀', color: 'item-blue',   desc: 'Now · others’ view', detail: 'The now as others see it: how others rate my strengths and where they think I need to develop. May differ from my own view.', tip: 'Seek more feedback to sharpen this quadrant.' },
+  { name: 'Success Factors',icon: '🏁', color: 'item-purple', desc: 'Future · others’ view', detail: 'The future as others see it: what the organisation or manager defines as required to succeed in a role, not what I assume they are.', tip: 'Confirm success factors with the organisation, don’t guess them.' }
+];
+
+function renderGAPS() {
+  const it = gapsItems[state.selGAPS];
+  return `
+    <div class="section-number">2.7</div>
+    <div class="section-title">GAPS & Prioritising Development</div>
+    <div class="section-subtitle">GAPS maps four views (now vs future, my view vs others’) to surface the creative tension for development. Click each quadrant.</div>
+
+    <div class="clickable-grid">
+      ${gapsItems.map((t, i) => `
+        <div class="clickable-item ${t.color} ${i === state.selGAPS ? 'active' : ''}" onclick="selectGAPS(${i})">
+          <div class="clickable-icon">${t.icon}</div>
+          <div class="clickable-name">${t.name}</div>
+          <div class="clickable-desc">${t.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${it.icon} ${it.name}</h4>
+      <p>${it.detail}</p>
+      <p><strong>💡 Tip:</strong> ${it.tip}</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Prioritising development goals (payback vs ease)</div>
+      <div class="compare">
+        <div class="c-col">
+          <h3>Start here: best ROI</h3>
+          <div class="c-row">High payback to person and organisation</div>
+          <div class="c-row">Relatively easy to learn</div>
+          <div class="c-row">Delivers early success → builds confidence</div>
+        </div>
+        <div class="c-col">
+          <h3>Then, and avoid</h3>
+          <div class="c-row">High payback but harder slog, still worthwhile</div>
+          <div class="c-row">Low payback (easy or hard), do not waste effort</div>
+          <div class="c-row">Prioritise return, not just ease</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-note">
+      <div class="note-title">🧭 Creative tension</div>
+      <p>Development happens in the gaps between these quadrants: goals vs abilities, self-view vs others’ perceptions, and personal goals vs organisational success factors.</p>
+    </div>
+  `;
+}
+function selectGAPS(i) { state.selGAPS = i; renderContent(); }
+
+/* -- Section 2.8: Cross-Cultural Communication (clickable grid + info note + pull quote) -- */
+const tripwireItems = [
+  { name: 'Business vs Relationship', icon: '🤝', color: 'item-blue',   desc: 'Trip wire 1', detail: 'Some cultures (e.g. US) treat conversations as exchanging information and get down to business quickly. Others (e.g. Mexico) build the relationship first.', tip: 'A task-first person can seem aggressive; a relationship-first person can seem to waste time.' },
+  { name: 'Direct vs Indirect',       icon: '🗣️', color: 'item-green',  desc: 'Trip wire 2', detail: 'Some cultures state problems plainly. Others (e.g. Japan) use hints and general statements to protect face and the relationship.', tip: 'A direct person can seem insensitive; an indirect person can seem scattered or shifty.' },
+  { name: 'Low vs High Context',      icon: '📡', color: 'item-purple', desc: 'Trip wire 3', detail: 'In low-context cultures (e.g. Canada) meaning is in the exact words. In high-context cultures (e.g. South Korea) meaning is read across tone, setting, relationship and social context.', tip: 'Low-context speakers may under-read cues; high-context speakers may over-read them.' },
+  { name: 'Informality vs Formality', icon: '🎩', color: 'item-orange', desc: 'Trip wire 4', detail: 'Cultures differ on how much informality is welcome versus how much formality signals respect.', tip: 'Match the register: misjudging formality can read as disrespect or distance.' }
+];
+
+function renderTripwire() {
+  const it = tripwireItems[state.selTripwire];
+  return `
+    <div class="section-number">2.8</div>
+    <div class="section-title">Cross-Cultural Communication</div>
+    <div class="section-subtitle">A difficult conversation is harder by an order of magnitude across cultures. Click each of the four common trip wires (Hahn &amp; Molinsky).</div>
+
+    <div class="clickable-grid">
+      ${tripwireItems.map((t, i) => `
+        <div class="clickable-item ${t.color} ${i === state.selTripwire ? 'active' : ''}" onclick="selectTripwire(${i})">
+          <div class="clickable-icon">${t.icon}</div>
+          <div class="clickable-name">${t.name}</div>
+          <div class="clickable-desc">${t.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${it.icon} ${it.name}</h4>
+      <p>${it.detail}</p>
+      <p><strong>⚠️ The danger:</strong> ${it.tip}</p>
+    </div>
+
+    <div class="info-note">
+      <div class="note-title">🌍 Coaching across cultures (David Peterson)</div>
+      <p>Use cross-cultural knowledge to customise your approach to each individual, not to stereotype. Culture is a group-level phenomenon; coaching happens at the level of the individual.</p>
+    </div>
+
+    <div class="pullquote">
+      <p>The coach's challenge is to get to know the person they are working with, regardless of that person's culture.</p>
+      <cite>David B. Peterson</cite>
+    </div>
+  `;
+}
+function selectTripwire(i) { state.selTripwire = i; renderContent(); }
+
+/* ═══════════════════════════════════════════════════════════
+   CORE ENGINE — do not edit below this line
+   ═══════════════════════════════════════════════════════════ */
+function render() { renderNav(); renderContent(); }
+
+function renderNav() {
+  document.getElementById('nav').innerHTML = sections.map(s =>
+    `<div class="nav-item ${s.id === state.currentSection ? 'active' : ''}" onclick="goTo('${s.id}')">
+      <span class="nav-number">${s.id}</span> ${s.icon} ${s.name}
+    </div>`
+  ).join('');
+}
+
+function goTo(id) { state.currentSection = id; render(); }
+
+function renderContent() {
+  const c = document.getElementById('content');
+  switch(state.currentSection) {
+    case '2.1':  c.innerHTML = renderToolbelt();  break;
+    case '2.2':  c.innerHTML = renderHygiene();   break;
+    case '2.3':  c.innerHTML = renderAMP();       break;
+    case '2.4':  c.innerHTML = renderSkillWill(); break;
+    case '2.5':  c.innerHTML = renderSBI();       break;
+    case '2.6':  c.innerHTML = renderGROW();      break;
+    case '2.7':  c.innerHTML = renderGAPS();      break;
+    case '2.8':  c.innerHTML = renderTripwire();  break;
+    case 'quiz': c.innerHTML = renderQuiz();      break;
+  }
+}
+
+function renderQuiz() {
+  if (state.quizComplete) {
+    const score = state.quizAnswers.filter((a, i) => a === quizQuestions[i].correct).length;
+    const pct   = Math.round((score / quizQuestions.length) * 100);
+    const emoji = pct === 100 ? '🏆' : pct >= 75 ? '⭐' : pct >= 50 ? '👍' : '📚';
+    const msg   = pct === 100 ? 'Perfect! You\'ve mastered this module.' :
+                  pct >= 75  ? 'Great work! You understand the key concepts.' :
+                  pct >= 50  ? 'Good effort, revisit the sections you found tricky.' :
+                               'Keep studying and try again!';
+    return `
+      <div class="quiz-result">
+        <div class="section-number">Quiz</div>
+        <div class="section-title" style="display:block;margin-bottom:16px;">Results</div>
+        <div class="quiz-score">${emoji}</div>
+        <p style="font-size:22px;font-weight:700;color:var(--navy);margin-bottom:8px;">${score} / ${quizQuestions.length} (${pct}%)</p>
+        <p class="quiz-message">${msg}</p>
+        <button class="quiz-btn quiz-btn-primary" onclick="resetQuiz()">Try Again</button>
+      </div>`;
+  }
+  const q        = quizQuestions[state.quiz];
+  const answered = state.quizAnswers[state.quiz] !== undefined;
+  const isCorrect = answered && state.quizAnswers[state.quiz] === q.correct;
+  return `
+    <div class="section-number">Quiz</div>
+    <div class="section-title" style="display:block;margin-bottom:16px;">Test Your Knowledge</div>
+    <div class="quiz-progress">
+      ${quizQuestions.map((_, i) => {
+        let cls = i === state.quiz ? 'active' : '';
+        if (state.quizAnswers[i] !== undefined)
+          cls = state.quizAnswers[i] === quizQuestions[i].correct ? 'correct' : 'incorrect';
+        return `<div class="quiz-dot ${cls}"></div>`;
+      }).join('')}
+    </div>
+    <div class="quiz-question">Q${state.quiz + 1}. ${q.q}</div>
+    <div class="quiz-options">
+      ${q.opts.map((opt, i) => {
+        let cls = answered ? 'disabled ' : '';
+        if (answered && i === q.correct) cls += 'correct';
+        else if (answered && state.quizAnswers[state.quiz] === i) cls += 'incorrect';
+        return `<div class="quiz-option ${cls}" onclick="${answered ? '' : `answerQuiz(${i})`}">${opt}</div>`;
+      }).join('')}
+    </div>
+    ${answered ? `<div class="quiz-feedback ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✅ Correct!' : '❌ Not quite.'} ${q.explain}</div>` : ''}
+    <div class="quiz-nav">
+      ${state.quiz > 0 ? '<button class="quiz-btn quiz-btn-secondary" onclick="prevQuiz()">← Previous</button>' : ''}
+      ${answered ? (state.quiz < quizQuestions.length - 1
+        ? '<button class="quiz-btn quiz-btn-primary" onclick="nextQuiz()">Next →</button>'
+        : '<button class="quiz-btn quiz-btn-primary" onclick="finishQuiz()">See Results</button>') : ''}
+    </div>`;
+}
+
+function answerQuiz(i) { state.quizAnswers[state.quiz] = i; renderContent(); }
+function prevQuiz()    { state.quiz--; renderContent(); }
+function nextQuiz()    { state.quiz++; renderContent(); }
+function finishQuiz()  { state.quizComplete = true; renderContent(); }
+function resetQuiz()   { state.quiz = 0; state.quizAnswers = []; state.quizComplete = false; renderContent(); }
+
+render();
+</script>
+</body>
+</html>

@@ -62,7 +62,10 @@ If you find these useful or have questions, feel free to connect on [LinkedIn](h
 
 ## Workshop 2: Driving Performance
 
-*To be created*
+| File | Type | Description |
+|---|---|---|
+| [Driving Performance](./Workshop_2_Summary.md) | Notes | Written notes on driving performance |
+| [Visual Summary](https://kc-morrison.github.io/wla-resources/Workshop_2_Visual_Summary.html) | Interactive | Visual summary tool |
 
 ---
 

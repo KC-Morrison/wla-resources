@@ -93,7 +93,7 @@ If you find these useful or have questions, feel free to connect on [LinkedIn](h
 
 | File | Type | Description |
 |---|---|---|
-| [Driving Performance](./Workshop_3_Summary.md) | Notes | Written notes on driving performance |
+| [Driving Performance](./Workshop_3_summary.md) | Notes | Written notes on driving performance |
 | [Visual Summary](https://kc-morrison.github.io/wla-resources/Workshop_3_Visual_Summary.html) | Interactive | Visual summary tool |
 
 ---

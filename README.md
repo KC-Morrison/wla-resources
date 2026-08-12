@@ -91,13 +91,10 @@ If you find these useful or have questions, feel free to connect on [LinkedIn](h
 
 ## Workshop 3: Purpose, Priorities and Professional Development
 
-*To be created*
-
----
-
-## Module 6: Reconnect
-
-*To be created*
+| File | Type | Description |
+|---|---|---|
+| [Driving Performance](./Workshop_3_Summary.md) | Notes | Written notes on driving performance |
+| [Visual Summary](https://kc-morrison.github.io/wla-resources/Workshop_3_Visual_Summary.html) | Interactive | Visual summary tool |
 
 ---
 

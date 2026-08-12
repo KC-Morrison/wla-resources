@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3: Purpose, Priorities and Professional Development</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ── THEME TOKENS ─────────────────────────────────────── */
+  :root {
+    --navy:       #1a2744;
+    --navy-mid:   #2c3e6b;
+    --gold:       #c9a84c;
+    --gold-light: #f0e6c8;
+    --cream:      #f5f0e8;
+    --cream-dark: #ede8dc;
+    --border:     #d4c9b0;
+    --text:       #2c2416;
+    --text-muted: #5a5040;
+    --text-dim:   #7a6e5e;
+  }
+
+  /* ── RESET ────────────────────────────────────────────── */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+
+  /* ── PAGE HEADER ──────────────────────────────────────── */
+  .page-header { background: var(--navy); border-bottom: 3px solid var(--gold); padding: 24px 28px 0; }
+  .container   { max-width: 960px; margin: 0 auto; }
+  .header-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-weight: 500; text-align: center; }
+  h1 { font-family: 'Playfair Display', serif; color: #fff; text-align: center; margin-bottom: 4px; font-size: 24px; font-weight: 700; }
+  .subtitle { color: rgba(255,255,255,0.65); text-align: center; margin-bottom: 14px; font-size: 13px; }
+
+  /* ── NAV PILLS ────────────────────────────────────────── */
+  .nav-container { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 0 12px; }
+  .nav-item { padding: 7px 13px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); border: 1.5px solid transparent; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .nav-item:hover { color: #fff; background: rgba(255,255,255,0.18); transform: translateY(-1px); }
+  .nav-item.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+  .nav-number { font-size: 11px; opacity: 0.8; }
+  .nav-item.active .nav-number { opacity: 1; }
+
+  /* ── CONTENT AREA & CARD ──────────────────────────────── */
+  .content-area { padding: 24px 28px 40px; }
+  .card { background: #fff; border-radius: 12px; padding: 26px; border: 1px solid var(--border); min-height: 520px; }
+
+  /* ── SECTION HEADER ───────────────────────────────────── */
+  .section-number   { display: inline-block; background: var(--navy); color: var(--gold); padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; margin-right: 10px; vertical-align: middle; }
+  .section-title    { display: inline; font-size: 22px; font-weight: 600; color: var(--navy); vertical-align: middle; }
+  .section-subtitle { display: block; font-size: 13px; color: var(--text-muted); margin-top: 12px; margin-bottom: 20px; line-height: 1.6; border-left: 3px solid var(--gold); padding: 10px 14px; background: var(--cream-dark); border-radius: 0 6px 6px 0; }
+  .subsection { margin: 20px 0; }
+  .subsection-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .subsection-title::before { content: ''; width: 3px; height: 16px; background: var(--gold); border-radius: 2px; flex-shrink: 0; }
+
+  /* ── CLICKABLE GRID ───────────────────────────────────── */
+  .clickable-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 16px 0; }
+  .clickable-item { padding: 16px; border-radius: 10px; cursor: pointer; transition: all 0.25s; text-align: center; border: 2px solid transparent; }
+  .clickable-item:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(26,39,68,0.12); }
+  .clickable-item.active { border-color: var(--gold); box-shadow: 0 6px 18px rgba(201,168,76,0.25); }
+  .clickable-icon { font-size: 30px; margin-bottom: 8px; }
+  .clickable-name { font-weight: 700; font-size: 13px; color: var(--text); }
+  .clickable-desc { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+  .item-blue   { background: #dbeafe; }
+  .item-green  { background: #dcfce7; }
+  .item-yellow { background: #fef3c7; }
+  .item-red    { background: #fee2e2; }
+  .item-purple { background: #ede9fe; }
+  .item-orange { background: #ffedd5; }
+  .item-teal   { background: #ccfbf1; }
+  .item-gray   { background: #f1f5f9; }
+
+  /* ── DETAIL BOX ───────────────────────────────────────── */
+  .detail-box { margin-top: 14px; padding: 18px; background: #fff; border-radius: 8px; border: 1px solid var(--border); border-left: 3px solid var(--gold); }
+  .detail-box h4 { color: var(--navy); margin-bottom: 8px; font-size: 15px; font-weight: 700; }
+  .detail-box p  { color: #4a3f2f; line-height: 1.6; margin-bottom: 8px; font-size: 13.5px; }
+  .detail-box p:last-child { margin-bottom: 0; }
+
+  /* ── INSIGHT / CALLOUT BOX ────────────────────────────── */
+  .insight-box { background: var(--gold-light); border: 1px solid var(--gold); border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .insight-title { font-size: 12px; font-weight: 700; color: #7a5c00; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .insight-box p { color: #5c4400; font-size: 13.5px; line-height: 1.5; }
+
+  /* ── CULTURAL / INFO NOTE BOX ─────────────────────────── */
+  .info-note { background: #e8edf5; border: 1px solid #b5c4d4; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .info-note .note-title { font-weight: 700; color: var(--navy); margin-bottom: 8px; font-size: 13px; }
+  .info-note p { color: #2c3e6b; font-size: 13.5px; line-height: 1.5; }
+  .info-note p + p { margin-top: 8px; }
+
+  /* ── FORMULA BOX ──────────────────────────────────────── */
+  .formula-box   { background: var(--gold-light); border: 1.5px solid var(--gold); border-radius: 10px; padding: 18px; margin: 16px 0; }
+  .formula-title { font-weight: 700; margin-bottom: 12px; text-align: center; color: #7a5c00; font-size: 14px; }
+  .formula-steps { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+  .formula-step  { background: white; padding: 9px 13px; border-radius: 7px; font-weight: 600; font-size: 13px; border: 1px solid var(--border); color: var(--text); }
+  .formula-arrow { color: var(--gold); font-size: 16px; font-weight: bold; }
+  .formula-note  { text-align: center; margin-top: 12px; font-size: 13px; color: #7a5c00; font-weight: 600; }
+
+  /* ── NUMBERED STEPS LIST ──────────────────────────────── */
+  .steps-list  { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 16px 0; }
+  .step-item   { display: flex; align-items: flex-start; gap: 10px; padding: 12px; background: #fff; border-radius: 8px; border: 1px solid var(--border); border-left: 3px solid var(--navy); }
+  .step-number { background: var(--navy); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .step-text   { font-size: 13px; color: #4a3f2f; }
+
+  /* ── CIRCLE-NUMBER STEP LIST (vertical) ──────────────── */
+  .vsteps { display: flex; flex-direction: column; gap: 16px; margin: 16px 0; }
+  .vstep  { display: flex; gap: 20px; align-items: flex-start; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; transition: box-shadow 0.2s; }
+  .vstep:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .vstep-num  { width: 38px; height: 38px; background: var(--navy); color: white; font-size: 18px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .vstep-body h4 { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .vstep-body p  { font-size: 13.5px; color: #6b6b6b; line-height: 1.6; }
+
+  /* ── EXPANDABLE CARDS ─────────────────────────────────── */
+  .exp-cards { display: grid; gap: 12px; }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .exp-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+  .exp-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--navy); opacity: 0; transition: opacity 0.2s; }
+  .exp-card:hover { border-color: #b8a98a; transform: translateY(-2px); }
+  .exp-card:hover::before, .exp-card.expanded::before { opacity: 1; }
+  .exp-card.expanded { border-color: var(--gold); background: #fdfaf5; }
+  .exp-title   { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .exp-tag     { font-size: 10px; background: var(--gold-light); color: #7a5c00; padding: 2px 7px; border-radius: 10px; font-weight: 600; margin-left: auto; flex-shrink: 0; }
+  .exp-preview { font-size: 12px; color: var(--text-dim); line-height: 1.45; }
+  .exp-detail  { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--cream-dark); }
+  .exp-card.expanded .exp-detail { display: block; }
+  .dp { display: flex; gap: 8px; margin-bottom: 7px; font-size: 12px; color: #4a3f2f; line-height: 1.45; }
+  .dp::before { content: '→'; color: var(--gold); flex-shrink: 0; font-weight: 700; }
+  .expand-hint { font-size: 11px; color: #b8a98a; margin-top: 8px; text-align: right; }
+  .exp-card:hover .expand-hint { color: #7a5c00; }
+
+  /* ── PULL QUOTE ───────────────────────────────────────── */
+  .pullquote { background: var(--navy); color: white; border-radius: 12px; padding: 28px 32px; margin: 24px 0; position: relative; }
+  .pullquote::before { content: '\201C'; font-family: 'Playfair Display', serif; font-size: 100px; color: var(--gold); opacity: 0.3; position: absolute; top: -10px; left: 16px; line-height: 1; }
+  .pullquote p    { font-size: 15px; line-height: 1.65; font-weight: 400; position: relative; z-index: 1; }
+  .pullquote cite { display: block; margin-top: 10px; font-size: 12px; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; font-style: normal; font-weight: 500; position: relative; z-index: 1; }
+
+  /* ── STAT BOXES ───────────────────────────────────────── */
+  .stats    { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin: 20px 0; }
+  .stat-box { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px 20px; text-align: center; }
+  .stat-num   { font-size: 42px; font-weight: 700; color: var(--navy); line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-size: 13px; color: #6b6b6b; line-height: 1.5; }
+
+  /* ── COMPARE COLUMNS ──────────────────────────────────── */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .c-col   { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .c-col h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--cream-dark); }
+  .c-row { display: block; margin-bottom: 7px; font-size: 12px; color: var(--text-muted); line-height: 1.45; }
+
+  /* ── VISION BANNER ────────────────────────────────────── */
+  .vision-banner { text-align: center; padding: 13px; background: var(--navy); color: white; border-radius: 8px; font-weight: 700; font-size: 13px; margin-bottom: 12px; }
+
+  /* ── COVEY QUADRANT GRID ──────────────────────────────── */
+  .matrix-wrap { display: grid; grid-template-columns: 34px 1fr 1fr; grid-template-rows: auto auto 26px; gap: 8px; margin: 16px 0; align-items: stretch; }
+  .axis-y { grid-row: 1 / span 2; writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); background: var(--cream-dark); border-radius: 6px; padding: 6px 0; }
+  .axis-x { grid-column: 2 / span 2; text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); background: var(--cream-dark); border-radius: 6px; padding: 6px 0; }
+  .quad { border-radius: 10px; padding: 14px 16px; cursor: pointer; transition: all 0.25s; border: 2px solid transparent; color: var(--text); min-height: 118px; }
+  .quad:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(26,39,68,0.12); }
+  .quad.active { border-color: var(--gold); box-shadow: 0 6px 18px rgba(201,168,76,0.25); }
+  .quad-mark { font-size: 20px; float: right; line-height: 1; opacity: 0.75; }
+  .quad-cond { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); font-weight: 600; }
+  .quad-name { font-size: 15px; font-weight: 700; margin: 4px 0 6px; color: var(--navy); }
+  .quad-list { font-size: 11.5px; line-height: 1.5; color: var(--text-muted); }
+  .q1 { background: #fee2e2; }
+  .q2 { background: #dcfce7; }
+  .q3 { background: #fef3c7; }
+  .q4 { background: #f1f5f9; }
+
+  /* ── VENN DIAGRAM ─────────────────────────────────────── */
+  .venn-wrap { display: flex; justify-content: center; margin: 8px 0 4px; }
+  .venn { width: 100%; max-width: 430px; height: auto; }
+  .venn-region { cursor: pointer; transition: opacity 0.2s; opacity: 0.72; }
+  .venn-region:hover { opacity: 0.92; }
+  .venn-region.active { opacity: 1; }
+  .venn-outline { fill: none; stroke: var(--navy); stroke-width: 1.5; opacity: 0.35; pointer-events: none; }
+  .venn-ring { fill: none; stroke: var(--gold); stroke-width: 3; pointer-events: none; }
+  .venn-circle-label { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; fill: var(--navy); letter-spacing: 0.1em; text-anchor: middle; pointer-events: none; }
+  .venn-feel { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; fill: #3a3020; text-anchor: middle; pointer-events: none; }
+  .venn-feel.active { font-size: 11px; font-weight: 700; fill: var(--navy); }
+  .venn-hint { text-align: center; font-size: 11.5px; color: var(--text-dim); margin-bottom: 10px; }
+
+  /* ── SIMPLE TABLE ─────────────────────────────────────── */
+  .stbl { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 12.5px; }
+  .stbl th { background: var(--navy); color: var(--gold); text-align: left; padding: 9px 11px; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .stbl td { padding: 9px 11px; border-bottom: 1px solid var(--cream-dark); color: #4a3f2f; line-height: 1.45; vertical-align: top; }
+  .stbl tr:last-child td { border-bottom: none; }
+  .stbl tr.hl td { background: var(--gold-light); font-weight: 700; color: #5c4400; }
+
+  /* ── QUIZ ─────────────────────────────────────────────── */
+  .quiz-progress { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
+  .quiz-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--border); transition: all 0.3s; }
+  .quiz-dot.active    { background: var(--navy); transform: scale(1.3); }
+  .quiz-dot.correct   { background: var(--gold); }
+  .quiz-dot.incorrect { background: #c07060; }
+  .quiz-question { font-size: 17px; font-weight: 700; margin-bottom: 18px; color: var(--navy); line-height: 1.4; }
+  .quiz-options  { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option   { padding: 13px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s; border: 1.5px solid var(--border); background: white; font-size: 13.5px; color: var(--text); }
+  .quiz-option:hover:not(.disabled) { border-color: var(--navy); background: var(--cream); transform: translateX(3px); }
+  .quiz-option.correct  { border-color: var(--gold); background: var(--gold-light); color: #5c4400; }
+  .quiz-option.incorrect { border-color: #c07060; background: #f5e8e5; color: #6b2a1e; }
+  .quiz-option.disabled { cursor: default; }
+  .quiz-feedback { margin-top: 14px; padding: 14px 16px; border-radius: 8px; font-size: 13.5px; line-height: 1.5; }
+  .quiz-feedback.correct   { background: var(--gold-light); color: #5c4400; border: 1px solid var(--gold); }
+  .quiz-feedback.incorrect { background: #f5e8e5; color: #6b2a1e; border: 1px solid #c07060; }
+  .quiz-nav { display: flex; gap: 12px; margin-top: 20px; justify-content: center; }
+  .quiz-btn { padding: 11px 22px; border-radius: 8px; cursor: pointer; font-weight: 700; border: none; transition: all 0.2s; font-size: 13.5px; }
+  .quiz-btn:hover { transform: translateY(-1px); }
+  .quiz-btn-primary   { background: var(--navy); color: var(--gold); }
+  .quiz-btn-secondary { background: var(--cream-dark); color: var(--navy); }
+  .quiz-result  { text-align: center; padding: 30px 20px; }
+  .quiz-score   { font-size: 64px; margin: 16px 0; }
+  .quiz-message { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; }
+
+  @media (max-width: 700px) {
+    .compare, .cols-2, .cols-3 { grid-template-columns: 1fr; }
+    .matrix-wrap { grid-template-columns: 28px 1fr; grid-template-rows: auto auto auto auto 26px; }
+    .axis-y { grid-row: 1 / span 4; }
+    .axis-x { grid-column: 2; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     PAGE HEADER
+     ═══════════════════════════════════════════ -->
+<div class="page-header">
+  <div class="container">
+    <div class="header-label">Executive Ready Leadership · Module 3</div>
+    <h1>Purpose, Priorities &amp; Professional Development</h1>
+    <p class="subtitle">What am I committing to do in order to be the leader I want to be?</p>
+    <div class="nav-container" id="nav"></div>
+  </div>
+</div>
+
+<div class="content-area">
+  <div class="container">
+    <div class="card" id="content"></div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   STEP 1 — Sections
+   ═══════════════════════════════════════════════════════════ */
+const sections = [
+  { id: '3.1', name: 'The Third Space',    icon: '🌗' },
+  { id: '3.2', name: 'The Sweet Spot',     icon: '🎯' },
+  { id: '3.3', name: 'Vision & Tension',   icon: '🧭' },
+  { id: '3.4', name: 'Managing Priorities',icon: '🗂️' },
+  { id: '3.5', name: 'GROW Coaching',      icon: '🌱' },
+  { id: '3.6', name: 'Project & Commitments', icon: '📋' },
+  { id: 'quiz', name: 'Quiz',              icon: '🧠' }
+];
+
+/* ═══════════════════════════════════════════════════════════
+   STEP 2 — State
+   ═══════════════════════════════════════════════════════════ */
+const state = {
+  currentSection: sections[0].id,
+  selectedSpace:    0,
+  selectedCircle:   0,
+  selectedPosition: 0,
+  selectedQuadrant: 1,
+  selectedGrow:     0,
+  quiz:           0,
+  quizAnswers:    [],
+  quizComplete:   false
+};
+
+/* ═══════════════════════════════════════════════════════════
+   STEP 3 — Quiz questions
+   ═══════════════════════════════════════════════════════════ */
+const quizQuestions = [
+  {
+    q: 'In the Covey Matrix, how is an "important" activity defined?',
+    opts: [
+      'An activity that demands immediate attention',
+      'An activity with outcomes that lead to the achievement of your goals',
+      'An activity your manager has asked you to do',
+      'An activity with a hard deadline attached'
+    ],
+    correct: 1,
+    explain: 'Important activities have outcomes that lead to the achievement of YOUR goals. Urgent activities demand immediate attention and are often associated with the achievement of someone else’s goals.'
+  },
+  {
+    q: 'Which Covey quadrant is called "The Zone", and is the one you are challenged to grow?',
+    opts: [
+      'Quadrant I: Urgent and Important',
+      'Quadrant II: Not Urgent and Important',
+      'Quadrant III: Urgent and Not Important',
+      'Quadrant IV: Not Urgent and Not Important'
+    ],
+    correct: 1,
+    explain: 'Quadrant II, Not Urgent and Important, is The Zone: planning, prevention, relationship building, new opportunities, learning and development. The challenge is to create as much time as possible for this quadrant. This is being proactive.'
+  },
+  {
+    q: 'According to the Sweet Spot model, what does it feel like when you are using only your gifts?',
+    opts: ['Self-indulgent', 'Disengaged', 'Frustration', 'Unappreciated'],
+    correct: 2,
+    explain: 'Using gifts alone brings frustration: you keep getting pulled back to what you are good at without tapping into your sense of purpose or passion. Passion alone feels self-indulgent; purpose alone feels self-sacrificing.'
+  },
+  {
+    q: 'What is the formula for building a purpose statement, from The Purpose Project?',
+    opts: [
+      'Vision + values + mission',
+      'Verb + intention (what) + outcome (beneficiary)',
+      'Gifts + passion + purpose',
+      'Goal + reality + options'
+    ],
+    correct: 1,
+    explain: 'Purpose = verb + intention (what) + outcome (beneficiary). For example, "To create a brilliant connected future for everyone".'
+  },
+  {
+    q: 'Creative tension requires two things. What are they?',
+    opts: [
+      'A deadline and an accountability partner',
+      'A vision of what you want, and a clear honest understanding of current reality',
+      'A stretch goal and a fallback plan',
+      'Ambition and permission'
+    ],
+    correct: 1,
+    explain: 'A vision without the current reality is really just a dream. The current reality without a vision is just stuck, complacent, or coasting. The gap between the two is the source of energy.'
+  },
+  {
+    q: 'What does neuroscience research say actually happens when we think we are multitasking?',
+    opts: [
+      'The brain genuinely processes two tasks in parallel',
+      'We switch tasks quickly, with a stop/start process each time',
+      'Performance improves on simple tasks but not complex ones',
+      'The brain allocates equal attention to each task'
+    ],
+    correct: 1,
+    explain: 'The brain does not do tasks simultaneously. We switch-task. That start/stop/start process costs time rather than saving it, produces more mistakes, and saps energy.'
+  },
+  {
+    q: 'In the GROW model, what is the coach doing during the "Options" stage?',
+    opts: [
+      'Recommending the best course of action from experience',
+      'Brainstorming options, asking rather than telling, and ensuring choice',
+      'Writing the action plan on the coachee’s behalf',
+      'Assessing whether the goal is realistic'
+    ],
+    correct: 1,
+    explain: 'Options is about brainstorming, asking not telling, empowering and ensuring choice. The coaching tips reinforce this: resist the urge to offer advice, and let them come up with their own solutions.'
+  },
+  {
+    q: 'What are the three moves of the Third Space?',
+    opts: [
+      'Review, Refocus, Recommit',
+      'Reflect, Rest, Reset',
+      'Reflect, Reframe, Restart',
+      'Rest, Realign, Respond'
+    ],
+    correct: 1,
+    explain: 'Reflect (what did I learn? what actions do I need to follow up?), Rest (how can I make myself still and present? what is needed?) and Reset (how will I show up? what is my intention?).'
+  },
+  {
+    q: 'A leadership project asks you to apply a minimum of how many models or frameworks?',
+    opts: ['One', 'Two', 'Three', 'As many as possible'],
+    correct: 1,
+    explain: 'A minimum of two models or leadership frameworks, applied to real work that delivers a tangible outcome, and evidenced as you go. Keeping a leadership diary is the simplest way to build that evidence base.'
+  },
+  {
+    q: 'What did the BCG and Heidrick & Struggles research find about ambition?',
+    opts: [
+      'Men were substantially more likely to be trying for a promotion',
+      'There is no ambition gap: 62% of women and 67% of men were trying for a promotion',
+      'Women were more likely to be trying for a promotion, by a wide margin',
+      'Ambition was not measured in the study'
+    ],
+    correct: 1,
+    explain: 'There is no ambition gap. Roughly the same percentage of women and men, 62% and 67% respectively, were trying for a promotion. The differences showed up in risk approach, employer changes and mentor relationships instead.'
+  }
+];
+
+/* ═══════════════════════════════════════════════════════════
+   STEP 4 — Section render functions
+   ═══════════════════════════════════════════════════════════ */
+
+/* -- 3.1 The Third Space -- */
+const spaces = [
+  { name: 'Reflect', icon: '🔍', color: 'item-blue', desc: 'On what you have just left',
+    detail: 'The Third Space begins by closing off the First Space, the thing you have just come from. Reflect asks you to name what the last block of time actually gave you before you carry its residue into the next one.',
+    prompts: ['What did I learn?', 'What actions do I need to follow up?'] },
+  { name: 'Rest', icon: '🌿', color: 'item-green', desc: 'Make yourself still',
+    detail: 'Rest is the deliberate pause in the middle. It is not an absence of activity so much as the act of settling yourself before you re-enter.',
+    prompts: ['How can I make myself still and present?', 'What’s needed?'] },
+  { name: 'Reset', icon: '⚡', color: 'item-yellow', desc: 'Choose how you arrive',
+    detail: 'Reset is where intention gets set for the Second Space. It turns the transition from something that happens to you into something you direct.',
+    prompts: ['How will I show up?', 'What’s my intention?'] }
+];
+
+function render31() {
+  const s = spaces[state.selectedSpace];
+  return `
+    <div class="section-number">3.1</div>
+    <div class="section-title">The Third Space</div>
+    <div class="section-subtitle">The transition between the First Space (what you have just come from) and the Second Space (what you are moving into). Click each move to explore. <em>Model adapted from Fraser (2012).</em></div>
+
+    <div class="clickable-grid">
+      ${spaces.map((sp, i) => `
+        <div class="clickable-item ${sp.color} ${i === state.selectedSpace ? 'active' : ''}" onclick="selectSpace(${i})">
+          <div class="clickable-icon">${sp.icon}</div>
+          <div class="clickable-name">${sp.name}</div>
+          <div class="clickable-desc">${sp.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${s.icon} ${s.name}</h4>
+      <p>${s.detail}</p>
+      <p><strong>Prompts:</strong> ${s.prompts.map(p => '“' + p + '”').join(' &nbsp;·&nbsp; ')}</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 Set your intention</div>
+      <p>I need to pay attention to <strong>.............................</strong> in order to gain the most from the day.</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Reflection questions for the whole day</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-number">1</div><div class="step-text">Where am I now?</div></div>
+        <div class="step-item"><div class="step-number">2</div><div class="step-text">Where do I want to be?</div></div>
+        <div class="step-item"><div class="step-number">3</div><div class="step-text">What do I need to focus on in order to achieve it?</div></div>
+      </div>
+    </div>
+
+    <div class="info-note">
+      <div class="note-title">🎓 What this guide covers</div>
+      <p>Develop capacity to identify and pursue fulfilment in your current role · Apply methods for effectively managing your workload · Formulate and commit to a professional development plan.</p>
+      <p>Alongside these: demonstrate capacity to conduct productive discussions, and demonstrate the ability to design professional development tasks.</p>
+    </div>
+  `;
+}
+function selectSpace(i) { state.selectedSpace = i; renderContent(); }
+
+/* -- 3.2 The Sweet Spot -- */
+const circles = [
+  { name: 'Gifts', icon: '🎁', color: 'item-purple', desc: 'What you do uniquely well',
+    detail: 'The greatest part of the challenge of finding the sweet spot is our ignorance of what our gifts, our natural talents, the things we do easily, actually are. We live in a world that is terribly specialised, and we are driven early in life to pick one of a few narrow career channels and to stop dreaming about doing anything else.',
+    qs: ['What have people said you are especially good at?', 'What activities have you received the most praise for, in work or outside?', 'What tasks come easiest to you, whether you enjoy them or not?', 'What are you most capable working with: people, tools, ideas or information?'] },
+  { name: 'Passion', icon: '❤️', color: 'item-red', desc: 'What you love doing',
+    detail: 'Although our intellect, which drives our gifts, evolves rather slowly over our lives, our emotions, which underlie our passions, can change quickly, as our bodies change and our experiences colour what we care about.',
+    qs: ['In other people’s observation, what do you seem to enjoy the most?', 'What tasks do you take on with most relish, whether you are good at them or not?', 'If someone asked you what your “ideal job” might be, how would you answer?', 'If you suddenly received a lot of money or power, what would you start doing that you are not doing now?'] },
+  { name: 'Purpose', icon: '🌍', color: 'item-teal', desc: 'What’s needed that you care about',
+    detail: 'Your purpose must be discovered, not invented. It starts with needs, not with solutions. Your purpose gives focus and meaning to your life and directs your decisions on what to do.',
+    qs: ['What stirs you? What’s going on in the world that makes you want to get involved?', 'What “aha!” moments or callings have come to you in reflection or crisis?', 'What most of all do you think is needed in the world, your community, your profession, your workplace?', 'What do you feel responsible for, that you think you might be able to help improve?'] }
+];
+
+/* Positions on the Venn diagram. `at` is the label anchor inside the SVG. */
+const positions = [
+  { name: 'Gifts only',        feel: 'Frustration',      fill: '#ded7fb', at: [98, 288],  note: 'You keep getting pulled back to the things you are good at, without getting to tap into your sense of purpose or passion.' },
+  { name: 'Passion only',      feel: 'Self-indulgent',   fill: '#fdd6d6', at: [302, 288], note: 'It does a lot for you, but there is not much fulfilment in it for other people. Good for short periods.' },
+  { name: 'Purpose only',      feel: 'Self-sacrificing', fill: '#c7f3e9', at: [200, 88],  note: 'You are working for a purpose no one else seems to care about, and that you may not be especially good at or passionate about.' },
+  { name: 'Passion + Purpose', feel: 'Disappointment',   fill: '#ffe0bd', at: [268, 190], note: 'You are doing what you love and what is needed, but it is not using your gifts.' },
+  { name: 'Passion + Gifts',   feel: 'Unappreciated',    fill: '#fdeeb6', at: [200, 285], note: 'As much as it is your passion and your gift, there is no real need in the world for it.' },
+  { name: 'Purpose + Gifts',   feel: 'Disengaged',       fill: '#cfe0fb', at: [132, 190], note: 'You are capable and it matters, but you have no passion for what you are working on.' },
+  { name: 'All three',         feel: 'SWEET SPOT',       fill: '#a7ecb9', at: [200, 218], note: 'The intersection of gifts, passion and purpose. Where you use all three at once. Place a dot on the diagram where you see yourself in your career right now.' }
+];
+
+/* Venn geometry: Purpose top (P), Gifts bottom-left (G), Passion bottom-right (S) */
+function renderVenn() {
+  const sel = state.selectedPosition;
+  // region index -> [clip chain of circle ids, exclusion circle ids]
+  const regions = [
+    { i: 0, clip: ['G'],           not: ['P','S'] },
+    { i: 1, clip: ['S'],           not: ['P','G'] },
+    { i: 2, clip: ['P'],           not: ['G','S'] },
+    { i: 3, clip: ['P','S'],       not: ['G']     },
+    { i: 4, clip: ['G','S'],       not: ['P']     },
+    { i: 5, clip: ['P','G'],       not: ['S']     },
+    { i: 6, clip: ['P','G','S'],   not: []        }
+  ];
+  const shapes = regions.map(r => {
+    const p = positions[r.i];
+    const maskId = 'mask-' + r.i;
+    let inner = `<rect x="0" y="0" width="400" height="360" fill="${p.fill}" ${r.not.length ? `mask="url(#${maskId})"` : ''}/>`;
+    for (let k = r.clip.length - 1; k >= 0; k--) inner = `<g clip-path="url(#clip${r.clip[k]})">${inner}</g>`;
+    return `<g class="venn-region ${r.i === sel ? 'active' : ''}" onclick="selectPosition(${r.i})"
+              role="button" tabindex="0" aria-label="${p.name}: ${p.feel}">${inner}</g>`;
+  }).join('');
+
+  const masks = regions.filter(r => r.not.length).map(r => `
+    <mask id="mask-${r.i}">
+      <rect x="0" y="0" width="400" height="360" fill="white"/>
+      ${r.not.map(n => `<use href="#c${n}" fill="black"/>`).join('')}
+    </mask>`).join('');
+
+  const labels = positions.map((p, i) => `
+    <text class="venn-feel ${i === sel ? 'active' : ''}" x="${p.at[0]}" y="${p.at[1]}">${p.feel}</text>`).join('');
+
+  return `
+  <div class="venn-wrap">
+    <svg class="venn" viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <circle id="cP" cx="200" cy="150" r="100"/>
+        <circle id="cG" cx="145" cy="240" r="100"/>
+        <circle id="cS" cx="255" cy="240" r="100"/>
+        <clipPath id="clipP"><use href="#cP"/></clipPath>
+        <clipPath id="clipG"><use href="#cG"/></clipPath>
+        <clipPath id="clipS"><use href="#cS"/></clipPath>
+        ${masks}
+      </defs>
+      ${shapes}
+      <use href="#cP" class="venn-outline"/>
+      <use href="#cG" class="venn-outline"/>
+      <use href="#cS" class="venn-outline"/>
+      <text class="venn-circle-label" x="200" y="58">PURPOSE</text>
+      <text class="venn-circle-label" x="70"  y="330">GIFTS</text>
+      <text class="venn-circle-label" x="330" y="330">PASSION</text>
+      ${labels}
+    </svg>
+  </div>
+  <div class="venn-hint">Click any region of the diagram to read what that position feels like.</div>`;
+}
+
+function render32() {
+  const c = circles[state.selectedCircle];
+  const p = positions[state.selectedPosition];
+  return `
+    <div class="section-number">3.2</div>
+    <div class="section-title">Finding the Sweet Spot</div>
+    <div class="section-subtitle">Your sweet spot is where three things overlap: what you do uniquely well, what you love doing, and what is needed that you care about. Start by exploring each of the three on its own, then click through the diagram to see what every other position on it feels like. <em>Model: Dave Pollard, Finding the Sweet Spot (2008).</em></div>
+
+    <div class="subsection">
+      <div class="subsection-title">Two ways in, before the model</div>
+      <div class="compare">
+        <div class="c-col">
+          <h3 style="color:var(--navy);">The Crossroads of Should and Must</h3>
+          <div class="c-row">At most decision points there is the thing you feel you <em>should</em> do, and the thing you <em>must</em> do. Elle Luna’s book takes its instruction from the subtitle: find and follow your passion.</div>
+        </div>
+        <div class="c-col">
+          <h3 style="color:var(--navy);">A Job · A Career · A Calling</h3>
+          <div class="c-row">The same work can be held three different ways. Which one you are in is not fixed by the role. It is partly a choice about the meaning you make of it. <em>Attributed to Stefan Sagmeister.</em></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clickable-grid">
+      ${circles.map((ci, i) => `
+        <div class="clickable-item ${ci.color} ${i === state.selectedCircle ? 'active' : ''}" onclick="selectCircle(${i})">
+          <div class="clickable-icon">${ci.icon}</div>
+          <div class="clickable-name">${ci.name}</div>
+          <div class="clickable-desc">${ci.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${c.icon} ${c.name}</h4>
+      <p>${c.detail}</p>
+      ${c.qs.map(q => `<p>→ ${q}</p>`).join('')}
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">⚠️ Why gifts alone are not enough</div>
+      <p>One client was very good at accounting. Every time a finance job came up, even on a committee, they were asked to do it. They were good at it, but it did nothing for them. Being repeatedly handed what you are good at is not the same as fulfilment. Watch for the same pattern in yourself.</p>
+      <p style="margin-top:8px;">Purpose is the list most people struggle with. It is often easier to start from what you don’t like to see in the world, and what you think the world could be better at.</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Every position on the diagram has a feeling attached</div>
+      ${renderVenn()}
+      <div class="detail-box">
+        <h4>${p.name} → ${p.feel}</h4>
+        <p>${p.note}</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-title">🎯 The Purpose Project formula</div>
+      <div class="formula-steps">
+        <div class="formula-step">Verb</div>
+        <span class="formula-arrow">+</span>
+        <div class="formula-step">Intention (what)</div>
+        <span class="formula-arrow">+</span>
+        <div class="formula-step">Outcome (beneficiary)</div>
+      </div>
+      <div class="formula-note">“To create a brilliant connected future for everyone” · “Make safety available to every worker in the world” · “Enabling executives to flourish”</div>
+    </div>
+
+    <div class="pullquote">
+      <p>Leadership oftentimes is a passionate and consuming activity… So strong are the emotions of leadership, they can overwhelm the person who has not developed a sufficiently broad sense of purpose… Preserving a sense of purpose helps one take setbacks and failures in stride… A sense of purpose provides the ongoing capacity to generate new possibilities.</p>
+      <cite>Heifetz (1994)</cite>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">🪨 The stonecutter story</div>
+      <p>Three workers are cutting stones. Asked what they are doing, the first says “I’m earning a living.” The second says “I’m trying to be the best stone cutter the world has ever seen.” The third points to the hillside and says “I’m building a cathedral.” Same task, three different meanings. Sometimes purpose is found in what you are already choosing to do.</p>
+    </div>
+
+    <div class="info-note">
+      <div class="note-title">🌏 Global orientation and ikigai</div>
+      <p>In considering your Sweet Spot, it is worth considering how global boundaries are dissolving. It might involve developing a “global work orientation”, an ability to “seek commonality between cultures” and to “embrace positive indifference”. Cultural agility can be measured, focusing on self-management, relationship management and task management.</p>
+      <p>A comparable model to the Sweet Spot is the concept of <strong>ikigai</strong>, often translated as one’s reason for being.</p>
+    </div>
+  `;
+}
+function selectCircle(i)   { state.selectedCircle = i; renderContent(); }
+function selectPosition(i) { state.selectedPosition = i; renderContent(); }
+
+/* -- 3.3 Vision and Creative Tension -- */
+function render33() {
+  return `
+    <div class="section-number">3.3</div>
+    <div class="section-title">Putting Energy Into Your Vision</div>
+    <div class="section-subtitle">Creative tension is the internal mechanism that helps us achieve what we want. It needs two things, and it only generates energy when there is a gap between them.</div>
+
+    <div class="pullquote">
+      <p>The gap between vision and current reality is also a source of energy. If there were no gap, there would be no need for any action to move towards the vision.</p>
+      <cite>Peter Senge</cite>
+    </div>
+
+    <div class="vision-banner">CREATIVE TENSION = VISION ↔ CURRENT REALITY</div>
+
+    <div class="compare">
+      <div class="c-col">
+        <h3 style="color:var(--navy);">① Vision</h3>
+        <div class="c-row">A goal, an aspiration, something you are striving towards.</div>
+        <div class="c-row">Diana Nyad was clear for a very long time that she wanted to swim from Havana to Florida.</div>
+        <div class="c-row"><strong>Without current reality, a vision is really just a dream.</strong></div>
+      </div>
+      <div class="c-col">
+        <h3 style="color:var(--navy);">② Current reality</h3>
+        <div class="c-row">All the strengths you have to draw on.</div>
+        <div class="c-row">All the weaknesses you have to overcome, and the external challenges you must face.</div>
+        <div class="c-row"><strong>Without a vision, current reality is just stuck, complacent or coasting.</strong></div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">⚠️ Be honest about reality</div>
+      <p>An aspiration to be fit and healthy stays a pipe dream if you have not faced up to having been overindulgent over the holidays and having stopped your exercise programme. You need to honestly assess where you are now in relation to the vision if you actually want to motivate yourself to do anything differently.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">🌊 “Find a way”</div>
+      <p>Diana Nyad’s mantra for the crossing was not “win” or “finish”. It was <strong>find a way</strong>. She also held a cardinal rule: she is never told how far it is, because nobody knows what will happen between this point and that point. What she had instead was a vision that was specific, and held for decades.</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Diana Nyad: a case study in vision, obstacles and persistence</div>
+      <div class="vsteps">
+        <div class="vstep">
+          <div class="vstep-num">1</div>
+          <div class="vstep-body"><h4>Never, ever give up</h4><p>The fifth attempt, at 64, having first dreamed of and attempted the swim in her twenties. Over 100 miles of open ocean, box jellyfish, sharks, hypothermia and the Gulf Stream, across 53 hours.</p></div>
+        </div>
+        <div class="vstep">
+          <div class="vstep-num">2</div>
+          <div class="vstep-body"><h4>You can chase your dreams at any age; you’re never too old</h4><p>“There’s no doubt in my mind that I am at the prime of my life today.”</p></div>
+        </div>
+        <div class="vstep">
+          <div class="vstep-num">3</div>
+          <div class="vstep-body"><h4>It looks like the most solitary endeavour in the world, and in the most important ways, it’s a team</h4><p>A team of some 30 people. “We did it. I didn’t do it. We did it.”</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      <p>When you reach for the horizon, as I’ve proven, you may not get there. But what a tremendous build of character and spirit that you lay down; what a foundation you lay down in reaching for those horizons.</p>
+      <cite>Diana Nyad</cite>
+    </div>
+
+    <div class="pullquote">
+      <p>Until one is committed, there is hesitancy, the chance to draw back, always ineffectiveness… the moment one definitely commits oneself, then providence moves too. A whole stream of events issues from the decision, raising in one’s favour all manner of unforeseen incidents, meetings and material assistance… Whatever you can do or dream you can, begin it. Boldness has genius, power and magic in it!</p>
+      <cite>W.H. Murray, The Scottish Himalayan Expedition</cite>
+    </div>
+
+    <div class="info-note">
+      <div class="note-title">🌍 Cultural note: how people expect to reach a vision differs</div>
+      <p><strong>Internal direction</strong> (US, UK, Australia): people believe they can control their environment to achieve their goals.</p>
+      <p><strong>External direction</strong> (China, Russia, Saudi Arabia): people believe they must work <em>with</em> their environment. Winning is not as important as maintaining a strong relationship.</p>
+      <p>Short-term and long-term orientation also shape how far ahead a vision reaches. Reference: Trompenaars and Hampden-Turner, Seven Dimensions of Culture.</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Two exercises to build your own vision</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-number">1</div><div class="step-text"><strong>Personal Vision</strong> — capture what you want for yourself. Use images, symbols, words, whatever best expresses it.</div></div>
+        <div class="step-item"><div class="step-number">2</div><div class="step-text"><strong>Personal Leadership Story</strong> — write from a point in the future, looking back at what you have done and accomplished.</div></div>
+      </div>
+    </div>
+  `;
+}
+
+/* -- 3.4 Managing Priorities -- */
+const quadrants = [
+  { key: 'q1', mark: '❗', cond: 'Urgent and Important', name: 'Quadrant I — Demand',
+    list: 'Crisis · Pressing problems · Deadline projects',
+    detail: 'These fall into two types: unforeseeable issues and crises, and activities left to the last minute. Make space for the first type; plan ahead and avoid procrastination for the second.',
+    tip: 'If you spend too much of your time here you are likely to experience burnout over time. Look at how you can delegate, and plan strategically so these move into Quadrant II.' },
+  { key: 'q2', mark: '✔️', cond: 'Not Urgent and Important', name: 'Quadrant II — The Zone',
+    list: 'Planning · Prevention · Relationship building · New opportunities · Learning and development',
+    detail: 'These activities help you achieve your personal and professional goals. This quadrant allows you to plan for improvement and growth.',
+    tip: 'The challenge is to create as much time as possible for this quadrant. This is being proactive, and it is where your strategic efforts are best used.' },
+  { key: 'q3', mark: '❓', cond: 'Urgent and Not Important', name: 'Quadrant III — Illusion',
+    list: 'Interruptions and other people’s priorities · Some calls, mail etc · Pressing matters without impact · Popular activities',
+    detail: 'These stop you from achieving your goals. They are the squeaky wheels that get the grease: they demand attention because not dealing with them immediately has visible consequences.',
+    tip: 'Challenge these tasks. Can they be rescheduled, or can someone else do them?' },
+  { key: 'q4', mark: '✖️', cond: 'Not Urgent and Not Important', name: 'Quadrant IV — Escape',
+    list: 'Trivia and busy work · Time wasters, private calls · Internet surfing · Pleasant activities',
+    detail: 'These activities are distractions. If you find yourself doing a lot of this, you are probably not using your time in a very helpful way.',
+    tip: 'These should be avoided.' }
+];
+
+function render34() {
+  const q = quadrants[state.selectedQuadrant];
+  return `
+    <div class="section-number">3.4</div>
+    <div class="section-title">Managing Priorities</div>
+    <div class="section-subtitle">Not time management, <strong>task and energy management</strong>. The model is Stephen Covey’s Time Management Matrix, from the habit “Put First Things First”. Click each quadrant.</div>
+
+    <div class="compare">
+      <div class="c-col">
+        <h3 style="color:#7a5c00;">Important</h3>
+        <div class="c-row">Activities that have outcomes that lead to the achievement of <strong>your</strong> goals.</div>
+      </div>
+      <div class="c-col">
+        <h3 style="color:#7a5c00;">Urgent</h3>
+        <div class="c-row">Activities that demand immediate attention, and are often associated with the achievement of <strong>someone else’s</strong> goals.</div>
+      </div>
+    </div>
+
+    <div class="matrix-wrap">
+      <div class="axis-y">Importance ↑</div>
+      ${[0,1,2,3].map(i => {
+        const qq = quadrants[i];
+        return `<div class="quad ${qq.key} ${i === state.selectedQuadrant ? 'active' : ''}" onclick="selectQuadrant(${i})">
+          <div class="quad-mark">${qq.mark}</div>
+          <div class="quad-cond">${qq.cond}</div>
+          <div class="quad-name">${qq.name}</div>
+          <div class="quad-list">${qq.list}</div>
+        </div>`;
+      }).join('')}
+      <div class="axis-x">← High urgency &nbsp;·&nbsp; Low urgency →</div>
+    </div>
+
+    <div class="detail-box">
+      <h4>${q.mark} ${q.name}</h4>
+      <p>${q.detail}</p>
+      <p><strong>🔧 What to do:</strong> ${q.tip}</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">📌 The exercise</div>
+      <p>List the main tasks you do and plot them into the four quadrants. Then work out <strong>what percentage of your time you spend in each quadrant</strong>, and identify strategies for moving tasks into the not urgent and important quadrant wherever possible.</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Diagnostic questions before you plot</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-number">1</div><div class="step-text">Is this really a necessary task?</div></div>
+        <div class="step-item"><div class="step-number">2</div><div class="step-text">Am I spending my time in “fire fighting” mode?</div></div>
+        <div class="step-item"><div class="step-number">3</div><div class="step-text">Do I work on band-aid fixes rather than looking at the cause of problems?</div></div>
+        <div class="step-item"><div class="step-number">4</div><div class="step-text">Do I feel guilty taking time out for myself?</div></div>
+        <div class="step-item"><div class="step-number">5</div><div class="step-text">Do I put off tasks I know are important but that may be perceived as time wasting?</div></div>
+        <div class="step-item"><div class="step-number">6</div><div class="step-text">Am I saying yes to other people’s work because they cannot manage their own tasks?</div></div>
+        <div class="step-item"><div class="step-number">7</div><div class="step-text">Am I working on activities because they are enjoyable rather than because they make a difference?</div></div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">A worked example of moving a task</div>
+      <p style="font-size:13.5px;color:#4a3f2f;line-height:1.6;">A business spent two weeks every quarter hand-stuffing catalogues into envelopes. It consumed enormous time, felt urgent, and generated very little response: <strong>urgent and not important</strong>. When email arrived, the same content went out with a link back, response rates rose sharply, and the activity became <strong>not urgent and important</strong>, a major feature of how they did business.</p>
+      <p style="font-size:13.5px;color:#4a3f2f;line-height:1.6;margin-top:10px;">A smaller version of the same move: coming home tonight is neither urgent nor important. Coming home <em>with flowers</em> moves it up into important.</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">🧠 The myth of multitasking</div>
+      <p>The brain does not do tasks simultaneously. We <strong>switch-task</strong>, with a stop/start process each time. Rather than saving time it costs time, produces more mistakes, and saps energy. Test it: time yourself writing “I am a great multitasker” then 1 to 20 (about 20 seconds), then time yourself alternating one letter, one number, line to line. Expect double or more, with errors. Instead: set a time limit, 10 or 45 minutes, and focus on one task.</p>
+    </div>
+
+    <div class="info-note">
+      <div class="note-title">📊 Australian context: HILDA Statistical Report 2021</div>
+      <p>Women consistently report higher time stress than men, by about 7 to 8 percentage points. In 2019, 38% of women reported often or almost always feeling rushed or pressed for time, versus 29% of men. The 35 to 44 age group is highest, with almost half consistently in time stress.</p>
+      <p>Holding a Bachelor’s degree or higher is associated with an 11.1 (women) and 10.0 (men) percentage point higher likelihood of time stress compared with not completing high school. Time stress is associated with worse mental health, worse self-rated health, less physical activity and lower life satisfaction.</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Ask yourself · Ask your team</div>
+      <div class="compare">
+        <div class="c-col">
+          <h3 style="color:var(--navy);">Ask yourself</h3>
+          <div class="c-row">Where do you currently put most of your energy?</div>
+          <div class="c-row">What might you need to do in order to work more in the High Importance, Low Urgency quadrant?</div>
+        </div>
+        <div class="c-col">
+          <h3 style="color:var(--navy);">Ask your team</h3>
+          <div class="c-row">Share the matrix with your team.</div>
+          <div class="c-row">Discuss where the team is putting its energy and what you may need to do to work more in the High Importance, Low Urgency quadrant.</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+function selectQuadrant(i) { state.selectedQuadrant = i; renderContent(); }
+
+/* -- 3.5 GROW Coaching -- */
+const growStages = [
+  { name: 'Goal',    icon: '🎯', desc: 'Set goals, write them down, and establish what the person wants from the session.', when: 'Be clear on what outcome they are seeking from the conversation (a list of ideas? Greater understanding? A plan?) before you get too far into it.' },
+  { name: 'Reality', icon: '🪞', desc: 'Let them tell their story. Invite self-assessment, ask what is happening, and discuss the effects of the situation.', when: 'Ask open, generative questions.' },
+  { name: 'Options', icon: '💡', desc: 'Brainstorm options, ask rather than tell, empower and ensure choice. How can you move toward your goal? What has worked in the past?', when: 'Resist the urge to offer advice. Let them come up with their own solutions.' },
+  { name: 'Wrap Up', icon: '📝', desc: 'Identify specific steps and any obstacles. Write an action plan.', when: 'Get them to commit to something as a next step by the end of the session. Anything, even reading or thinking about something, might be enough.' }
+];
+
+function render35() {
+  const g = growStages[state.selectedGrow];
+  return `
+    <div class="section-number">3.5</div>
+    <div class="section-title">GROW Coaching</div>
+    <div class="section-subtitle">A four-stage coaching conversation with <strong>FOCUS</strong> at its centre. Model adapted from Whitmore (1992). Click each stage.</div>
+
+    <div class="clickable-grid">
+      ${growStages.map((gs, i) => `
+        <div class="clickable-item ${['item-blue','item-teal','item-yellow','item-green'][i]} ${i === state.selectedGrow ? 'active' : ''}" onclick="selectGrow(${i})">
+          <div class="clickable-icon">${gs.icon}</div>
+          <div class="clickable-name">${gs.name}</div>
+          <div class="clickable-desc">${['G','R','O','W'][i]}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-box">
+      <h4>${g.icon} ${g.name}</h4>
+      <p>${g.desc}</p>
+      <p><strong>💡 Coaching tip:</strong> ${g.when}</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">The triads exercise</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-number">1</div><div class="step-text">Break into groups of 3</div></div>
+        <div class="step-item"><div class="step-number">2</div><div class="step-text">Allocate roles: <strong>Coach</strong>, <strong>Coachee</strong>, <strong>Observer</strong></div></div>
+        <div class="step-item"><div class="step-number">3</div><div class="step-text">15 minutes of coaching, then 5 minutes of feedback</div></div>
+        <div class="step-item"><div class="step-number">4</div><div class="step-text">Change roles and repeat two more times</div></div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">👀 Notice yourself in each role</div>
+      <p>What feels natural or awkward? What can you learn about yourself?</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">The Balcony Moment: debrief structure</div>
+      <div class="compare">
+        <div class="c-col" style="border-left:3px solid #22c55e;">
+          <h3 style="color:#166534;">WWW</h3>
+          <div class="c-row"><strong>What is Working Well?</strong></div>
+        </div>
+        <div class="c-col" style="border-left:3px solid var(--gold);">
+          <h3 style="color:#7a5c00;">EBI</h3>
+          <div class="c-row"><strong>What would be Even Better If?</strong></div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+function selectGrow(i) { state.selectedGrow = i; renderContent(); }
+
+/* -- 3.6 PLP and Commitments -- */
+function render36() {
+  return `
+    <div class="section-number">3.6</div>
+    <div class="section-title">Running a Leadership Project</div>
+    <div class="section-subtitle">A leadership project is an outcome-driven activity focused on an opportunity to lead positive change within your organisation, as well as on your own leadership growth. The point is not to add substantially to your workload, but to have somewhere deliberate to apply new skills and strategies to your practice.</div>
+
+    <div class="subsection">
+      <div class="subsection-title">Project criteria</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-number">1</div><div class="step-text">Reflect, analyse, monitor and lead change using a <strong>strong evidence base</strong> (keeping a leadership diary is recommended)</div></div>
+        <div class="step-item"><div class="step-number">2</div><div class="step-text">Apply a <strong>minimum of two models or leadership frameworks</strong>, drawn from your learning or your own research</div></div>
+        <div class="step-item"><div class="step-number">3</div><div class="step-text">Deliver a <strong>tangible outcome</strong> in an area you have identified that requires leadership development</div></div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">🎤 Presentation criteria</div>
+      <p>Five minutes maximum · Make it engaging: use visual aids, props, stories, metaphors or role play · Get the audience involved and learning, rather than reporting at them.</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Six questions to structure the reflection (they work for a short presentation or a written report)</div>
+      <div class="exp-cards cols-2">
+        <div class="exp-card"><div class="exp-title">1. Context</div><div class="exp-preview">What is your project, why did you choose it, who was involved?</div></div>
+        <div class="exp-card"><div class="exp-title">2. Progress</div><div class="exp-preview">What steps have you taken towards your project?</div></div>
+        <div class="exp-card"><div class="exp-title">3. Wins / Challenges</div><div class="exp-preview">Your successes and setbacks, and how you overcame them.</div></div>
+        <div class="exp-card"><div class="exp-title">4. Reflections</div><div class="exp-preview">What stood out: challenges overcome, how you built relationships, how your team worked together.</div></div>
+        <div class="exp-card"><div class="exp-title">5. Next steps</div><div class="exp-preview">What are the next steps, where to from here?</div></div>
+        <div class="exp-card"><div class="exp-title">6. How did I implement my learning?</div><div class="exp-preview">What did you actually apply? How did facilitators, a peer coach or your colleagues assist you? Which resources mattered most?</div></div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Choosing a focus</div>
+      <table class="stbl">
+        <tr><th>Question</th><th>Answer</th></tr>
+        <tr><td>Does it have to be a work project?</td><td>No. The focus can be either personal or professional, and it can be purely about your own leadership development.</td></tr>
+        <tr><td>Does it have to be new?</td><td>No. It could be a piece of work you are already doing, or something you can start now.</td></tr>
+        <tr class="hl"><td>Does it have to be finished?</td><td>No. You do not need to complete it inside any fixed time frame.</td></tr>
+        <tr><td>How long should the write-up be?</td><td>Around 1500 words is a useful cap. Clear, concise and focused writing is what makes it worth rereading.</td></tr>
+      </table>
+      <p style="font-size:13.5px;color:#4a3f2f;line-height:1.6;">In writing it up, reflect on the project against the frameworks you have been using. In particular, consider <strong>the impact of your behaviours on the achievement of your goals</strong>, and the ways you might explore and overcome your own areas of resistance.</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Reflect and share</div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-number">💡</div><div class="step-text"><strong>Insight</strong> — what did I learn?</div></div>
+        <div class="step-item"><div class="step-number">📋</div><div class="step-text"><strong>Project</strong> — what inspiration or idea will I take into it?</div></div>
+        <div class="step-item"><div class="step-number">🧭</div><div class="step-text"><strong>Vision</strong> — what commitment or action follows?</div></div>
+        <div class="step-item"><div class="step-number">🌱</div><div class="step-text"><strong>Coaching</strong> — what was my aha moment?</div></div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Personal commitments</div>
+      <p style="font-size:13.5px;color:#4a3f2f;line-height:1.6;margin-bottom:4px;">The commitment only counts once all three columns are filled in.</p>
+      <table class="stbl">
+        <tr><th>What I am going to do</th><th>How I am going to do it</th><th>When I am going to do it</th></tr>
+        <tr><td style="height:44px;"></td><td></td><td></td></tr>
+        <tr><td style="height:44px;"></td><td></td><td></td></tr>
+        <tr><td style="height:44px;"></td><td></td><td></td></tr>
+      </table>
+    </div>
+
+    <div class="pullquote">
+      <p>Our deepest fear is not that we are inadequate. Our deepest fear is that we are powerful beyond measure. It is our light, not our darkness that most frightens us. We ask ourselves, who am I to be brilliant, gorgeous, talented, fabulous? Actually, who are you not to be? …Your playing small doesn’t serve the world.</p>
+      <cite>Marianne Williamson</cite>
+    </div>
+
+    <div class="info-note">
+      <div class="note-title">📚 Supporting research: BCG &amp; Heidrick &amp; Struggles, “Learning from Women Who’ve Made It to the Top in Tech” (2021)</div>
+      <p>There is no ambition gap: 62% of women and 67% of men were trying for a promotion. 44% of women said their first promotion was the most important, versus 32% of men. When pursuing a promotion without meeting all qualifications, 35% of men cited individual confidence versus 17% of women, while women drew more on colleagues, mentors and household members.</p>
+      <p>Lessons the interviewees named: hone an effective communication style (start with the headline) · push for constructive feedback · master the art of the humble brag · embrace who you are · embrace the stretch role.</p>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CORE ENGINE
+   ═══════════════════════════════════════════════════════════ */
+function render() { renderNav(); renderContent(); }
+
+function renderNav() {
+  document.getElementById('nav').innerHTML = sections.map(s =>
+    `<div class="nav-item ${s.id === state.currentSection ? 'active' : ''}" onclick="goTo('${s.id}')">
+      <span class="nav-number">${s.id}</span> ${s.icon} ${s.name}
+    </div>`
+  ).join('');
+}
+
+function goTo(id) { state.currentSection = id; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+function renderContent() {
+  const c = document.getElementById('content');
+  switch(state.currentSection) {
+    case sections[0].id: c.innerHTML = render31();   break;
+    case sections[1].id: c.innerHTML = render32();   break;
+    case sections[2].id: c.innerHTML = render33();   break;
+    case sections[3].id: c.innerHTML = render34();   break;
+    case sections[4].id: c.innerHTML = render35();   break;
+    case sections[5].id: c.innerHTML = render36();   break;
+    case 'quiz':         c.innerHTML = renderQuiz(); break;
+  }
+}
+
+function renderQuiz() {
+  if (state.quizComplete) {
+    const score = state.quizAnswers.filter((a, i) => a === quizQuestions[i].correct).length;
+    const pct   = Math.round((score / quizQuestions.length) * 100);
+    const emoji = pct === 100 ? '🏆' : pct >= 75 ? '⭐' : pct >= 50 ? '👍' : '📚';
+    const msg   = pct === 100 ? 'Perfect! You\'ve mastered this material.' :
+                  pct >= 75  ? 'Great work! You understand the key concepts.' :
+                  pct >= 50  ? 'Good effort — revisit the sections you found tricky.' :
+                               'Keep studying and try again!';
+    return `
+      <div class="quiz-result">
+        <div class="section-number">Quiz</div>
+        <div class="section-title" style="display:block;margin-bottom:16px;">Results</div>
+        <div class="quiz-score">${emoji}</div>
+        <p style="font-size:22px;font-weight:700;color:var(--navy);margin-bottom:8px;">${score} / ${quizQuestions.length} (${pct}%)</p>
+        <p class="quiz-message">${msg}</p>
+        <button class="quiz-btn quiz-btn-primary" onclick="resetQuiz()">Try Again</button>
+      </div>`;
+  }
+  const q        = quizQuestions[state.quiz];
+  const answered = state.quizAnswers[state.quiz] !== undefined;
+  const isCorrect = answered && state.quizAnswers[state.quiz] === q.correct;
+  return `
+    <div class="section-number">Quiz</div>
+    <div class="section-title" style="display:block;margin-bottom:16px;">Test Your Knowledge</div>
+    <div class="quiz-progress">
+      ${quizQuestions.map((_, i) => {
+        let cls = i === state.quiz ? 'active' : '';
+        if (state.quizAnswers[i] !== undefined)
+          cls = state.quizAnswers[i] === quizQuestions[i].correct ? 'correct' : 'incorrect';
+        return `<div class="quiz-dot ${cls}"></div>`;
+      }).join('')}
+    </div>
+    <div class="quiz-question">Q${state.quiz + 1}. ${q.q}</div>
+    <div class="quiz-options">
+      ${q.opts.map((opt, i) => {
+        let cls = answered ? 'disabled ' : '';
+        if (answered && i === q.correct) cls += 'correct';
+        else if (answered && state.quizAnswers[state.quiz] === i) cls += 'incorrect';
+        return `<div class="quiz-option ${cls}" onclick="${answered ? '' : `answerQuiz(${i})`}">${opt}</div>`;
+      }).join('')}
+    </div>
+    ${answered ? `<div class="quiz-feedback ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✅ Correct!' : '❌ Not quite.'} ${q.explain}</div>` : ''}
+    <div class="quiz-nav">
+      ${state.quiz > 0 ? '<button class="quiz-btn quiz-btn-secondary" onclick="prevQuiz()">← Previous</button>' : ''}
+      ${answered ? (state.quiz < quizQuestions.length - 1
+        ? '<button class="quiz-btn quiz-btn-primary" onclick="nextQuiz()">Next →</button>'
+        : '<button class="quiz-btn quiz-btn-primary" onclick="finishQuiz()">See Results</button>') : ''}
+    </div>`;
+}
+
+function answerQuiz(i) { state.quizAnswers[state.quiz] = i; renderContent(); }
+function prevQuiz()    { state.quiz--; renderContent(); }
+function nextQuiz()    { state.quiz++; renderContent(); }
+function finishQuiz()  { state.quizComplete = true; renderContent(); }
+function resetQuiz()   { state.quiz = 0; state.quizAnswers = []; state.quizComplete = false; renderContent(); }
+
+/* Expandable cards in 3.6 */
+document.addEventListener('click', function(e) {
+  const card = e.target.closest('.exp-card');
+  if (card) card.classList.toggle('expanded');
+});
+
+render();
+</script>
+</body>
+</html>
